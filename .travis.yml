@@ -1,0 +1,8 @@
+language: node_js
+node_js: v12.19.0
+sudo: false
+install:
+  - npm install
+script:
+  - npm run lint
+  - npm run test
