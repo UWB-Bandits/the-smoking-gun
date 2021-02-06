@@ -1,18 +1,16 @@
 {
     "env": {
         "browser": true,
-        "node": true,
-        "es2021": true
+        "node": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "standard"
+        "plugin:react/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 12,
+        "ecmaVersion": 2019,
         "sourceType": "module"
     },
     "plugins": [
