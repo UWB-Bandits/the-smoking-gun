@@ -1,21 +1,50 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import HeadingNav from "./components/HeadingNav/HeadingNav";
+import SignIn from "./pages/SignIn/SignIn";
+// import Dashboard from "./components/HeadingNav/Dashboard";
 
-class App extends Component {
-  render () {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+// Routes:
+// / → signin                           ------------- done
+// /sign-up → sign up page          -- same as sign in
+// /:userid → dashboard                  --------------- done
+// /:bookid → Index                      ----------- done
+// /create-book → Create Book page
+// /create-list → Create List page
+// /caledar/:date → Daily calendar page
+
+// import Books from "./pages/Books";
+// import Detail from "./pages/Detail";
+// import NoMatch from "./pages/NoMatch";
+// import Nav from "./components/Nav";
+
+function App() {
+  return (
+    <Router>
+      <div>
+        <HeadingNav />
+        <Switch>
+          <Route exact path="/">
+            <SignIn />
+          </Route>
+          <Route exact path="/dashboard/:userid">
+            {/* <Dashboard /> */}
+          </Route>
+          <Route exact path="/books">
+            {/* <Books /> */}
+          </Route>
+          <Route exact path="/create-list">
+            {/* <Lists /> */}
+          </Route>
+          <Route exact path="/:userid">
+            {/* <Dashboard /> */}
+          </Route>
+          <Route>{/* <NoMatch /> */}</Route>
+        </Switch>
       </div>
-    );
-  }
+    </Router>
+  );
 }
 
 export default App;
