@@ -13,7 +13,7 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
     "lint": "eslint '**/*.js' --quiet",
-    "lintfix": "eslint '**/*.js' --fix"
+    "lintfix": "eslint **/*.js --fix"
   },
   "author": "",
   "license": "ISC",

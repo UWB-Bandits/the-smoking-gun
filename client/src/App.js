@@ -4,6 +4,9 @@ import "./App.css";
 import HeadingNav from "./components/HeadingNav/HeadingNav";
 import SignIn from "./pages/SignIn/SignIn";
 import Dashboard from "./pages/Dashboard";
+import IndexPage from "./pages/IndexPage";
+import Lists from "./pages/Lists";
+import CreateBook from "./pages/CreateBook";
 
 // Routes:
 // / → signin                           ------------- done
@@ -28,17 +31,17 @@ function App() {
           <Route exact path="/">
             <SignIn />
           </Route>
+          <Route exact path="/books/:bookid">
+            <IndexPage />
+          </Route>
+          <Route exact path="/lists/:listid">
+            <Lists />
+          </Route>
+          <Route exact path="/create-book">
+            <CreateBook />
+          </Route>
           <Route exact path="/dashboard/:userid">
             <Dashboard />
-          </Route>
-          <Route exact path="/books">
-            {/* <Books /> */}
-          </Route>
-          <Route exact path="/create-list">
-            {/* <Lists /> */}
-          </Route>
-          <Route exact path="/:userid">
-            {/* <Dashboard /> */}
           </Route>
           <Route>{/* <NoMatch /> */}</Route>
         </Switch>
