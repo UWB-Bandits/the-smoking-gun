@@ -7,7 +7,6 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import FormButtons from "../FormButtons/FormButtons";
 import Box from "@material-ui/core/Box";
