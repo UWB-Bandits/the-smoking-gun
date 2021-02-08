@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import HeadingNav from "./components/HeadingNav/HeadingNav";
@@ -29,6 +29,10 @@ function App() {
             <SignIn />
           </Route>
           <Route exact path="/dashboard/:userid">
+            <Dashboard />
+          </Route>
+          {/* _____________________Remove once user auth is in place _______________ */}
+          <Route exact path="/dashboard">
             <Dashboard />
           </Route>
           <Route exact path="/books">
