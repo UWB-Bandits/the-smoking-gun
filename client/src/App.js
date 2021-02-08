@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn/SignIn";
 import Dashboard from "./pages/Dashboard";
 import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
+import CreateBook from "./pages/CreateBook";
 
 // Routes:
 // / → signin                           ------------- done
@@ -37,7 +38,7 @@ function App() {
             <Lists />
           </Route>
           <Route exact path="/create-book">
-            {/* <NewBook /> */}
+            <CreateBook />
           </Route>
           <Route exact path="/dashboard/:userid">
             <Dashboard />
