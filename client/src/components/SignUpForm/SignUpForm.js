@@ -72,7 +72,7 @@ const SignInForm = (props) => {
             onChange={handleInputChange}
           />
         </div>
-        <FormControl>
+        <FormControl style={{ margin: "0px 5px" }}>
           <InputLabel htmlFor="password">Password</InputLabel>
           <Input
             id="password"
@@ -93,7 +93,7 @@ const SignInForm = (props) => {
             }
           />
         </FormControl>
-        <FormControl>
+        <FormControl style={{ margin: "0px 5px" }}>
           <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
           <Input
             id="confirmPassword"
