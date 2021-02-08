@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Box, Grid, Accordion, AccordionSummary, Typography, AccordionDetails, TextField } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FakeBooks from "../utils/fakeBooks";
-import BookTitle from "../components/BookTitle";
+import TitleItem from "../components/TitleItem";
 import { makeStyles } from "@material-ui/core/styles";
-import NewListForm from "../components/NewListForm";
+import NewListForm from "../components/NewItemForm";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: ""});
 
-  //GET ID OFF OF ROUTE AND SET UP STATE FOR THE BOOK SHOWN -- UPDATE REFERENCES TO FakeBooks[1] 
+  //GET ID OFF OF ROUTE AND SET UP STATE FOR THE BOOK SHOWN -- UPDATE REFERENCES TO FakeBooks[0] 
 
   const handleInputChange = (e) => {
     const { value } = e.target;
@@ -40,7 +40,7 @@ function IndexPage() {
   return (
     <div> 
         <Box>
-            <BookTitle {...FakeBooks[1]}/>
+            <TitleItem {...FakeBooks[0]}/>
 
               <Accordion >
                 <AccordionSummary 
@@ -53,8 +53,8 @@ function IndexPage() {
                 </AccordionSummary>
                 <AccordionDetails>
                     <ul>
-                      {FakeBooks[1].lists.map(item => <li key={item.name}><a href={`/lists/${item._id}`}>{item.name}</a></li>)}
-                        <NewListForm handleInputChange={handleInputChange} addList={addList}/>
+                      {FakeBooks[0].lists.map(item => <li key={item.name}><a href={`/lists/${item.id}`}>{item.name}</a></li>)}
+                        <NewListForm handleInputChange={handleInputChange} addItem={addList} type="list"/>
                     </ul>
                 </AccordionDetails>
               </Accordion>                            

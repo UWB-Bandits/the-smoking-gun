@@ -6,6 +6,7 @@ const FakeBooks = [
         lists: [
             {
             name: "Places to Visit",
+            id: 1,
             items: [{
                 name: "Italy", 
                 completed: false
@@ -30,6 +31,7 @@ const FakeBooks = [
             },
             {
               name: "Places to Eat",
+              id: 2,
               items: [{
                   name: "Archipelago", 
                   completed: false
@@ -54,6 +56,7 @@ const FakeBooks = [
               },
               {
                 name: "Groceries",
+                id: 3,
                 items: [{
                     name: "Milk", 
                     completed: false
@@ -78,6 +81,7 @@ const FakeBooks = [
                 },
                 {
                   name: "Gratitude",
+                  id:4,
                   items: [{
                       name: "Family", 
                       completed: false

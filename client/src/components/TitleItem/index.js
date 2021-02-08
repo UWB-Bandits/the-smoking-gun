@@ -18,12 +18,12 @@ const useStyles = makeStyles({
   },
 });
 
-BookTitle.propTypes = {
+TitleItem.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
 };
 
-export default function BookTitle(props) {
+export default function TitleItem(props) {
   const classes = useStyles();
 
   return (

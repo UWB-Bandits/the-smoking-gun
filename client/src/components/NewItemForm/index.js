@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Box from "@material-ui/core/Box";
 
 const NewListForm = (props) => {
-  const { handleInputChange, addList } = props;
+  const { handleInputChange, addItem, type, formDataShown} = props;
 
   return (
     <Box style={{width:"100%"}}>
@@ -21,10 +21,11 @@ const NewListForm = (props) => {
           <TextField
             style={{ width: "100%" }}
             id="newListInput"
-            label="Add a new list"
+            label={`Add a new ${type}`}
             type="text"
             name="newList"
             onChange={handleInputChange}
+            value={formDataShown}
           />
         </div>
 
@@ -35,7 +36,7 @@ const NewListForm = (props) => {
           }}
           variant="contained"
           color="primary"
-          onClick={addList}
+          onClick={addItem}
         >Add
         </Button>
       </form>
@@ -44,8 +45,10 @@ const NewListForm = (props) => {
 };
 
 NewListForm.propTypes = {
-  addList: PropTypes.func,
+  addItem: PropTypes.func,
   handleInputChange: PropTypes.func,
+  type: PropTypes.string,
+  formDataShown: PropTypes.string
 };
 
 export default NewListForm;

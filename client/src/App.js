@@ -5,6 +5,7 @@ import HeadingNav from "./components/HeadingNav/HeadingNav";
 import SignIn from "./pages/SignIn/SignIn";
 import Dashboard from "./pages/Dashboard";
 import IndexPage from "./pages/IndexPage";
+import Lists from "./pages/Lists";
 
 // Routes:
 // / → signin                           ------------- done
@@ -32,8 +33,8 @@ function App() {
           <Route exact path="/books/:bookid">
             <IndexPage />
           </Route>
-          <Route exact path="/create-list">
-            {/* <Lists /> */}
+          <Route exact path="/lists/:listid">
+            <Lists />
           </Route>
           <Route exact path="/create-book">
             {/* <NewBook /> */}
