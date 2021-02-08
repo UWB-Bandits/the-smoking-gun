@@ -35,7 +35,10 @@ function App() {
           <Route exact path="/create-list">
             {/* <Lists /> */}
           </Route>
-          <Route exact path="/:userid">
+          <Route exact path="/create-book">
+            {/* <NewBook /> */}
+          </Route>
+          <Route exact path="/dashboard/:userid">
             <Dashboard />
           </Route>
           <Route>{/* <NoMatch /> */}</Route>
