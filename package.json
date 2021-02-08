@@ -12,8 +12,8 @@
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
-    "lint": "eslint **/*.js --quiet",
-    "lintfix": "eslint **/*.js --fix"
+    "lint": "eslint '**/*.js' --quiet",
+    "lintfix": "eslint '**/*.js' --fix"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "axios": "^0.21.1",
     "express": "^4.16.3",
     "if-env": "^1.0.4",

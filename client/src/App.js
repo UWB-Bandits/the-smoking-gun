@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import HeadingNav from "./components/HeadingNav/HeadingNav";
 import SignIn from "./pages/SignIn/SignIn";
-// import Dashboard from "./components/HeadingNav/Dashboard";
+import Dashboard from "./pages/Dashboard";
 
 // Routes:
 // / → signin                           ------------- done
@@ -29,7 +29,7 @@ function App() {
             <SignIn />
           </Route>
           <Route exact path="/dashboard/:userid">
-            {/* <Dashboard /> */}
+            <Dashboard />
           </Route>
           <Route exact path="/books">
             {/* <Books /> */}
