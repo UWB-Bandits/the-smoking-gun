@@ -55,9 +55,9 @@ const LogInForm = (props) => {
           <TextField
             style={{ width: "100%" }}
             id="standard-password-input"
-            label="Username"
-            type="Username"
-            name="username"
+            label="Email"
+            type="Email"
+            name="email"
             autoComplete="current-password"
             onChange={handleInputChange}
           />

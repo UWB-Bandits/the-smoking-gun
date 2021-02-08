@@ -4,7 +4,7 @@ import SignUpForm from "../../components/SignUpForm/SignUpForm.js";
 
 const SignIn = () => {
   const [formDisplay, setFormDisplay] = useState("Log In");
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

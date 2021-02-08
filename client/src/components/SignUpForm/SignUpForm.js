@@ -65,9 +65,9 @@ const SignInForm = (props) => {
           <TextField
             style={{ width: "100%" }}
             id="standard-password-input"
-            label="Username"
-            type="Username"
-            name="username"
+            label="Email"
+            type="email"
+            name="email"
             autoComplete="current-password"
             onChange={handleInputChange}
           />
