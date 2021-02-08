@@ -24,7 +24,7 @@ export default function BookButton(props) {
 
   return (
     <Grid item xs={6}>
-    <Link href={`/${props.link}`}>
+    <Link href={`/books/${props.link}`}>
         <Card className={classes.root}>
         <CardActionArea>
             <CardContent>
