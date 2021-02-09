@@ -9,6 +9,7 @@ import Lists from "./pages/Lists";
 import CreateBook from "./pages/CreateBook";
 import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
+import API from "./utils/API";
 
 // Routes:
 // / → signin                           ------------- done
@@ -33,6 +34,12 @@ function App() {
     fire.auth().signOut();
   };
 
+  const testDbConnection = () => {
+    API.getBooks()
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+  testDbConnection();
   console.log("logged in?", isLoggedIn);
   return (
     <div className="App">
