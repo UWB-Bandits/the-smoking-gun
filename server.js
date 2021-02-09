@@ -18,7 +18,7 @@ app.use(routes);
 
 // Connect to the Mongo DB
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/testSmokingGun"
+  process.env.MONGODB_URI || "mongodb://localhost/theSmokingGunDB"
 );
 
 //  ____________Commented out because maybe we don't need it same code as in routes/index.js?
