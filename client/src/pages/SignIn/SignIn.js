@@ -22,7 +22,7 @@ const SignIn = () => {
   return (
     <div>
       {/* <h1>Sign In page</h1> */}
-      <div className="formContainer" style={{ marginTop: "15vh" }}>
+      <div className="formContainer" style={{ marginTop: "40px" }}>
         {formDisplay === "Log In" ? (
           <LoginForm handleInputChange={handleInputChange} setPage={setPage} />
         ) : (

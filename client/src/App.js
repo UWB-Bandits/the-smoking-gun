@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
 import CreateBook from "./pages/CreateBook";
+import Footer from "./components/Footer";
 
 // Routes:
 // / → signin                           ------------- done
@@ -45,6 +46,7 @@ function App() {
           </Route>
           <Route>{/* <NoMatch /> */}</Route>
         </Switch>
+        <Footer />
       </div>
     </Router>
   );

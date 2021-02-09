@@ -11,8 +11,8 @@ function Dashboard() {
         <Box>
             <Jumbotron>
             </Jumbotron>
-            <Grid container spacing={3}>
-                <BookButton title="Create a new book!" description="Click here to start a new journal" link="/create-book"/>
+            <Grid container >
+                <BookButton title="Create a new book!" description="Click here to start a new journal" link="/create-book" colorScheme="yellow"/>
                 {FakeBooks.map(item => <BookButton key={item.id} link={`/books/${item.id}`} {...item}/> )}
                                     
             </Grid>

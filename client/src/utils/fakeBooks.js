@@ -3,6 +3,7 @@ const FakeBooks = [
         id: 1,
         title: "2021",
         description: "My current bullet journal",
+        colorScheme: "blue",
         lists: [
             {
             name: "Places to Visit",
@@ -110,6 +111,7 @@ const FakeBooks = [
         id: 2,
         title: "2020",
         description: "Journal for the worst year ever",
+        colorScheme: "red",
         lists: [
             {
             name: "Places to Visit",
@@ -212,7 +214,8 @@ const FakeBooks = [
     {
         id: 3,
         title: "Family",
-        description: "Lists and activities for the family"
+        description: "Lists and activities for the family",
+        colorScheme: "green",
     }
 ];
 
