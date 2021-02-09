@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import FormButtons from "../FormButtons/FormButtons";
 import Box from "@material-ui/core/Box";
 const LogInForm = (props) => {
-  const { handleInputChange, setPage } = props;
+  const { handleInputChange, setPage, handleSubmit } = props;
   const [values, setValues] = useState({
     password: "",
     showPassword: false,
@@ -44,6 +44,7 @@ const LogInForm = (props) => {
     >
       <h2>Log In</h2>
       <form
+        onSubmit={handleSubmit}
         style={{
           minWidth: "300px",
           display: "flex",
@@ -98,6 +99,7 @@ const LogInForm = (props) => {
 LogInForm.propTypes = {
   setPage: PropTypes.func,
   handleInputChange: PropTypes.func,
+  handleSubmit: PropTypes.func,
 };
 
 export default LogInForm;
