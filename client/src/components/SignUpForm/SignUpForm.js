@@ -10,9 +10,10 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import PropTypes from "prop-types";
 import FormButtons from "../FormButtons/FormButtons";
 import Box from "@material-ui/core/Box";
+// import fire from "../../utils/firebase";
 
 const SignInForm = (props) => {
-  const { handleInputChange, setPage } = props;
+  const { handleInputChange, setPage, handleSubmit } = props;
   const [values, setValues] = useState({
     confirmPassword: "",
     showConfirmPassword: false,
@@ -34,10 +35,30 @@ const SignInForm = (props) => {
       showConfirmPassword: !values.showConfirmPassword,
     });
   };
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(formData);
+  //   test.createUserWithEmailAndPassWord(formData.email, formData.password);
+  // };
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(`submitted email:
+  //         ${formData.email} password: ${formData.password} confirm: ${formData.confirmPassword}`);
+
+  //   if (formData.password === formData.confirmPassword) {
+  //     fire
+  //       .auth()
+  //       .createUserWithEmailAndPassword(formData.email, formData.password);
+  //     // console.log("they Match");
+  //   } else {
+  //     console.log("passwords don't match");
+  //   }
+  // };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  // console.log(formData);
 
   return (
     <Box
@@ -54,6 +75,7 @@ const SignInForm = (props) => {
     >
       <h2>Sign Up</h2>
       <form
+        onSubmit={handleSubmit}
         style={{
           minWidth: "300px",
           display: "flex",
@@ -99,7 +121,7 @@ const SignInForm = (props) => {
             id="confirmPassword"
             type={values.showConfirmPassword ? "text" : "password"}
             value={values.confirmPassword}
-            name="confirm-password"
+            name="confirmPassword"
             onChange={handleChange("confirmPassword")}
             endAdornment={
               <InputAdornment position="end">
@@ -131,6 +153,8 @@ const SignInForm = (props) => {
 SignInForm.propTypes = {
   setPage: PropTypes.func,
   handleInputChange: PropTypes.func,
+  // formData: PropTypes.object,
+  handleSubmit: PropTypes.func,
 };
 
 export default SignInForm;
