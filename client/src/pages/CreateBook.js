@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CreateBookForm from "../components/CreateBookForm";
 
 const CreateBook = () => {
-  const [formData, setFormData] = useState({ title: "", description: "", colorScheme:"", lists: [] });
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    colorScheme: "",
+    lists: [],
+  });
 
   const handleThemeChange = (event) => {
     setFormData({ ...formData, colorScheme: event.target.value });
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -17,8 +22,6 @@ const CreateBook = () => {
     console.log(formData);
     //SEND NEW BOOK TO DATABASE AND REDIRECT TO BOOK INDEX
   };
-
-
 
   return (
     <div>

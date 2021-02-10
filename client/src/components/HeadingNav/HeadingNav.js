@@ -1,6 +1,5 @@
 import React from "react";
 import logo from "../../utils/images/logo.png";
-import { makeStyles } from "@material-ui/core/styles";
 import Image from "react-image-resizer";
 
 function Nav() {

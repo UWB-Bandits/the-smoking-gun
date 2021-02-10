@@ -5,6 +5,7 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import HomeIcon from "@material-ui/icons/Home";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import fire from "../../utils/firebase";
 
 const useStyles = makeStyles({
   root: {
@@ -21,6 +22,10 @@ const useStyles = makeStyles({
   }
 });
 
+const signOut = () => {
+  fire.auth().signOut();
+};
+
 export default function SimpleBottomNavigation() {
   const classes = useStyles();
 
@@ -33,7 +38,7 @@ export default function SimpleBottomNavigation() {
         >
         <BottomNavigationAction href="/dashboard/1" label="Dashboard" icon={<HomeIcon />} />
         <BottomNavigationAction href="/create-book" label="Create New Book" icon={<ImportContactsIcon />} />
-        <BottomNavigationAction href="/" label="Log In/Out" icon={<LockOpenIcon />} />
+        <BottomNavigationAction onClick={signOut} href="/" label="Log In/Out" icon={<LockOpenIcon />} />
         </BottomNavigation>
       </div>
     
