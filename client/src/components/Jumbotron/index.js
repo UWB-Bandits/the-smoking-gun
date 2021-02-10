@@ -3,20 +3,26 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Hero from "../../utils/images/hero.jpg";
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    backgroundColor: "grey",
-    marginBottom: "20px"
+    marginBottom: "10px",
+    backgroundImage: `url(${Hero})`,
+    backgroundSize: "100%"
   },
   title: {
-    fontSize: 50,
+    fontSize: 20,
+    fontFamily: "'Rock Salt', cursive",
     textAlign: "center",
+    backgroundColor: "rgba(204, 204, 204, 0.5)"
   },
   date: {
     fontSize:25,
     textAlign: "center",
+    backgroundColor: "rgba(204, 204, 204, 0.5)",
+    fontFamily: "'Raleway', sans-serif",
   }
 });
 
@@ -31,7 +37,7 @@ export default function Jumbotron() {
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} gutterBottom>
-          Welcome User!
+          Welcome insert-username-here!
         </Typography>
         <Typography className={classes.date} gutterBottom>
           {date}

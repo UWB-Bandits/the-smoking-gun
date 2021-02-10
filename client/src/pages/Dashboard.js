@@ -6,20 +6,17 @@ import FakeBooks from "../utils/fakeBooks";
 
 function Dashboard() {
   return (
-    <div>
-      <Box>
-        <Jumbotron></Jumbotron>
-        <Grid container spacing={3}>
-          <BookButton
-            title="Create a new book!"
-            description="Click here to start a new journal"
-            link="/create-book"
-          />
-          {FakeBooks.map((item) => (
-            <BookButton key={item.id} link={`/books/${item.id}`} {...item} />
-          ))}
-        </Grid>
-      </Box>
+    <div> 
+        <Box>
+            <Jumbotron />
+            <Grid container >
+                <BookButton title="Create a new book!" description="Click here to start a new journal" link="/create-book" colorScheme="yellow"/>
+                {FakeBooks.map(item => <BookButton key={item.id} link={`/books/${item.id}`} {...item}/> )}
+                                    
+            </Grid>
+       
+        </Box>
+             
     </div>
   );
 }

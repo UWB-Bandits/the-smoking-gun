@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
 import CreateBook from "./pages/CreateBook";
+import Footer from "./components/Footer";
 import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
 import API from "./utils/API";
@@ -30,9 +31,6 @@ function App() {
     return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
   });
 
-  const signOut = () => {
-    fire.auth().signOut();
-  };
 
   const testDbConnection = () => {
     API.getBooks()
@@ -54,9 +52,6 @@ function App() {
           </>
         ) : (
           <div>
-            <span onClick={signOut}>
-              <a href="/">Sign out</a>
-            </span>
             <HeadingNav />
             <Switch>
               <Route exact path={["/", "/dashboard"]}>
@@ -82,6 +77,7 @@ function App() {
                 <NoMatch />
               </Route>
             </Switch>
+            <Footer />
           </div>
         )}
       </Router>

@@ -88,7 +88,7 @@ const LogInForm = (props) => {
         </FormControl>
         <FormButtons
           button1="Log In"
-          button2={["Don't have an account ", "Sign Up"]}
+          button2={["Don't have an account? ", "Sign Up"]}
           setPage={setPage}
         />
       </form>

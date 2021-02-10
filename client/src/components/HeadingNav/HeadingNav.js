@@ -1,15 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import logo from "../../utils/images/logo.png";
+import Image from "react-image-resizer";
 
 function Nav() {
   return (
-    <nav style={{ margin: "15px" }}>
-      <Link to={"/"} style={{ margin: "15px" }}>
-        <strong>Home</strong>
-      </Link>
-      <Link to={"/dashboard"} style={{ margin: "15px" }}>
-        <strong>Dashboard</strong>
-      </Link>
+    <nav>
+      <Image style={{display:"inline-block"}} src={logo} alt="Smoking Gun Logo" height={100}/>
     </nav>
   );
 }

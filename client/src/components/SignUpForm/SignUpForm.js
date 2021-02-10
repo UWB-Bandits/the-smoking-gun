@@ -142,7 +142,7 @@ const SignInForm = (props) => {
         </FormControl>
         <FormButtons
           button1="Sign Up"
-          button2={["Have an account ", "Log In"]}
+          button2={["Have an account? ", "Log In"]}
           setPage={setPage}
         />
       </form>
