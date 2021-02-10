@@ -12,6 +12,8 @@ const FormButtons = ({ button1, button2, setPage }) => {
           }}
           variant="contained"
           color="primary"
+          type="submit"
+          // onClick={(e) => e.preventDefault()}
         >
           {button1}
         </Button>

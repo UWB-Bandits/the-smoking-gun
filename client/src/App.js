@@ -1,52 +1,91 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import HeadingNav from "./components/HeadingNav/HeadingNav";
-import SignIn from "./pages/SignIn/SignIn";
+import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
 import CreateBook from "./pages/CreateBook";
+import NoMatch from "./pages/NoMatch";
+import fire from "./utils/firebase";
+import API from "./utils/API";
 
 // Routes:
 // / → signin                           ------------- done
 // /sign-up → sign up page          -- same as sign in
 // /:userid → dashboard                  --------------- done
 // /:bookid → Index                      ----------- done
-// /create-book → Create Book page
+// /create-book → Create Book page           ----------- done
 // /create-list → Create List page
 // /caledar/:date → Daily calendar page
 
-// import Books from "./pages/Books";
-// import Detail from "./pages/Detail";
-// import NoMatch from "./pages/NoMatch";
-// import Nav from "./components/Nav";
-
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  fire.auth().onAuthStateChanged((user) => {
+    // console.log(user);
+
+    // console.log(data);
+    return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+  });
+
+  const signOut = () => {
+    fire.auth().signOut();
+  };
+
+  const testDbConnection = () => {
+    API.getBooks()
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+  testDbConnection();
+  console.log("logged in?", isLoggedIn);
   return (
-    <Router>
-      <div>
-        <HeadingNav />
-        <Switch>
-          <Route exact path="/">
-            <SignIn />
-          </Route>
-          <Route exact path="/books/:bookid">
-            <IndexPage />
-          </Route>
-          <Route exact path="/lists/:listid">
-            <Lists />
-          </Route>
-          <Route exact path="/create-book">
-            <CreateBook />
-          </Route>
-          <Route exact path="/dashboard/:userid">
-            <Dashboard />
-          </Route>
-          <Route>{/* <NoMatch /> */}</Route>
-        </Switch>
-      </div>
-    </Router>
+    <div className="App">
+      <Router>
+        {!isLoggedIn ? (
+          <>
+            <Switch>
+              <Route path="/">
+                <SignIn />
+              </Route>
+            </Switch>
+          </>
+        ) : (
+          <div>
+            <span onClick={signOut}>
+              <a href="/">Sign out</a>
+            </span>
+            <HeadingNav />
+            <Switch>
+              <Route exact path={["/", "/dashboard"]}>
+                <Dashboard />
+              </Route>
+              <Route exact path="/books/:id">
+                <IndexPage />
+              </Route>
+
+              <Route exact path="/lists/:id">
+                <Lists />
+              </Route>
+
+              <Route exact path="/create-book">
+                <CreateBook />
+              </Route>
+
+              <Route exact path="/dashboard/:id">
+                <Dashboard />
+              </Route>
+
+              <Route>
+                <NoMatch />
+              </Route>
+            </Switch>
+          </div>
+        )}
+      </Router>
+    </div>
   );
 }
 
