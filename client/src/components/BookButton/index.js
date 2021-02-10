@@ -4,12 +4,24 @@ import {Card, Link, CardActionArea, CardContent, Typography, Grid} from "@materi
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
-  root: {
-    width: "100%",
-    backgroundColor: "grey"
+  root:{
+    width: "95%",
+    marginRight: "auto",
+    marginLeft: "auto",
+    marginBottom: "10px"
   },
-  media: {
-    minHeight: 140,
+  red: {
+    backgroundColor: "#F07C5F",
+
+  },
+  blue: {
+    backgroundColor: "#48C1F0"
+  },
+  green: {
+    backgroundColor: "#78F07D"
+  },
+  yellow: {
+    backgroundColor: "#F0B16C"
   },
 });
 
@@ -20,12 +32,13 @@ export default function BookButton(props) {
     title: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    colorScheme: PropTypes.string
   };
 
   return (
     <Grid item xs={6}>
     <Link href={props.link}>
-        <Card className={classes.root}>
+        <Card className={classes.root +" " + classes[props.colorScheme]}>
         <CardActionArea>
             <CardContent>
             <Typography gutterBottom variant="h5" component="h2">

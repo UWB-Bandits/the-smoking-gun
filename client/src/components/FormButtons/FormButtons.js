@@ -12,6 +12,8 @@ const FormButtons = ({ button1, button2, setPage }) => {
           }}
           variant="contained"
           color="primary"
+          type="submit"
+          // onClick={(e) => e.preventDefault()}
         >
           {button1}
         </Button>
@@ -19,9 +21,6 @@ const FormButtons = ({ button1, button2, setPage }) => {
       <p
         style={{
           textAlign: "center",
-          position: "absolute",
-          bottom: "0",
-          left: "0",
           width: "100%",
         }}
       >
