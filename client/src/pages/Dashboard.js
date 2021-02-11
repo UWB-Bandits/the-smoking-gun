@@ -43,7 +43,7 @@ function Dashboard() {
             colorScheme="yellow"
           />
           {usersBooks.map((item) => (
-            <BookButton key={item.id} link={`/books/${item.id}`} {...item} />
+            <BookButton key={item._id} link={`/books/${item._id}`} {...item} />
           ))}
         </Grid>
       </Box>
