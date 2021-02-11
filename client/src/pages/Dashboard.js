@@ -33,7 +33,6 @@ function Dashboard() {
 
   return (
     <div>
-      {/* {JSON.stringify(currentUser)} */}
       <Box>
         <Jumbotron />
         <Grid container>
