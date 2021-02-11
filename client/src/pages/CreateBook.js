@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CreateBookForm from "../components/CreateBookForm";
-
+import API from "../utils/API";
 const CreateBook = () => {
   const [formData, setFormData] = useState({
     title: "",
@@ -21,6 +21,9 @@ const CreateBook = () => {
   const handleSubmit = () => {
     console.log(formData);
     //SEND NEW BOOK TO DATABASE AND REDIRECT TO BOOK INDEX
+    API.saveBook(formData).then(
+      console.log("Books has been saved")
+    ).catch(err => console.log(err));
   };
 
   return (
