@@ -165,7 +165,7 @@ const SignInForm = (props) => {
               row
               defaultValue="image one"
               aria-label="profile-pic"
-              name="avatar"
+              name="profilePic"
               // value={FormData.avatar}
               onChange={handleInputChange}
             >
