@@ -1,17 +1,32 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+// import { useHistory } from "react-router-dom";
 import LoginForm from "../components/LogInForm/LogInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
-import fire from "../utils/firebase";
+import { useAuth } from "../contexts/AuthContext";
+import API from "../utils/API";
 
 const SignIn = () => {
-  let history = useHistory();
+  // let history = useHistory();
   const [formDisplay, setFormDisplay] = useState("Log In");
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    avatar: "image one",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { signUp, logIn } = useAuth();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  useEffect(() => {
+    setError("");
+    setLoading(false);
+  }, [formDisplay]);
+
   const setPage = (e) => {
     e.preventDefault();
     const value =
@@ -20,41 +35,48 @@ const SignIn = () => {
     setFormDisplay(value);
     setFormData({});
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(`submitted email: 
-          ${formData.email} password: ${formData.password}`);
-    console.log(formDisplay);
-    if (formDisplay === "Log In") {
-      fire
-        .auth()
-        .signInWithEmailAndPassword(formData.email, formData.password)
-        .then((user) => {
-          console.log(user.user.uid);
-        })
-        .catch((error) => {
-          console.error("Incorrect username or password", error);
-        });
-    } else if (formDisplay === "Sign Up") {
-      e.preventDefault();
-      console.log(`submitted email: 
-          ${formData.email} password: ${formData.password} confirm: ${formData.confirmPassword}`);
 
+  const handleSubmit = async (e) => {
+    // const email = formData.email.trim();
+    e.preventDefault();
+    if (formDisplay === "Log In") {
+      try {
+        setError("");
+        await logIn(formData.email.trim(), formData.password);
+        setFormData({});
+      } catch (e) {
+        console.log(e);
+        if (e) {
+          setError("Incorrect username or password");
+        }
+      }
+    } else if (formDisplay === "Sign Up") {
       if (formData.password === formData.confirmPassword) {
-        fire
-          .auth()
-          .createUserWithEmailAndPassword(formData.email, formData.password);
-        // console.log("they Match");
+        try {
+          setError("");
+          setLoading(true);
+          let user = await signUp(formData.email, formData.password);
+          console.log(user.user.uid);
+          // const firebase_uid = user.user.uid;
+          // setFormData({ ...formData, firebase_uid: user.user.uid });
+          let test = await API.createUser({
+            ...formData,
+            firebase_uid: user.user.uid,
+          });
+          console.log(test);
+          setFormData({});
+        } catch {
+          setError("failed to create user");
+        }
       } else {
-        console.log("passwords don't match");
+        setError("passwords don't match");
       }
     }
-    history.push("/dashboard");
+    // history.push("/dashboard");
   };
 
   return (
     <div>
-      {/* <h1>Sign In page</h1> */}
       <div className="formContainer" style={{ marginTop: "40px" }}>
         {formDisplay === "Log In" ? (
           <LoginForm
@@ -62,6 +84,8 @@ const SignIn = () => {
             setPage={setPage}
             handleSubmit={handleSubmit}
             formData={formData}
+            loading={loading}
+            error={error}
           />
         ) : (
           <SignUpForm
@@ -69,6 +93,8 @@ const SignIn = () => {
             setPage={setPage}
             handleSubmit={handleSubmit}
             formData={formData}
+            loading={loading}
+            error={error}
           />
         )}
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
-const FormButtons = ({ button1, button2, setPage }) => {
+const FormButtons = ({ button1, button2, setPage, loading }) => {
   return (
     <div>
       <div>
@@ -10,6 +10,7 @@ const FormButtons = ({ button1, button2, setPage }) => {
             margin: "25px 10px 25px auto",
             display: "block",
           }}
+          disabled={loading}
           variant="contained"
           color="primary"
           type="submit"
@@ -45,6 +46,7 @@ FormButtons.propTypes = {
   button1: PropTypes.string,
   button2: PropTypes.array,
   setPage: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 export default FormButtons;
