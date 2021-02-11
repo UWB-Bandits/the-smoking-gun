@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import LoginForm from "../components/LogInForm/LogInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 import { useAuth } from "../contexts/AuthContext";
+import API from "../utils/API";
 
 const SignIn = () => {
-  let history = useHistory();
+  // let history = useHistory();
   const [formDisplay, setFormDisplay] = useState("Log In");
   const [formData, setFormData] = useState({
     email: "",
@@ -54,7 +55,15 @@ const SignIn = () => {
         try {
           setError("");
           setLoading(true);
-          await signUp(formData.email, formData.password);
+          let user = await signUp(formData.email, formData.password);
+          console.log(user.user.uid);
+          // const firebase_uid = user.user.uid;
+          // setFormData({ ...formData, firebase_uid: user.user.uid });
+          let test = await API.createUser({
+            ...formData,
+            firebase_uid: user.user.uid,
+          });
+          console.log(test);
           setFormData({});
         } catch {
           setError("failed to create user");
@@ -63,7 +72,7 @@ const SignIn = () => {
         setError("passwords don't match");
       }
     }
-    history.push("/dashboard");
+    // history.push("/dashboard");
   };
 
   return (
