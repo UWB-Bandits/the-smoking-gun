@@ -24,6 +24,16 @@ const userSchema = new Schema({
     profilePic: {
         type: String,
     },
+    date: { 
+        type: Date, 
+        default: Date.now 
+    },
+    books: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Book"
+        }
+    ]
 });
 
 const User = mongoose.model("User", userSchema);
