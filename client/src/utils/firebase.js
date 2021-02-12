@@ -1,12 +1,16 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+console.log(process.env.REACT_APP_FIREBASE_API_KEY);
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCpcv3RPOSbgmV49Mkn2sM-144PXig_1WA",
-  authDomain: "the-smoking-gun-9108e.firebaseapp.com",
-  projectId: "the-smoking-gun-9108e",
-  storageBucket: "the-smoking-gun-9108e.appspot.com",
-  messagingSenderId: "641197757845",
-  appId: "1:641197757845:web:19d41ac0a2736c47db929c",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 // Initialize Firebase
 

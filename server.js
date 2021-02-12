@@ -18,7 +18,13 @@ app.use(routes);
 
 // Connect to the Mongo DB
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/theSmokingGunDB"
+  process.env.MONGODB_URI || "mongodb://localhost/theSmokingGunDB",
+  {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
 );
 
 const path = require("path");
