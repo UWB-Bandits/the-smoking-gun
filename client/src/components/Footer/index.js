@@ -5,7 +5,8 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import HomeIcon from "@material-ui/icons/Home";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
-import fire from "../../utils/firebase";
+// import fire from "../../utils/firebase";
+import { useAuth } from "../../contexts/AuthContext";
 
 const useStyles = makeStyles({
   root: {
@@ -16,31 +17,37 @@ const useStyles = makeStyles({
     width: "100%",
   },
   phantom: {
-    height:"50px",
+    height: "50px",
     display: "block",
     width: "100%",
-  }
+  },
 });
-
-const signOut = () => {
-  fire.auth().signOut();
-};
 
 export default function SimpleBottomNavigation() {
   const classes = useStyles();
+  const { logout } = useAuth();
 
   return (
-      <div>
-        <div className={classes.phantom} />
-        <BottomNavigation
-        showLabels
-        className={classes.root}
-        >
-        <BottomNavigationAction href="/dashboard/1" label="Dashboard" icon={<HomeIcon />} />
-        <BottomNavigationAction href="/create-book" label="Create New Book" icon={<ImportContactsIcon />} />
-        <BottomNavigationAction onClick={signOut} href="/" label="Log In/Out" icon={<LockOpenIcon />} />
-        </BottomNavigation>
-      </div>
-    
+    <div>
+      <div className={classes.phantom} />
+      <BottomNavigation showLabels className={classes.root}>
+        <BottomNavigationAction
+          href="/dashboard"
+          label="Dashboard"
+          icon={<HomeIcon />}
+        />
+        <BottomNavigationAction
+          href="/create-book"
+          label="Create New Book"
+          icon={<ImportContactsIcon />}
+        />
+        <BottomNavigationAction
+          onClick={logout}
+          href="/"
+          label="Log In/Out"
+          icon={<LockOpenIcon />}
+        />
+      </BottomNavigation>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Accordion,
@@ -6,16 +6,32 @@ import {
   Typography,
   AccordionDetails,
 } from "@material-ui/core";
+import { useParams } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import FakeBooks from "../utils/fakeBooks";
 import TitleItem from "../components/TitleItem";
 import { makeStyles } from "@material-ui/core/styles";
 import NewListForm from "../components/NewItemForm";
+import API from "../utils/API";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
+  const [book, setBook] = useState({});
+  const [lists, setLists] = useState([]);
+  
   console.log(formData);
-  //GET ID OFF OF ROUTE AND SET UP STATE FOR THE BOOK SHOWN -- UPDATE REFERENCES TO FakeBooks[0]
+ 
+  const {id} = useParams();
+
+  useEffect(() => {
+    API.getBook(id)
+      .then(res => {
+        console.log(res);
+      
+        setBook(res.data);
+        setLists(res.data.lists);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   const handleInputChange = (e) => {
     const { value } = e.target;
@@ -23,7 +39,11 @@ function IndexPage() {
   };
 
   const addList = () => {
-    //HAVE NEWLIST POST TO DATABASE AND REDIRECT TO "/lists/:listid"
+    API.saveList({
+      name: formData.newList,
+      items: []
+    }).then(res => window.location.href = "/lists/" + res.data._id)
+    .catch(err => console.log(err));
   };
 
   const classes = makeStyles((theme) => ({
@@ -46,7 +66,7 @@ function IndexPage() {
   return (
     <div>
       <Box>
-        <TitleItem {...FakeBooks[0]} />
+        <TitleItem {...book} />
 
         <Accordion>
           <AccordionSummary
@@ -59,11 +79,14 @@ function IndexPage() {
           </AccordionSummary>
           <AccordionDetails>
             <ul>
-              {FakeBooks[0].lists.map((item) => (
-                <li key={item.name}>
-                  <a href={`/lists/${item.id}`}>{item.name}</a>
+              {lists ? lists.map((item) => (
+                <li key={item._id}>
+                  <a href={`/lists/${item._id}`}>{item.name}</a>
                 </li>
-              ))}
+              ))
+              :
+              <li>Add a new list to get started</li>
+            }
               <NewListForm
                 handleInputChange={handleInputChange}
                 addItem={addList}

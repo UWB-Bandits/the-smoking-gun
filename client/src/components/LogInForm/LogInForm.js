@@ -10,8 +10,10 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import PropTypes from "prop-types";
 import FormButtons from "../FormButtons/FormButtons";
 import Box from "@material-ui/core/Box";
+import Alert from "@material-ui/lab/Alert";
+
 const LogInForm = (props) => {
-  const { handleInputChange, setPage, handleSubmit } = props;
+  const { handleInputChange, setPage, handleSubmit, loading, error } = props;
   const [values, setValues] = useState({
     password: "",
     showPassword: false,
@@ -52,6 +54,7 @@ const LogInForm = (props) => {
           justifyContent: "center",
         }}
       >
+        {error && <Alert severity="error">{error}</Alert>}
         <div style={{ margin: "0px 5px" }}>
           <TextField
             style={{ width: "100%" }}
@@ -90,6 +93,7 @@ const LogInForm = (props) => {
           button1="Log In"
           button2={["Don't have an account? ", "Sign Up"]}
           setPage={setPage}
+          loading={loading}
         />
       </form>
     </Box>
@@ -100,6 +104,8 @@ LogInForm.propTypes = {
   setPage: PropTypes.func,
   handleInputChange: PropTypes.func,
   handleSubmit: PropTypes.func,
+  loading: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 export default LogInForm;

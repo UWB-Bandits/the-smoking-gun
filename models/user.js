@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     firstName: {
-        type: String,
-        
+        type: String, 
     },
     lastName: {
         type: String,
@@ -22,6 +21,9 @@ const userSchema = new Schema({
         type: String,
     },
     profilePic: {
+        type: String,
+    },
+    firebase_uid: {
         type: String,
     },
     date: { 
