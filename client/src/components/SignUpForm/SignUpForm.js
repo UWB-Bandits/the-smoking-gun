@@ -22,7 +22,7 @@ const SignInForm = (props) => {
     handleSubmit,
     loading,
     error,
-    formData,
+    // formData,
   } = props;
   const [values, setValues] = useState({
     confirmPassword: "",
@@ -49,7 +49,6 @@ const SignInForm = (props) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  console.log(formData);
   return (
     <Box
       boxShadow={2}
@@ -214,7 +213,7 @@ SignInForm.propTypes = {
   loading: PropTypes.bool,
   handleSubmit: PropTypes.func,
   error: PropTypes.string,
-  formData: PropTypes.object,
+  // formData: PropTypes.object,
 };
 
 export default SignInForm;

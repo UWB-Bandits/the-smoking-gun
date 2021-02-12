@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
 import LoginForm from "../components/LogInForm/LogInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
 
 const SignIn = () => {
-  // let history = useHistory();
   const [formDisplay, setFormDisplay] = useState("Log In");
   const [formData, setFormData] = useState({
     email: "",
@@ -37,7 +35,6 @@ const SignIn = () => {
   };
 
   const handleSubmit = async (e) => {
-    // const email = formData.email.trim();
     e.preventDefault();
     if (formDisplay === "Log In") {
       try {
@@ -56,14 +53,10 @@ const SignIn = () => {
           setError("");
           setLoading(true);
           let user = await signUp(formData.email, formData.password);
-          console.log(user.user.uid);
-          // const firebase_uid = user.user.uid;
-          // setFormData({ ...formData, firebase_uid: user.user.uid });
-          let test = await API.createUser({
+          await API.createUser({
             ...formData,
             firebase_uid: user.user.uid,
           });
-          console.log(test);
           setFormData({});
         } catch {
           setError("failed to create user");
@@ -72,7 +65,6 @@ const SignIn = () => {
         setError("passwords don't match");
       }
     }
-    // history.push("/dashboard");
   };
 
   return (
