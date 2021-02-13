@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import CreateBookForm from "../components/CreateBookForm";
 import API from "../utils/API";
+import { useAuth } from "../contexts/AuthContext";
+
 const CreateBook = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     colorScheme: "",
-    lists: [],
   });
+
+  const { currentUser } = useAuth();
 
   const handleThemeChange = (event) => {
     setFormData({ ...formData, colorScheme: event.target.value });
@@ -21,7 +24,7 @@ const CreateBook = () => {
   const handleSubmit = () => {
     console.log(formData);
     //SEND NEW BOOK TO DATABASE AND REDIRECT TO BOOK INDEX
-    API.saveBook({...formData, lists: []})
+    API.saveBook({...formData, user:currentUser.uid })
     .then( res => {
       console.log("Books has been saved");
       window.location.href = "/books/" + res.data._id;
