@@ -4,6 +4,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Hero from "../../utils/images/hero.jpg";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   root: {
@@ -30,14 +31,14 @@ let date = new Date();
 
 date = date.toDateString();
 
-export default function Jumbotron() {
+export default function Jumbotron(props) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} gutterBottom>
-          Welcome insert-username-here!
+          Welcome {props.userName}!
         </Typography>
         <Typography className={classes.date} gutterBottom>
           {date}
@@ -46,3 +47,7 @@ export default function Jumbotron() {
     </Card>
   );
 }
+
+Jumbotron.propTypes = {
+  userName: PropTypes.string,
+};
