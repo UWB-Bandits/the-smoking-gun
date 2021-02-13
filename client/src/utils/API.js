@@ -2,9 +2,13 @@ import axios from "axios";
 
 export default {
   // Gets all books
-  getBooks: function (id) {
-    return axios.get("/api/" + id);
+  getBooks: function () {
+    return axios.get("/api/books/");
     // return axios.get("/api/books" + user_id);
+  },
+  getBooksWhere: function (user) {
+    return axios.get("/api/books/findWhere/" + user);
+
   },
   // Gets the book with the given id
   getBook: function (id) {
@@ -17,6 +21,9 @@ export default {
   // Saves a book to the database
   saveBook: function (bookData) {
     return axios.post("/api/books", bookData);
+  },
+  updateBook: function (id, bookData) {
+    return axios.put("/api/books/" + id, bookData);
   },
   getLists: function () {
     return axios.get("/api/lists");
@@ -38,5 +45,8 @@ export default {
   },
   createUser: function (obj) {
     return axios.post("/api/users", obj);
+  },
+  getUser: function (id) {
+    return axios.get("/api/users/" + id);
   },
 };

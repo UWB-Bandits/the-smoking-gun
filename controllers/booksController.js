@@ -3,7 +3,14 @@ const db = require("../models");
 // Defining methods for the booksController
 module.exports = {
   findAll: function (req, res) {
-    db.Book.find(req.query)
+    db.Book.find({})
+      .populate("lists")
+      .sort({ date: -1 })
+      .then((dbModel) => res.json(dbModel))
+      .catch((err) => res.status(422).json(err));
+  },
+  findWhere: function (req, res) {
+    db.Book.find({user: req.params.id})
       .populate("List")
       .sort({ date: -1 })
       .then((dbModel) => res.json(dbModel))
@@ -11,6 +18,7 @@ module.exports = {
   },
   findById: function (req, res) {
     db.Book.findById(req.params.id)
+      .populate("lists")
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
