@@ -6,7 +6,8 @@ const bookSchema = new Schema({
   colorScheme: String,
   date: { type: Date, default: Date.now },
   // lists: {id: { type: Schema.Types.ObjectId, ref: "listSchema"}}
-  lists: { type: Schema.Types.ObjectId, ref: "listSchema" }
+  lists: [{ type: Schema.Types.ObjectId, ref: "List" }],
+  user: { type: String, required: true },
 });
 
 const Book = mongoose.model("Book", bookSchema);

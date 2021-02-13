@@ -41,8 +41,18 @@ function IndexPage() {
   const addList = () => {
     API.saveList({
       name: formData.newList,
-      items: []
-    }).then(res => window.location.href = "/lists/" + res.data._id)
+      items: [],
+      book: book._id
+    }).then(res => {
+      let newBookLists = lists.map(list => list._id);
+      newBookLists.push(res.data._id);
+      API.updateBook(id, {
+        ...book,
+        lists: newBookLists
+      }).then(res => console.log(res))
+      .catch(err => console.log(err));
+      window.location.href = "/lists/" + res.data._id;
+    })
     .catch(err => console.log(err));
   };
 

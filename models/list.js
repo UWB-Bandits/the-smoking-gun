@@ -7,7 +7,8 @@ const listSchema = new Schema({
     name: String,
     completed: Boolean
   }],
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  book: { type: Schema.Types.ObjectId, ref: "Book" },
 });
 
 const List = mongoose.model("List", listSchema);
