@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Box, Grid } from "@material-ui/core";
 import Jumbotron from "../components/Jumbotron";
 import BookButton from "../components/BookButton";
-import FakeBooks from "../utils/fakeBooks";
+// import FakeBooks from "../utils/fakeBooks";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
 
 function Dashboard() {
   // Gets current user data
-  const { currentUser } = useAuth();
   // Set state based off user id form mongo db
   const [usersBooks, setUsersBooks] = useState([]);
-
+  const { currentUser } = useAuth();
   // testing user id
   console.log(currentUser.uid);
 
@@ -20,11 +19,12 @@ function Dashboard() {
   }, []);
 
   const getAllBooks = () => {
-    //  for the currentUser.uid
-    API.getBooks(currentUser.uid)
+      //  for the currentUser.uid
+
+    API.getBooksWhere({user: currentUser.uid})
       .then((res) => {
         // FakeBooks;
-        setUsersBooks(FakeBooks);
+        setUsersBooks(res.data);
         console.log(res);
         // setUsersBooks(res.data);
       })
