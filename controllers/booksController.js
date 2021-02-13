@@ -10,7 +10,8 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   findWhere: function (req, res) {
-    db.Book.find(req.user)
+    console.log(req.params.id);
+    db.Book.find({user: req.params.id})
       .populate("List")
       .sort({ date: -1 })
       .then((dbModel) => res.json(dbModel))

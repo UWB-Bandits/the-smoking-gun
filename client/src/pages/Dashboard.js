@@ -2,39 +2,44 @@ import React, { useState, useEffect } from "react";
 import { Box, Grid } from "@material-ui/core";
 import Jumbotron from "../components/Jumbotron";
 import BookButton from "../components/BookButton";
-// import FakeBooks from "../utils/fakeBooks";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
 
 function Dashboard() {
   // Gets current user data
   // Set state based off user id form mongo db
+  const [user, setUser] = useState({});
   const [usersBooks, setUsersBooks] = useState([]);
   const { currentUser } = useAuth();
-  // testing user id
-  console.log(currentUser.uid);
 
   useEffect(() => {
+    getUser();
     getAllBooks();
   }, []);
 
   const getAllBooks = () => {
       //  for the currentUser.uid
 
-    API.getBooksWhere({user: currentUser.uid})
+    API.getBooksWhere(currentUser.uid)
       .then((res) => {
-        // FakeBooks;
         setUsersBooks(res.data);
         console.log(res);
-        // setUsersBooks(res.data);
       })
       .catch((err) => console.log(err));
+  };
+
+  const getUser = () => {
+    API.getUser(currentUser.uid)
+      .then(res => {
+        setUser(res.data);
+        console.log(res);
+      });
   };
 
   return (
     <div>
       <Box>
-        <Jumbotron />
+        <Jumbotron userName= {user.firstName}/>
         <Grid container>
           <BookButton
             title="Create a new book!"

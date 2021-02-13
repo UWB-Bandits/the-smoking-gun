@@ -7,7 +7,7 @@ export default {
     // return axios.get("/api/books" + user_id);
   },
   getBooksWhere: function (user) {
-    return axios.get("/api/books/findWhere", user);
+    return axios.get("/api/books/findWhere/" + user);
 
   },
   // Gets the book with the given id
@@ -42,5 +42,8 @@ export default {
   },
   createUser: function (obj) {
     return axios.post("/api/users", obj);
+  },
+  getUser: function (id) {
+    return axios.get("/api/users/" + id);
   },
 };
