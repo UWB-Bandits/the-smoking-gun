@@ -22,6 +22,9 @@ export default {
   saveBook: function (bookData) {
     return axios.post("/api/books", bookData);
   },
+  updateBook: function (id, bookData) {
+    return axios.put("/api/books/" + id, bookData);
+  },
   getLists: function () {
     return axios.get("/api/lists");
   },

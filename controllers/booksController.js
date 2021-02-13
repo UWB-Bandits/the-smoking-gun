@@ -4,13 +4,12 @@ const db = require("../models");
 module.exports = {
   findAll: function (req, res) {
     db.Book.find({})
-      .populate("List")
+      .populate("lists")
       .sort({ date: -1 })
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
   findWhere: function (req, res) {
-    console.log(req.params.id);
     db.Book.find({user: req.params.id})
       .populate("List")
       .sort({ date: -1 })
@@ -19,6 +18,7 @@ module.exports = {
   },
   findById: function (req, res) {
     db.Book.findById(req.params.id)
+      .populate("lists")
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
