@@ -12,6 +12,10 @@ import TitleItem from "../components/TitleItem";
 import { makeStyles } from "@material-ui/core/styles";
 import NewListForm from "../components/NewItemForm";
 import API from "../utils/API";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Link from "@material-ui/core/Link";
+import HomeIcon from "@material-ui/icons/Home";
+import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
@@ -71,13 +75,30 @@ function IndexPage() {
       fontSize: theme.typography.pxToRem(15),
       fontWeight: theme.typography.fontWeightRegular,
     },
+    link: {
+      display: "flex",
+    },
+    icon: {
+      marginRight: theme.spacing(0.5),
+      width: 20,
+      height: 20,
+    },
   }));
 
   return (
     <div>
       <Box>
         <TitleItem {...book} />
-
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" href="/dashboard" className={classes.link}>
+            <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+          </Link>
+          <Typography color="textPrimary" className={classes.link}>
+            <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+            <span style={{fontSize: "12px",  marginLeft: "2px"}}>{book.title}</span>
+          </Typography>
+        </Breadcrumbs>
         <Accordion>
           <AccordionSummary
             className={classes.accordion}

@@ -14,6 +14,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import NewItemForm from "../components/NewItemForm";
 import { useParams } from "react-router-dom";
 import API from "../utils/API";
+import Typography from "@material-ui/core/Typography";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Link from "@material-ui/core/Link";
+import HomeIcon from "@material-ui/icons/Home";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+
 
 function Lists() {
   const [formData, setFormData] = useState({ newItem: "" });
@@ -30,7 +37,17 @@ function Lists() {
   const loadList = () =>{
     API.getList(id)
       .then(res => {
-        setList(res.data);
+        let pageList = {
+          user: res.data.book.user,
+          name: res.data.name,
+          items: res.data.items,
+          date: res.data.date,
+          bookName: res.data.book.title,
+          bookId: res.data.book._id
+        };
+
+        setList(pageList);
+        console.log(res.data);
         setItems(res.data.items);
       })
       .catch(err => console.log(err));
@@ -42,18 +59,19 @@ function Lists() {
   };
 
   const addItem = () => {
-    
-    let updatedItems = items;
-    updatedItems.push({ name: formData.newItem, completed: false });
-    setList({ ...list, items: updatedItems });
-    setFormData({ newItem: "" });
 
-    API.updateList(id, {
-      ...list,
-      items: items
-    }).then(res => console.log(res))
-    .catch(err => console.log(err));
-
+    if (formData.newItem){
+      let updatedItems = items;
+      updatedItems.push({ name: formData.newItem, completed: false });
+      setList({ ...list, items: updatedItems });
+      setFormData({ newItem: "" });
+  
+      API.updateList(id, {
+        ...list,
+        items: items
+      }).then(res => console.log(res))
+      .catch(err => console.log(err));
+    }
   };
 
   const handleToggle = (value) => () => {
@@ -72,10 +90,9 @@ function Lists() {
     API.updateList(id, {
       ...list,
       items: items
-    }).then(res => setList(res))
+    }).then(res => setList(res.data))
     .catch(err => console.log(err));
 
-    //HAVE COMPLETED STATUS UPDATE IN DATABASE
   };
 
   const classes = makeStyles((theme) => ({
@@ -93,12 +110,38 @@ function Lists() {
       fontSize: theme.typography.pxToRem(15),
       fontWeight: theme.typography.fontWeightRegular,
     },
+    link: {
+      display: "flex",
+    },
+    icon: {
+      marginRight: theme.spacing(0.5),
+      width: 20,
+      height: 20,
+    },
   }));
 
   return (
     <div>
       <Box>
         <TitleItem title={list.name} description={list.description}/>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" href="/dashboard" className={classes.link}>
+            <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+          </Link>
+          <Link
+            color="inherit"
+            href={"/books/" + list.bookId}
+            className={classes.link}
+          >
+            <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+            <span style={{fontSize: "12px", marginLeft: "2px"}}>{list.bookName}</span>
+          </Link>
+          <Typography color="textPrimary" className={classes.link}>
+            <PlaylistAddCheckIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+            <span style={{fontSize: "12px",  marginLeft: "2px"}}>{list.name}</span>
+          </Typography>
+        </Breadcrumbs>
         <List className={classes.root}>
           {items.map((value) => {
             const labelId = `checkbox-list-label-${value}`;

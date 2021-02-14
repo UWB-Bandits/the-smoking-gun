@@ -11,7 +11,7 @@ module.exports = {
   },
   findWhere: function (req, res) {
     db.Book.find({user: req.params.id})
-      .populate("List")
+      .populate("lists")
       .sort({ date: -1 })
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
