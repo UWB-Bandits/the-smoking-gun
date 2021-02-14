@@ -12,6 +12,7 @@ module.exports = {
   findById: function(req, res) {
     db.List
       .findById(req.params.id)
+      .populate("book")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
