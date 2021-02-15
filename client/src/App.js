@@ -9,10 +9,12 @@ import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
 import CreateBook from "./pages/CreateBook";
 import Footer from "./components/Footer";
+import Habits from "./pages/Habits";
 import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
 import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
+import Container from "@material-ui/core/Container";
 // import { useAuth } from "./contexts/AuthContext";
 
 // Routes:
@@ -49,6 +51,7 @@ function App() {
           ) : (
             <div>
               <HeadingNav />
+              <Container maxWidth="md">
               <Switch>
                 <Route exact path={["/", "/dashboard"]}>
                   <Dashboard />
@@ -64,10 +67,14 @@ function App() {
                 <Route exact path="/create-book">
                   <CreateBook />
                 </Route>
+                <Route exact path="/habits/:id">
+                  <Habits />
+                </Route>
                 <Route>
                   <NoMatch />
                 </Route>
               </Switch>
+              </Container>
               <Footer />
             </div>
           )}
