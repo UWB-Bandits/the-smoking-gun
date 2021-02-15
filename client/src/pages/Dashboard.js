@@ -18,7 +18,7 @@ function Dashboard() {
   }, []);
 
   const getAllBooks = () => {
-      //  for the currentUser.uid
+    //  for the currentUser.uid
 
     API.getBooksWhere(currentUser.uid)
       .then((res) => {
@@ -29,17 +29,16 @@ function Dashboard() {
   };
 
   const getUser = () => {
-    API.getUser(currentUser.uid)
-      .then(res => {
-        setUser(res.data);
-        console.log(res);
-      });
+    API.getUser(currentUser.uid).then((res) => {
+      setUser(res.data);
+      console.log(res);
+    });
   };
 
   return (
     <div>
       <Box>
-        <Jumbotron userName= {user.firstName}/>
+        <Jumbotron userName={user.firstName} />
         <Grid container>
           <BookButton
             title="Create a new book!"

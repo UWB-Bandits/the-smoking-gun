@@ -23,7 +23,7 @@ const SignInForm = (props) => {
     handleSubmit,
     loading,
     error,
-    // formData,
+    formData,
   } = props;
   const [values, setValues] = useState({
     confirmPassword: "",
@@ -32,20 +32,46 @@ const SignInForm = (props) => {
     showPassword: false,
   });
   const [gravatar, setGravatar] = useState({
-    standard: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    retro: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    robohash: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    wavatar: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    monsterid: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    identicon: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    standard:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    retro:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    robohash:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    wavatar:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    monsterid:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    identicon:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
   });
   const getGravatar = () => {
-    let standard = useGravatar.url(formData.email, {s: "100"}, true);
-    let retro = useGravatar.url(formData.email, {s: "100", r: "pg", d: "retro"}, true);
-    let robohash = useGravatar.url(formData.email, {s: "100", r: "pg", d: "robohash"}, true);
-    let wavatar = useGravatar.url(formData.email, {s: "100", r: "pg", d: "wavatar"}, true);
-    let monsterid = useGravatar.url(formData.email, {s: "100", r: "pg", d: "monsterid"}, true);
-    let identicon = useGravatar.url(formData.email, {s: "100", r: "pg", d: "identicon"}, true);
+    let standard = useGravatar.url(formData.email, { s: "100" }, true);
+    let retro = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "retro" },
+      true
+    );
+    let robohash = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "robohash" },
+      true
+    );
+    let wavatar = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "wavatar" },
+      true
+    );
+    let monsterid = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "monsterid" },
+      true
+    );
+    let identicon = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "identicon" },
+      true
+    );
     setGravatar({
       standard: standard,
       retro: retro,
@@ -252,7 +278,7 @@ SignInForm.propTypes = {
   loading: PropTypes.bool,
   handleSubmit: PropTypes.func,
   error: PropTypes.string,
-  // formData: PropTypes.object,
+  formData: PropTypes.object,
 };
 
 export default SignInForm;
