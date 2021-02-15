@@ -40,7 +40,7 @@ function App() {
             </>
           ) : (
             <div>
-              <HeadingNav loggedIn={isLoggedIn} />
+              <HeadingNav />
               <Switch>
                 <Route exact path={["/", "/dashboard"]}>
                   <Dashboard />

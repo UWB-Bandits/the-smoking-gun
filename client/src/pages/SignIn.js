@@ -21,9 +21,9 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    setError("");
-    setLoading(false);
-  }, [formDisplay]);
+    // setError("");
+    // setLoading(false);
+  }, []);
 
   const setPage = (e) => {
     e.preventDefault();
@@ -40,7 +40,6 @@ const SignIn = () => {
       try {
         setError("");
         await logIn(formData.email.trim(), formData.password);
-        setFormData({});
       } catch (e) {
         console.log(e);
         if (e) {
@@ -57,9 +56,9 @@ const SignIn = () => {
             ...formData,
             firebase_uid: user.user.uid,
           });
-          setFormData({});
         } catch {
           setError("failed to create user");
+          setLoading(false);
         }
       } else {
         setError("passwords don't match");
