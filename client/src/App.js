@@ -11,18 +11,10 @@ import CreateBook from "./pages/CreateBook";
 import Footer from "./components/Footer";
 import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
-import API from "./utils/API";
-import { AuthProvider } from "./contexts/AuthContext";
-// import { useAuth } from "./contexts/AuthContext";
+// import API from "./utils/API";
 
-// Routes:
-// / → signin                           ------------- done
-// /sign-up → sign up page          -- same as sign in
-// /:userid → dashboard                  --------------- done
-// /:bookid → Index                      ----------- done
-// /create-book → Create Book page           ----------- done
-// /create-list → Create List page
-// /caledar/:date → Daily calendar page
+import { AuthProvider } from "./contexts/AuthContext";
+import Settings from "./pages/Settings";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,22 +25,22 @@ function App() {
     });
   }, [isLoggedIn]);
 
-  console.log("logged in?", isLoggedIn);
+  // console.log("logged in?", isLoggedIn);
   return (
     <AuthProvider>
-      <div className="App">
+      <div id="App">
         <Router>
           {!isLoggedIn ? (
             <>
               <Switch>
-                <Route path="/">
+                <Route exact path="/">
                   <SignIn />
                 </Route>
               </Switch>
             </>
           ) : (
             <div>
-              <HeadingNav />
+              <HeadingNav loggedIn={isLoggedIn} />
               <Switch>
                 <Route exact path={["/", "/dashboard"]}>
                   <Dashboard />
@@ -60,9 +52,11 @@ function App() {
                 <Route exact path="/lists/:id">
                   <Lists />
                 </Route>
-
                 <Route exact path="/create-book">
                   <CreateBook />
+                </Route>
+                <Route exact path="/settings">
+                  <Settings />
                 </Route>
                 <Route>
                   <NoMatch />
