@@ -18,6 +18,7 @@ function HeadingNav() {
   }, []);
 
   const getAvatar = () => {
+    console.log(currentUser);
     if (currentUser) {
       API.getUser(currentUser.uid).then((res) => {
         console.log(res);

@@ -11,6 +11,7 @@ import CreateBook from "./pages/CreateBook";
 import Footer from "./components/Footer";
 import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
+import API from "./utils/API";
 // import API from "./utils/API";
 
 import { AuthProvider } from "./contexts/AuthContext";
@@ -18,19 +19,28 @@ import Settings from "./pages/Settings";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     fire.auth().onAuthStateChanged((user) => {
+      if (isLoggedIn) {
+        API.getUser(user.uid).then(() => {
+          setUser(true);
+          console.log(user);
+        });
+      } else {
+        setUser(false);
+      }
       return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
     });
   }, [isLoggedIn]);
 
-  // console.log("logged in?", isLoggedIn);
+  console.log("logged in?", isLoggedIn);
   return (
     <AuthProvider>
       <div id="App">
         <Router>
-          {!isLoggedIn ? (
+          {!isLoggedIn && !user ? (
             <>
               <Switch>
                 <Route exact path="/">

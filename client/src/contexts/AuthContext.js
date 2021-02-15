@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   };
   const logIn = (email, password) => {
     fire.auth().signInWithEmailAndPassword(email, password);
+    return currentUser ? true : false;
   };
   const logout = () => {
     fire.auth().signOut();

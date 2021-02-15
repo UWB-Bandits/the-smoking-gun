@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import LoginForm from "../components/LogInForm/LogInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 import { useAuth } from "../contexts/AuthContext";
@@ -18,12 +18,13 @@ const SignIn = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setError("");
   };
 
-  useEffect(() => {
-    // setError("");
-    // setLoading(false);
-  }, []);
+  // useEffect(() => {
+  // setError("");
+  // setLoading(false);
+  // }, []);
 
   const setPage = (e) => {
     e.preventDefault();
@@ -39,27 +40,44 @@ const SignIn = () => {
     if (formDisplay === "Log In") {
       try {
         setError("");
-        await logIn(formData.email.trim(), formData.password);
-      } catch (e) {
-        console.log(e);
-        if (e) {
-          setError("Incorrect username or password");
+        let response = await logIn(formData.email.trim(), formData.password);
+
+        if (!response) {
+          throw "New exception";
         }
+      } catch {
+        // console.log(e);
+        console.log("-----------------------");
+        console.log(error);
+        setError("Incorrect username or password");
       }
     } else if (formDisplay === "Sign Up") {
       if (formData.password === formData.confirmPassword) {
-        try {
-          setError("");
-          setLoading(true);
-          let user = await signUp(formData.email, formData.password);
-          await API.createUser({
-            ...formData,
-            firebase_uid: user.user.uid,
-          });
-        } catch {
-          setError("failed to create user");
-          setLoading(false);
-        }
+        signUp(formData.email, formData.password).then((res) => {
+          API.createUser({ ...formData, firebase_uid: res.user.uid }).catch(
+            (err) => {
+              console.log(err);
+              setError("failed to create user");
+              setLoading(false);
+            }
+          );
+        });
+        // try {
+        //   setError("");
+        //   setLoading(true);
+        //   let user = await signUp(formData.email, formData.password);
+        //   let createdUser = await API.createUser({
+        //     ...formData,
+        //     firebase_uid: user.user.uid,
+        //   });
+        //   console.log(createdUser);
+        //   if (!createdUser.data) {
+        //     throw "New exception";
+        //   }
+        // } catch (exception) {
+        //   setError("failed to create user");
+        //   setLoading(false);
+        // }
       } else {
         setError("passwords don't match");
       }
