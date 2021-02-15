@@ -21,11 +21,6 @@ const SignIn = () => {
     setError("");
   };
 
-  // useEffect(() => {
-  // setError("");
-  // setLoading(false);
-  // }, []);
-
   const setPage = (e) => {
     e.preventDefault();
     const value =
@@ -40,20 +35,15 @@ const SignIn = () => {
     if (formDisplay === "Log In") {
       try {
         setError("");
-        let response = await logIn(formData.email.trim(), formData.password);
-
-        if (!response) {
-          throw "New exception";
-        }
+        await logIn(formData.email.trim(), formData.password);
       } catch {
-        // console.log(e);
-        console.log("-----------------------");
-        console.log(error);
         setError("Incorrect username or password");
       }
     } else if (formDisplay === "Sign Up") {
       if (formData.password === formData.confirmPassword) {
         signUp(formData.email, formData.password).then((res) => {
+          setLoading(true);
+          setError("");
           API.createUser({ ...formData, firebase_uid: res.user.uid }).catch(
             (err) => {
               console.log(err);
@@ -62,6 +52,7 @@ const SignIn = () => {
             }
           );
         });
+        //  ___________Save for reference of how its supposed to work.______________
         // try {
         //   setError("");
         //   setLoading(true);
