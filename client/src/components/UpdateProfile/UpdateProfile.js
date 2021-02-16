@@ -2,11 +2,21 @@ import React, { useState } from "react";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
+import API from "../../utils/API";
+import { useAuth } from "../../contexts/AuthContext";
+
 const UpdateProfile = () => {
   const [formData, setFormData] = useState({ firstName: "", lastName: "" });
+  const { currentUser, mongoID } = useAuth();
+  console.log(mongoID);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    API.updateUser(currentUser.uid, formData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleInputChange = (e) => {
