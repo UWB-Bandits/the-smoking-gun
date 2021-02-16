@@ -1,23 +1,37 @@
 import React, { useState } from "react";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
-import { Button } from "@material-ui/core";
+import { Button, Link } from "@material-ui/core";
 import API from "../../utils/API";
 import { useAuth } from "../../contexts/AuthContext";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 const UpdateProfile = () => {
   const [formData, setFormData] = useState({ firstName: "", lastName: "" });
+  const [message, setMessage] = useState();
+  const [error, setError] = useState();
   const { mongoID } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    API.updateUser(mongoID, formData).catch((err) => console.log(err));
+    API.updateUser(mongoID, formData)
+      .then(() => {
+        setMessage(
+          "Update Complete go back to the dashboard to view the change"
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        setError("Failed to update user");
+      });
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setError();
+    setMessage();
   };
 
   return (
@@ -33,6 +47,18 @@ const UpdateProfile = () => {
       }}
       bgcolor="background.paper"
     >
+      {message && (
+        <Alert severity="success">
+          <AlertTitle>Success</AlertTitle>
+          {message}— <Link href="/dashboard">check it out!</Link>
+        </Alert>
+      )}
+      {error && (
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {error}— <strong>check your connection!</strong>
+        </Alert>
+      )}
       <h2>Update Profile</h2>
       <form
         onSubmit={handleSubmit}
@@ -51,7 +77,6 @@ const UpdateProfile = () => {
             label="First Name"
             type="firstName"
             name="firstName"
-            // autoComplete="current-password"
             onChange={handleInputChange}
           />
         </div>
@@ -63,7 +88,6 @@ const UpdateProfile = () => {
             label="Last Name"
             type="lastName"
             name="lastName"
-            // autoComplete="current-password"
             onChange={handleInputChange}
           />
         </div>
