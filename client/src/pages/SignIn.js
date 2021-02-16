@@ -37,38 +37,21 @@ const SignIn = () => {
         setError("");
         await logIn(formData.email.trim(), formData.password);
       } catch {
-        setError("Incorrect username or password");
+        setError("Incorrect email or password");
       }
     } else if (formDisplay === "Sign Up") {
       if (formData.password === formData.confirmPassword) {
-        signUp(formData.email, formData.password).then((res) => {
-          setLoading(true);
-          setError("");
-          API.createUser({ ...formData, firebase_uid: res.user.uid }).catch(
-            (err) => {
-              console.log(err);
-              setError("failed to create user");
-              setLoading(false);
-            }
-          );
-        });
-        //  ___________Save for reference of how its supposed to work.______________
-        // try {
-        //   setError("");
-        //   setLoading(true);
-        //   let user = await signUp(formData.email, formData.password);
-        //   let createdUser = await API.createUser({
-        //     ...formData,
-        //     firebase_uid: user.user.uid,
-        //   });
-        //   console.log(createdUser);
-        //   if (!createdUser.data) {
-        //     throw "New exception";
-        //   }
-        // } catch (exception) {
-        //   setError("failed to create user");
-        //   setLoading(false);
-        // }
+        signUp(formData.email, formData.password)
+          .then((res) => {
+            setLoading(true);
+            setError("");
+            API.createUser({ ...formData, firebase_uid: res.user.uid });
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setError(err.message);
+            setLoading(false);
+          });
       } else {
         setError("passwords don't match");
       }
