@@ -13,20 +13,14 @@ function HeadingNav() {
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
-    getAvatar();
-    // logout();
-  }, []);
-
-  const getAvatar = () => {
-    console.log(currentUser);
+    let unsubscribe;
     if (currentUser) {
-      API.getUser(currentUser.uid).then((res) => {
-        console.log(res);
-
+      unsubscribe = API.getUser(currentUser.uid).then((res) => {
         setAvatar(res.data.profilePic);
       });
     }
-  };
+    return unsubscribe;
+  }, []);
 
   return (
     <nav

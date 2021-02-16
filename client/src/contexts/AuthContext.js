@@ -19,11 +19,9 @@ export const AuthProvider = ({ children }) => {
   };
   const logIn = (email, password) => {
     return fire.auth().signInWithEmailAndPassword(email, password);
-    // return currentUser && !loading ? true : false;
   };
   const getMongoID = (firebase_id) => {
     API.getUser(firebase_id).then((res) => {
-      console.log("mongoUSer:: ", res);
       setMongoId(res.data._id);
     });
   };
@@ -32,12 +30,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // currentUser ? getMongoID(currentUser.uid) : setMongoId("");
     const unsubscribe = fire.auth().onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
       user ? getMongoID(user.uid) : setMongoId("");
-      console.log("firebaseuser:: ", user);
     });
     return unsubscribe;
   }, []);

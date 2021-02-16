@@ -32,8 +32,6 @@ function App() {
     });
   }, [isLoggedIn]);
 
-  console.log("logged in?", isLoggedIn);
-  console.log(user);
   return (
     <AuthProvider>
       <div id="App">
