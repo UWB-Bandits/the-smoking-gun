@@ -1,41 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import "./settings-nav.css";
 
 const SettingsNav = (props) => {
-  const { changeDisplay } = props;
-  // const styles = {
-  //   menuContainer: {
-  //     display: "flex",
-  //     justifyContent: "space-between",
-  //     margin: ".5rem 0",
-  //     background: "#232323",
-  //     color: "#E0E0E0",
-  //     textAlign: "center",
-  //   },
-  //   menuItems: {
-  //     padding: ".5rem 3rem",
-  //   },
-  // };
+  const { changeDisplay, display } = props;
+
+  useEffect(() => {
+    setClass();
+  }, []);
+
+  const setClass = (value) => {
+    return value === display ? "menuItems sn-active" : "menuItems";
+  };
+
   return (
     <Grid item xs={12} id="menuContainer">
-      <h3 className="menuItems" onClick={changeDisplay}>
+      <p className={setClass("Update Profile")} onClick={changeDisplay}>
         Update Profile
-      </h3>
-      <h3 className="menuItems" onClick={changeDisplay}>
+      </p>
+      <p className={setClass("Change Password")} onClick={changeDisplay}>
         Change Password
-      </h3>
-      <h3 className="menuItems" onClick={changeDisplay}>
+      </p>
+      <p className={setClass("Change Avatar")} onClick={changeDisplay}>
         Change Avatar
-      </h3>
-      <h3 className="menuItems" onClick={changeDisplay}>
+      </p>
+      <p className={setClass("Sign Out")} onClick={changeDisplay}>
         Sign Out
-      </h3>
+      </p>
     </Grid>
   );
 };
 SettingsNav.propTypes = {
   changeDisplay: PropTypes.func,
+  display: PropTypes.string,
 };
 export default SettingsNav;

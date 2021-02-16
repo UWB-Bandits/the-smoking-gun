@@ -29,7 +29,7 @@ const Settings = () => {
   return (
     <div>
       <Grid container>
-        <SettingsNav changeDisplay={changeDisplay} />
+        <SettingsNav changeDisplay={changeDisplay} display={display} />
         <Grid item xs={12}>
           {display === "Update Profile" ? (
             <UpdateProfile />
