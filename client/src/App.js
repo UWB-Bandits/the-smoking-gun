@@ -19,6 +19,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mongoUser, setMongoUser] = useState(false);
   const [firebaseID, setFirebaseID] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
     setMongoUser(false);
@@ -44,20 +45,23 @@ function App() {
 
   useEffect(() => {
     let unsubscribe;
-    if (isLoggedIn) {
+
+    if (isLoggedIn && !mongoUser) {
+      console.log("something");
       unsubscribe = API.getUser(firebaseID)
         .then((Muser) => {
           console.log(Muser.data._id);
           setMongoUser(true);
+          setError(false);
         })
         .catch((err) => {
           console.log(err);
           setMongoUser(false);
-          // setFirebaseID(false);
+          setError(true);
         });
     }
     return unsubscribe;
-  }, [firebaseID]);
+  }, [firebaseID, error]);
 
   console.log(mongoUser);
 
@@ -65,7 +69,7 @@ function App() {
     <AuthProvider>
       <div id="App">
         <Router>
-          {!mongoUser ? (
+          {!mongoUser && !error ? (
             <>
               <Switch>
                 <Route exact path="/">
