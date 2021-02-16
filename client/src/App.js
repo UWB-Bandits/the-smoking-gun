@@ -26,16 +26,6 @@ function App() {
     fire.auth().onAuthStateChanged((user) => {
       if (isLoggedIn && user) {
         setFirebaseID(user.uid);
-        // API.getUser(user.uid)
-        //   .then((Muser) => {
-        //     console.log(Muser.data._id);
-        //     setMongoUser(true);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //     setMongoUser(false);
-        //     setIsLoggedIn(false);
-        //   });
       }
       return user
         ? setIsLoggedIn(true)
