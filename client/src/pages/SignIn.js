@@ -3,7 +3,7 @@ import LoginForm from "../components/LogInForm/LogInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 const SignIn = () => {
   const [formDisplay, setFormDisplay] = useState("Log In");
   const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ const SignIn = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  let history = useHistory();
+  // let history = useHistory();
 
   const { signUp, logIn } = useAuth();
   const handleInputChange = (e) => {
@@ -37,7 +37,7 @@ const SignIn = () => {
       try {
         setError("");
         await logIn(formData.email.trim(), formData.password);
-        history.push("/");
+        // history.push("/dashboard");
       } catch {
         setError("Incorrect email or password");
       }
@@ -55,7 +55,6 @@ const SignIn = () => {
               console.log("user created");
               console.log(res);
               console.log("____________________________________________");
-              history.push("/dashboard");
               setLoading(false);
             });
           })

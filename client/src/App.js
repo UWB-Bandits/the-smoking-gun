@@ -18,24 +18,47 @@ import Settings from "./pages/Settings";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mongoUser, setMongoUser] = useState(false);
+  const [firebaseID, setFirebaseID] = useState();
 
   useEffect(() => {
     setMongoUser(false);
     fire.auth().onAuthStateChanged((user) => {
       if (isLoggedIn && user) {
-        API.getUser(user.uid)
-          .then((Muser) => {
-            console.log(Muser.data._id);
-            setMongoUser(true);
-          })
-          .catch((err) => {
-            console.log(err);
-            setMongoUser(false);
-          });
+        setFirebaseID(user.uid);
+        // API.getUser(user.uid)
+        //   .then((Muser) => {
+        //     console.log(Muser.data._id);
+        //     setMongoUser(true);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //     setMongoUser(false);
+        //     setIsLoggedIn(false);
+        //   });
       }
-      return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+      return user
+        ? setIsLoggedIn(true)
+        : (setIsLoggedIn(false), setFirebaseID(false));
     });
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    let unsubscribe;
+    if (isLoggedIn) {
+      unsubscribe = API.getUser(firebaseID)
+        .then((Muser) => {
+          console.log(Muser.data._id);
+          setMongoUser(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setMongoUser(false);
+          // setFirebaseID(false);
+        });
+    }
+    return unsubscribe;
+  }, [firebaseID]);
+
   console.log(mongoUser);
 
   return (
