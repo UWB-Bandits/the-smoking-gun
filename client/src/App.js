@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
+import Calendars from "./pages/Calendars";
 import CreateBook from "./pages/CreateBook";
 import Footer from "./components/Footer";
 import NoMatch from "./pages/NoMatch";
@@ -59,6 +60,10 @@ function App() {
 
                 <Route exact path="/lists/:id">
                   <Lists />
+                </Route>
+
+                <Route exact path="/calendars/:id">
+                  <Calendars />
                 </Route>
 
                 <Route exact path="/create-book">
