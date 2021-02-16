@@ -7,16 +7,12 @@ import { useAuth } from "../../contexts/AuthContext";
 
 const UpdateProfile = () => {
   const [formData, setFormData] = useState({ firstName: "", lastName: "" });
-  const { currentUser, mongoID } = useAuth();
-  console.log(mongoID);
+  const { mongoID } = useAuth();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    API.updateUser(currentUser.uid, formData)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    API.updateUser(mongoID, formData).catch((err) => console.log(err));
   };
 
   const handleInputChange = (e) => {
