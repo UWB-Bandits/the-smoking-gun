@@ -55,7 +55,8 @@ const SignIn = () => {
               console.log("user created");
               console.log(res);
               console.log("____________________________________________");
-              history.push("/");
+              history.push("/dashboard");
+              setLoading(false);
             });
           })
           .catch((err) => {
