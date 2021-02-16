@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = fire.auth().onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
-      user ? getMongoID(user.uid) : setMongoId("");
+      user ? getMongoID(user.uid) : setMongoId(false);
     });
     return unsubscribe;
   }, []);

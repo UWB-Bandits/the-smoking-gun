@@ -3,7 +3,7 @@ import LoginForm from "../components/LogInForm/LogInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
-
+import { useHistory } from "react-router-dom";
 const SignIn = () => {
   const [formDisplay, setFormDisplay] = useState("Log In");
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ const SignIn = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  let history = useHistory();
 
   const { signUp, logIn } = useAuth();
   const handleInputChange = (e) => {
@@ -36,6 +37,7 @@ const SignIn = () => {
       try {
         setError("");
         await logIn(formData.email.trim(), formData.password);
+        history.push("/");
       } catch {
         setError("Incorrect email or password");
       }
@@ -45,7 +47,16 @@ const SignIn = () => {
           .then((res) => {
             setLoading(true);
             setError("");
-            API.createUser({ ...formData, firebase_uid: res.user.uid });
+            API.createUser({
+              ...formData,
+              firebase_uid: res.user.uid,
+            }).then((res) => {
+              console.log("____________________________________________");
+              console.log("user created");
+              console.log(res);
+              console.log("____________________________________________");
+              history.push("/");
+            });
           })
           .catch((err) => {
             console.log(err.message);

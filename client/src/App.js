@@ -17,26 +17,32 @@ import Settings from "./pages/Settings";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(false);
+  const [mongoUser, setMongoUser] = useState(false);
 
   useEffect(() => {
+    setMongoUser(false);
     fire.auth().onAuthStateChanged((user) => {
       if (isLoggedIn && user) {
-        API.getUser(user.uid).then(() => {
-          setUser(true);
-        });
-      } else {
-        setUser(false);
+        API.getUser(user.uid)
+          .then((Muser) => {
+            console.log(Muser.data._id);
+            setMongoUser(true);
+          })
+          .catch((err) => {
+            console.log(err);
+            setMongoUser(false);
+          });
       }
       return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
     });
   }, [isLoggedIn]);
+  console.log(mongoUser);
 
   return (
     <AuthProvider>
       <div id="App">
         <Router>
-          {!isLoggedIn && !user ? (
+          {!mongoUser ? (
             <>
               <Switch>
                 <Route exact path="/">

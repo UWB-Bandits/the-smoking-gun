@@ -115,7 +115,7 @@ const SignInForm = (props) => {
     >
       <h2>Sign Up</h2>
       <form
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         style={{
           minWidth: "300px",
           display: "flex",
@@ -266,6 +266,7 @@ const SignInForm = (props) => {
           button2={["Have an account? ", "Log In"]}
           setPage={setPage}
           loading={loading}
+          handleSubmit={handleSubmit}
         />
       </form>
     </Box>
