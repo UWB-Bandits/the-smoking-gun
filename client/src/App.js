@@ -12,8 +12,6 @@ import Footer from "./components/Footer";
 import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
 import API from "./utils/API";
-// import API from "./utils/API";
-
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
 
@@ -23,10 +21,9 @@ function App() {
 
   useEffect(() => {
     fire.auth().onAuthStateChanged((user) => {
-      if (isLoggedIn) {
+      if (isLoggedIn && user) {
         API.getUser(user.uid).then(() => {
           setUser(true);
-          console.log(user);
         });
       } else {
         setUser(false);
@@ -36,6 +33,7 @@ function App() {
   }, [isLoggedIn]);
 
   console.log("logged in?", isLoggedIn);
+  console.log(user);
   return (
     <AuthProvider>
       <div id="App">
