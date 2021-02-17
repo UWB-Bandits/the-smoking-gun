@@ -2,13 +2,17 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {Card, Link, CardActionArea, CardContent, Typography, Grid} from "@material-ui/core/";
 import PropTypes from "prop-types";
+import BookLogo from "../../utils/images/book-logo.png";
 
 const useStyles = makeStyles({
   root:{
-    width: "95%",
+    width: "175px",
+    height: "175px",
     marginRight: "auto",
     marginLeft: "auto",
-    marginBottom: "10px"
+    marginBottom: "10px",
+    backgroundImage: `url(${BookLogo})`,
+    backgroundSize: "100%"
   },
   red: {
     backgroundColor: "#F07C5F",
@@ -23,6 +27,12 @@ const useStyles = makeStyles({
   yellow: {
     backgroundColor: "#F0B16C"
   },
+  text: {
+    marginTop: "20px",
+    backgroundColor: "rgba(204, 204, 204, 0.5)",
+    textAlign: "center",
+    fontWeight: "bold",
+  }
 });
 
 export default function BookButton(props) {
@@ -36,15 +46,15 @@ export default function BookButton(props) {
   };
 
   return (
-    <Grid item xs={6}>
+    <Grid item md={4} xs={6}>
     <Link href={props.link}>
         <Card className={classes.root +" " + classes[props.colorScheme]}>
         <CardActionArea>
             <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography className={classes.text} gutterBottom variant="h5" component="h2">
                 {props.title}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
                 {props.description}
             </Typography>
             </CardContent>

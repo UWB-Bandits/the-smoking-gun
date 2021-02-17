@@ -9,11 +9,13 @@ import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
 import CreateBook from "./pages/CreateBook";
 import Footer from "./components/Footer";
+import Habits from "./pages/Habits";
 import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
 import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
+import { Container } from "@material-ui/core";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -70,6 +72,7 @@ function App() {
           ) : (
             <div>
               <HeadingNav />
+              <Container>
               <Switch>
                 <Route exact path={["/", "/dashboard"]}>
                   <Dashboard />
@@ -84,6 +87,9 @@ function App() {
                 <Route exact path="/create-book">
                   <CreateBook />
                 </Route>
+                <Route exact path="/habits/:id">
+                  <Habits />
+                </Route>
                 <Route exact path="/settings">
                   <Settings />
                 </Route>
@@ -91,6 +97,7 @@ function App() {
                   <NoMatch />
                 </Route>
               </Switch>
+              </Container>
               <Footer />
             </div>
           )}
