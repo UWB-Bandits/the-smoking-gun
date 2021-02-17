@@ -8,6 +8,7 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   IconButton,
+  Grid
 } from "@material-ui/core";
 import TitleItem from "../components/TitleItem";
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,6 +21,8 @@ import Link from "@material-ui/core/Link";
 import HomeIcon from "@material-ui/icons/Home";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import TrackChangesIcon from "@material-ui/icons/TrackChanges";
+import HabitDoughnut from "../components/HabitDoughnut";
+import DaysMenu from "../components/DaysMenu";
 
 
 function Habits() {
@@ -27,13 +30,14 @@ function Habits() {
   const [habits, setHabits] = useState([]);
   const [book, setBook] = useState({});
   const [completedToday, setCompletedToday] = useState([]);
+  const [resultsDays, setResultsDays] = useState(7);
 
   const {id} = useParams();
 
   let date = new Date();
   let dateString = date.toDateString();
-  // let lastWeek = date.setDate(date.getDate() - 7);
-  // let lastWeekString = new Date(lastWeek).toDateString();
+  let dateNeeded = date.setDate(date.getDate() - resultsDays);
+  let dateNeededString = new Date(dateNeeded).toDateString();
 
   useEffect(() => {
     loadHabits();
@@ -64,8 +68,10 @@ function Habits() {
 
       })
       .catch(err => console.log(err));
+  };
 
-
+  const handleDaysChange = (event) => {
+    setResultsDays(event.target.value);
   };
 
   const handleInputChange = (e) => {
@@ -197,17 +203,27 @@ function Habits() {
               </ListItem>
             );
           })
-        :
-          <p>Add a habit to get started</p>   
-        }
+          :
+            <p>Add a habit to get started</p>   
+          }
         </List>
-
         <NewItemForm
           formDataShown={formData.newItem}
           handleInputChange={handleInputChange}
           addItem={addHabit}
           type="habit"
         />
+        <h2>See your progress:</h2>
+        <DaysMenu style={{display:"inline"}} handleChange={handleDaysChange} resultsDays={resultsDays}/>
+         
+        <Grid container>
+          { habits  ? habits.map( (value)=> {
+              return (<HabitDoughnut key={value._id} date={dateNeededString} days={resultsDays} {...value}/>);
+            })
+            :
+              <p>Add a habit to get started</p>   
+          }
+        </Grid>
       </Box>
     </div>
   );

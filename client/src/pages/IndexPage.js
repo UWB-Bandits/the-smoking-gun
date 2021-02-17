@@ -138,11 +138,7 @@ function IndexPage() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ul>
-              <li><a href={`/habits/${id}`}>Track your daily habits</a></li>
-              <li><a href={`/habits-7/${id}`}>Seven-day summary</a></li>
-              <li><a href={`/habits-30/${id}`}>Thirty-day summary</a></li>
-            </ul>
+              <h2><a href={`/habits/${id}`}>Track your daily habits</a></h2>
           </AccordionDetails>        
         </Accordion>
         <Accordion disabled>
