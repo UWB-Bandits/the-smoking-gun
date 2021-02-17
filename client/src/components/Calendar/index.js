@@ -1,23 +1,73 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { INITIAL_EVENTS, createEventId } from "./event-utils";
-import ResponsiveDrawer from "../ResponsiveDrawer";
+import TemporaryDrawer from "../TemporaryDrawer";
+import PropTypes from "prop-types";
+
+let eventGuid = 0;
+
+export default function Calendar(props) {
+    const [weekendsVisible, setWeekendsVisible] = useState(true);
+    const [currentEvents, setCurrentEvents] = useState([]);
+
+    const {calendar} = props;
+
+    useEffect(() => {
+        setCurrentEvents(calendar);
+      }, []);
+
+    function handleWeekendsToggle(){
+          setWeekendsVisible(!weekendsVisible);
+    }
+
+    function handleEventClick(clickInfo) {
+        if (confirm(`Are you sure you want to delete the event "${clickInfo.event.title}"`)) {
+        clickInfo.event.remove();
+        }
+    }
+
+    function handleEvents(events) {
+        
+        setCurrentEvents(events);
+        
+    }
 
 
-export default class Calendar extends React.Component {
+    function renderEventContent(eventInfo) {
+    return (
+        <>
+        <b>{eventInfo.timeText}</b>
+        <i>{eventInfo.event.title}</i>
+        </>
+    );
+    }
 
-  state = {
-    weekendsVisible: true,
-    currentEvents: []
-  }
+    function createEventId() {
+        return String(eventGuid++);
+    }
 
-  render() {
+    function handleDateSelect(selectInfo) {
+        let title = prompt("Please enter a new title for your event");
+        let calendarApi = selectInfo.view.calendar;
+    
+        calendarApi.unselect(); // clear date selection
+    
+        if (title) {
+          calendarApi.addEvent({
+            id: createEventId(),
+            title,
+            start: selectInfo.startStr,
+            end: selectInfo.endStr,
+            allDay: selectInfo.allDay
+          });
+        }
+    }
+
     return (
       <div>
-          <ResponsiveDrawer />
+          <TemporaryDrawer  weekends={setWeekendsVisible} toggle={handleWeekendsToggle}/>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{
@@ -35,59 +85,22 @@ export default class Calendar extends React.Component {
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
-            weekends={this.state.weekendsVisible}
-            initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
-            select={this.handleDateSelect}
+            weekends={weekendsVisible}
+            initialEvents={currentEvents} // alternatively, use the `events` setting to fetch from a feed
+            select={handleDateSelect}
             eventContent={renderEventContent} // custom render function
-            eventClick={this.handleEventClick}
-            eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
+            eventClick={handleEventClick}
+            eventsSet={handleEvents} // called after events are initialized/added/changed/removed
             /* you can update a remote database when these fire:
             eventAdd={function(){}}
             eventChange={function(){}}
             eventRemove={function(){}}
             */
           />
-        
       </div>
     );
-  }
-
-  handleDateSelect = (selectInfo) => {
-    let title = prompt("Please enter a new title for your event");
-    let calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      });
-    }
-  }
-
-  handleEventClick = (clickInfo) => {
-    if (confirm(`Are you sure you want to delete the event "${clickInfo.event.title}"`)) {
-      clickInfo.event.remove();
-    }
-  }
-
-  handleEvents = (events) => {
-    this.setState({
-      currentEvents: events
-    });
-  }
-
 }
 
-function renderEventContent(eventInfo) {
-  return (
-    <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
-    </>
-  );
-}
+Calendar.propTypes = {
+    calendar: PropTypes.object
+  };

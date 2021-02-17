@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import InfoIcon from "@material-ui/icons/Info";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   list: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TemporaryDrawer() {
+export default function TemporaryDrawer(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -43,6 +44,14 @@ export default function TemporaryDrawer() {
         <li>Drag, drop, and resize events</li>
         <li>Touch an event to delete it</li>
         </ul>
+        <label>
+            <input
+              type='checkbox'
+              checked={props.weekendVisible}
+              onChange={props.toggle}
+            ></input>
+            toggle weekends
+          </label>
     </div>
   );
 
@@ -57,3 +66,8 @@ export default function TemporaryDrawer() {
     </div>
   );
 }
+
+TemporaryDrawer.propTypes = {
+  weekendVisible: PropTypes.bool,
+  toggle: PropTypes.func
+};

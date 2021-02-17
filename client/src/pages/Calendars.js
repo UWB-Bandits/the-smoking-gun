@@ -13,6 +13,7 @@ import DateRangeIcon from "@material-ui/icons/DateRange";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import Calendar from "../components/Calendar";
 
+
 function Calendars() {
   
   const [calendar, setCalendar] = useState({});
@@ -31,6 +32,7 @@ function Calendars() {
         let pageList = {
           user: res.data.book.user,
           name: res.data.name,
+          events: res.data.events,
           date: res.data.date,
           bookName: res.data.book.title,
           bookId: res.data.book._id
@@ -87,7 +89,7 @@ function Calendars() {
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>{calendar.name}</span>
           </Typography>
         </Breadcrumbs>
-        <Calendar />
+        <Calendar calendar={calendar}/>
       </Box>
     </div>
   );
