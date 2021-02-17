@@ -2,11 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
+import SettingsIcon from "@material-ui/icons/Settings";
 import HomeIcon from "@material-ui/icons/Home";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
-// import fire from "../../utils/firebase";
-import { useAuth } from "../../contexts/AuthContext";
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +23,6 @@ const useStyles = makeStyles({
 
 export default function SimpleBottomNavigation() {
   const classes = useStyles();
-  const { logout } = useAuth();
 
   return (
     <div>
@@ -42,10 +39,10 @@ export default function SimpleBottomNavigation() {
           icon={<ImportContactsIcon />}
         />
         <BottomNavigationAction
-          onClick={logout}
-          href="/"
-          label="Log In/Out"
-          icon={<LockOpenIcon />}
+          // onClick={Settings}
+          href="/settings"
+          label="Settings"
+          icon={<SettingsIcon />}
         />
       </BottomNavigation>
     </div>

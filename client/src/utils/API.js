@@ -8,7 +8,6 @@ export default {
   },
   getBooksWhere: function (user) {
     return axios.get("/api/books/findWhere/" + user);
-
   },
   // Gets the book with the given id
   getBook: function (id) {
@@ -48,5 +47,8 @@ export default {
   },
   getUser: function (id) {
     return axios.get("/api/users/" + id);
+  },
+  updateUser: function (id, obj) {
+    return axios.put("api/users/" + id, obj);
   },
 };

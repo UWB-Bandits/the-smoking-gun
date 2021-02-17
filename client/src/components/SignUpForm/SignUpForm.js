@@ -32,20 +32,46 @@ const SignInForm = (props) => {
     showPassword: false,
   });
   const [gravatar, setGravatar] = useState({
-    standard: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    retro: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    robohash: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    wavatar: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    monsterid: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
-    identicon: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    standard:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    retro:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    robohash:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    wavatar:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    monsterid:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    identicon:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
   });
   const getGravatar = () => {
-    let standard = useGravatar.url(formData.email, {s: "100"}, true);
-    let retro = useGravatar.url(formData.email, {s: "100", r: "pg", d: "retro"}, true);
-    let robohash = useGravatar.url(formData.email, {s: "100", r: "pg", d: "robohash"}, true);
-    let wavatar = useGravatar.url(formData.email, {s: "100", r: "pg", d: "wavatar"}, true);
-    let monsterid = useGravatar.url(formData.email, {s: "100", r: "pg", d: "monsterid"}, true);
-    let identicon = useGravatar.url(formData.email, {s: "100", r: "pg", d: "identicon"}, true);
+    let standard = useGravatar.url(formData.email, { s: "100" }, true);
+    let retro = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "retro" },
+      true
+    );
+    let robohash = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "robohash" },
+      true
+    );
+    let wavatar = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "wavatar" },
+      true
+    );
+    let monsterid = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "monsterid" },
+      true
+    );
+    let identicon = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "identicon" },
+      true
+    );
     setGravatar({
       standard: standard,
       retro: retro,
@@ -89,7 +115,7 @@ const SignInForm = (props) => {
     >
       <h2>Sign Up</h2>
       <form
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         style={{
           minWidth: "300px",
           display: "flex",
@@ -240,6 +266,7 @@ const SignInForm = (props) => {
           button2={["Have an account? ", "Log In"]}
           setPage={setPage}
           loading={loading}
+          handleSubmit={handleSubmit}
         />
       </form>
     </Box>
