@@ -28,7 +28,7 @@ export default function TemporaryDrawer(props) {
 
     setState({ ...state, [anchor]: open });
   };
-  
+
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
@@ -46,12 +46,18 @@ export default function TemporaryDrawer(props) {
         </ul>
         <label>
             <input
-              type='checkbox'
+              type="checkbox"
               checked={props.weekendVisible}
               onChange={props.toggle}
             ></input>
             toggle weekends
           </label>
+          <div>
+          <h2>All Events ({props.currentEvents.length})</h2>
+          <ul>
+            {props.currentEvents.map(props.renderInfoDrawerEvent)}
+          </ul>
+        </div>
     </div>
   );
 
@@ -69,5 +75,7 @@ export default function TemporaryDrawer(props) {
 
 TemporaryDrawer.propTypes = {
   weekendVisible: PropTypes.bool,
-  toggle: PropTypes.func
+  toggle: PropTypes.func,
+  currentEvents: PropTypes.array,
+  renderInfoDrawerEvent: PropTypes.func
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import FullCalendar from "@fullcalendar/react";
+import FullCalendar, { EventApi, EventContentArg, formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -11,12 +11,15 @@ let eventGuid = 0;
 export default function Calendar(props) {
     const [weekendsVisible, setWeekendsVisible] = useState(true);
     const [currentEvents, setCurrentEvents] = useState([]);
-
-    const {calendar} = props;
-
+    console.log(props);
+    console.log(props.calendar.events);
+    if(props.calendar.events === undefined){
+        props.calendar.events = [];
+    }
     useEffect(() => {
-        setCurrentEvents(calendar);
-      }, []);
+        setCurrentEvents(props.calendar.events);
+    }, []);
+
 
     function handleWeekendsToggle(){
           setWeekendsVisible(!weekendsVisible);
@@ -35,14 +38,23 @@ export default function Calendar(props) {
     }
 
 
-    function renderEventContent(eventInfo) {
+    function renderEventContent(eventContent: EventContentArg) {
     return (
         <>
-        <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
+        <b>{eventContent.timeText}</b>
+        <i>{eventContent.event.title}</i>
         </>
     );
     }
+
+    function renderInfoDrawerEvent(event: EventApi) {
+        return (
+          <li key={event.id}>
+            <b>{formatDate(event.start, {year: "numeric", month: "short", day: "numeric"})}</b>
+            <i>    {event.title}</i>
+          </li>
+        );
+      }
 
     function createEventId() {
         return String(eventGuid++);
@@ -67,7 +79,7 @@ export default function Calendar(props) {
 
     return (
       <div>
-          <TemporaryDrawer  weekends={setWeekendsVisible} toggle={handleWeekendsToggle}/>
+          <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={setWeekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{
