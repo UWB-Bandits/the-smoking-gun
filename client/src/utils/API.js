@@ -48,6 +48,18 @@ export default {
   getUser: function (id) {
     return axios.get("/api/users/" + id);
   },
+  createHabit: function (obj) {
+    return axios.post("/api/habits/", obj);
+  },
+  getHabits: function (book) {
+    return axios.get("/api/habits/" + book);
+  },
+  updateHabit: function (id, habitData) {
+    return axios.put("/api/habits/" + id, habitData);
+  },
+  deleteHabit: function (id) {
+    return axios.delete("/api/habits/" + id);
+  },
   updateUser: function (id, obj) {
     return axios.put("api/users/" + id, obj);
   },

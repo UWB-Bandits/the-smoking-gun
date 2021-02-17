@@ -9,12 +9,14 @@ import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
 import CreateBook from "./pages/CreateBook";
 import Footer from "./components/Footer";
+import Habits from "./pages/Habits";
 import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
 import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
 import DoodlePage from "./pages/DoodlePage";
+import { Container } from "@material-ui/core";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -71,30 +73,35 @@ function App() {
           ) : (
             <div>
               <HeadingNav />
-              <Switch>
-                <Route exact path={["/", "/dashboard"]}>
-                  <Dashboard />
-                </Route>
-                <Route exact path="/books/:id">
-                  <IndexPage />
-                </Route>
+              <Container>
+                <Switch>
+                  <Route exact path={["/", "/dashboard"]}>
+                    <Dashboard />
+                  </Route>
+                  <Route exact path="/books/:id">
+                    <IndexPage />
+                  </Route>
 
-                <Route exact path="/lists/:id">
-                  <Lists />
-                </Route>
-                <Route exact path="/create-book">
-                  <CreateBook />
-                </Route>
-                <Route exact path="/settings">
-                  <Settings />
-                </Route>
-                <Route exact path="/doodle">
-                  <DoodlePage />
-                </Route>
-                <Route>
-                  <NoMatch />
-                </Route>
-              </Switch>
+                  <Route exact path="/lists/:id">
+                    <Lists />
+                  </Route>
+                  <Route exact path="/create-book">
+                    <CreateBook />
+                  </Route>
+                  <Route exact path="/habits/:id">
+                    <Habits />
+                  </Route>
+                  <Route exact path="/settings">
+                    <Settings />
+                  </Route>
+                  <Route exact path="/doodle">
+                    <DoodlePage />
+                  </Route>
+                  <Route>
+                    <NoMatch />
+                  </Route>
+                </Switch>
+              </Container>
               <Footer />
             </div>
           )}

@@ -8,6 +8,7 @@ const bookSchema = new Schema({
   // lists: {id: { type: Schema.Types.ObjectId, ref: "listSchema"}}
   lists: [{ type: Schema.Types.ObjectId, ref: "List" }],
   user: { type: String, required: true },
+  habits: [{ type: Schema.Types.ObjectId, ref: "Habit" }],
 });
 
 const Book = mongoose.model("Book", bookSchema);
