@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
 } from "@material-ui/core";
-import TitleItem from "../components/TitleItem";
-import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
 import API from "../utils/API";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import HomeIcon from "@material-ui/icons/Home";
-import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import DateRangeIcon from "@material-ui/icons/DateRange";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-
+import Calendar from "../components/Calendar";
 
 function Calendars() {
   
@@ -72,8 +69,7 @@ function Calendars() {
   return (
     <div>
       <Box>
-        <TitleItem title={calendar.name}/>
-        <Breadcrumbs aria-label="breadcrumb">
+      <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
@@ -87,14 +83,11 @@ function Calendars() {
             <span style={{fontSize: "12px", marginLeft: "2px"}}>{calendar.bookName}</span>
           </Link>
           <Typography color="textPrimary" className={classes.link}>
-            <PlaylistAddCheckIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+            <DateRangeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>{calendar.name}</span>
           </Typography>
         </Breadcrumbs>
-        <FullCalendar
-        plugins={[ dayGridPlugin ]}
-        initialView="dayGridMonth"
-      />
+        <Calendar />
       </Box>
     </div>
   );
