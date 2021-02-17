@@ -59,6 +59,7 @@ export default {
   },
   deleteHabit: function (id) {
     return axios.delete("/api/habits/" + id);
+  },
   updateUser: function (id, obj) {
     return axios.put("api/users/" + id, obj);
   },

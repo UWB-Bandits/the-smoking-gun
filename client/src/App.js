@@ -15,6 +15,7 @@ import fire from "./utils/firebase";
 import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
+import { Container } from "@material-ui/core";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -71,7 +72,7 @@ function App() {
           ) : (
             <div>
               <HeadingNav />
-              <Container maxWidth="md">
+              <Container>
               <Switch>
                 <Route exact path={["/", "/dashboard"]}>
                   <Dashboard />
