@@ -14,6 +14,7 @@ import fire from "./utils/firebase";
 import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
+import DoodlePage from "./pages/DoodlePage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -86,6 +87,9 @@ function App() {
                 </Route>
                 <Route exact path="/settings">
                   <Settings />
+                </Route>
+                <Route exact path="/doodle">
+                  <DoodlePage />
                 </Route>
                 <Route>
                   <NoMatch />
