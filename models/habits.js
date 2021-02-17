@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const habitSchema = new Schema({
   name: { type: String, required: true },
   tracking: [{
-    day: Date,
+    day: String,
     completed: Boolean
   }],
   date: { type: Date, default: Date.now },

@@ -26,12 +26,14 @@ function Habits() {
   const [formData, setFormData] = useState({ newItem: "" });
   const [habits, setHabits] = useState([]);
   const [book, setBook] = useState({});
+  const [completedToday, setCompletedToday] = useState([]);
 
   const {id} = useParams();
 
   let date = new Date();
-  date = date.toDateString();
-
+  let dateString = date.toDateString();
+  // let lastWeek = date.setDate(date.getDate() - 7);
+  // let lastWeekString = new Date(lastWeek).toDateString();
 
   useEffect(() => {
     loadHabits();
@@ -41,11 +43,25 @@ function Habits() {
     API.getBook(id)
     .then(res => setBook(res.data));
     
+    let todaysTracking = [];
     
+    function findCompleted(dbHabits){
+      dbHabits.forEach(habit =>{
+        let tracking = habit.tracking;
+        let tracked = tracking.filter(item => item.day === dateString);
+        if (tracked.length > 0) {
+          todaysTracking.push(habit._id);
+        } 
+      });
+    }
+
     API.getHabits(id)
       .then(res => {
-        setHabits(res.data);
-        console.log(res);
+        let dbHabits = res.data;
+        setHabits(dbHabits);
+        findCompleted(dbHabits);
+        setCompletedToday(todaysTracking);
+
       })
       .catch(err => console.log(err));
 
@@ -74,26 +90,34 @@ function Habits() {
     }
   };
 
-  // const handleToggle = (value) => () => {
-  //   const newChecked = items;
-  //   const currentIndex = newChecked.indexOf(value);
-
-  //   if (value.completed === false){
-  //     newChecked[currentIndex].completed = true;
-  //   } else {
-  //     newChecked[currentIndex].completed = false;
-  //   }
+  const handleToggle = (value) => () => {
+    const newChecked = habits;
+    const currentIndex = newChecked.indexOf(value);
+    const todaysTrackingIndex = completedToday.indexOf(value._id);
+    const completedTodayTemp = completedToday;
 
 
-  //   setItems(newChecked);
+    if (todaysTrackingIndex === -1){
+      newChecked[currentIndex].tracking.push({
+        day: dateString,
+        completed: true
+      });
+      completedTodayTemp.push(value._id);
+    } else {
+      let removedTracking = habits[currentIndex].tracking.filter(item => item.day !== dateString);
+      newChecked[currentIndex].tracking = removedTracking;
+      completedTodayTemp.splice(todaysTrackingIndex, 1);
+    }
 
-  //   API.updateList(id, {
-  //     ...list,
-  //     items: items
-  //   }).then(res => setList(res.data))
-  //   .catch(err => console.log(err));
+    setCompletedToday(completedTodayTemp);
+    setHabits(newChecked);
 
-  // };
+    API.updateHabit(value._id, {
+      ...habits[currentIndex]
+    }).then(loadHabits())
+    .catch(err => console.log(err));
+
+  };
 
   const classes = makeStyles((theme) => ({
     root: {
@@ -123,7 +147,7 @@ function Habits() {
   return (
     <div>
       <Box>
-        <TitleItem title="Your Daily Habits" description={date}/>
+        <TitleItem title="Your Daily Habits" description={dateString}/>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
@@ -142,7 +166,11 @@ function Habits() {
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>Habit Tracker</span>
           </Typography>
         </Breadcrumbs>
+        <Typography color="textPrimary" className={classes.heading}>
+            
+        </Typography>
         <List className={classes.root}>
+          <h2>Which habits have you completed today?</h2>
           { habits  ? habits.map((value) => {
             const labelId = `checkbox-list-label-${value.name}`;
 
@@ -151,12 +179,12 @@ function Habits() {
                 key={value.name}
                 dense
                 button
-                // onClick={handleToggle(value)}
+                onClick={handleToggle(value)}
               >
                 <ListItemIcon>
                   <Checkbox
                     edge="start"
-                    checked={value.completed}
+                    checked={completedToday.indexOf(value._id) !==  -1}
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ "aria-labelledby": labelId }}
