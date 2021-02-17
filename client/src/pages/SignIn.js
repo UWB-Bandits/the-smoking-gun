@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import LoginForm from "../components/LogInForm/LogInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
-
+// import { useHistory } from "react-router-dom";
 const SignIn = () => {
-  // let history = useHistory();
   const [formDisplay, setFormDisplay] = useState("Log In");
   const [formData, setFormData] = useState({
     email: "",
@@ -15,17 +13,14 @@ const SignIn = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  // let history = useHistory();
 
   const { signUp, logIn } = useAuth();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  useEffect(() => {
     setError("");
-    setLoading(false);
-  }, [formDisplay]);
+  };
 
   const setPage = (e) => {
     e.preventDefault();
@@ -37,42 +32,41 @@ const SignIn = () => {
   };
 
   const handleSubmit = async (e) => {
-    // const email = formData.email.trim();
     e.preventDefault();
     if (formDisplay === "Log In") {
       try {
         setError("");
         await logIn(formData.email.trim(), formData.password);
-        setFormData({});
-      } catch (e) {
-        console.log(e);
-        if (e) {
-          setError("Incorrect username or password");
-        }
+        // history.push("/dashboard");
+      } catch {
+        setError("Incorrect email or password");
       }
     } else if (formDisplay === "Sign Up") {
       if (formData.password === formData.confirmPassword) {
-        try {
-          setError("");
-          setLoading(true);
-          let user = await signUp(formData.email, formData.password);
-          console.log(user.user.uid);
-          // const firebase_uid = user.user.uid;
-          // setFormData({ ...formData, firebase_uid: user.user.uid });
-          let test = await API.createUser({
-            ...formData,
-            firebase_uid: user.user.uid,
+        signUp(formData.email, formData.password)
+          .then((res) => {
+            setLoading(true);
+            setError("");
+            API.createUser({
+              ...formData,
+              firebase_uid: res.user.uid,
+            }).then((res) => {
+              console.log("____________________________________________");
+              console.log("user created");
+              console.log(res);
+              console.log("____________________________________________");
+              setLoading(false);
+            });
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setError(err.message);
+            setLoading(false);
           });
-          console.log(test);
-          setFormData({});
-        } catch {
-          setError("failed to create user");
-        }
       } else {
         setError("passwords don't match");
       }
     }
-    // history.push("/dashboard");
   };
 
   return (

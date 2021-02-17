@@ -14,36 +14,56 @@ import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
 import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
-import Container from "@material-ui/core/Container";
-// import { useAuth } from "./contexts/AuthContext";
-
-// Routes:
-// / → signin                           ------------- done
-// /sign-up → sign up page          -- same as sign in
-// /:userid → dashboard                  --------------- done
-// /:bookid → Index                      ----------- done
-// /create-book → Create Book page           ----------- done
-// /create-list → Create List page
-// /caledar/:date → Daily calendar page
+import Settings from "./pages/Settings";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [mongoUser, setMongoUser] = useState(false);
+  const [firebaseID, setFirebaseID] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
+    setMongoUser(false);
     fire.auth().onAuthStateChanged((user) => {
-      return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+      if (isLoggedIn && user) {
+        setFirebaseID(user.uid);
+      }
+      return user
+        ? setIsLoggedIn(true)
+        : (setIsLoggedIn(false), setFirebaseID(false));
     });
   }, [isLoggedIn]);
 
-  console.log("logged in?", isLoggedIn);
+  useEffect(() => {
+    let unsubscribe;
+
+    if (isLoggedIn && !mongoUser) {
+      console.log("something");
+      unsubscribe = API.getUser(firebaseID)
+        .then((Muser) => {
+          console.log(Muser.data._id);
+          setMongoUser(true);
+          setError(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setMongoUser(false);
+          setError(true);
+        });
+    }
+    return unsubscribe;
+  }, [firebaseID, error]);
+
+  console.log(mongoUser);
+
   return (
     <AuthProvider>
-      <div className="App">
+      <div id="App">
         <Router>
-          {!isLoggedIn ? (
+          {!mongoUser && !error ? (
             <>
               <Switch>
-                <Route path="/">
+                <Route exact path="/">
                   <SignIn />
                 </Route>
               </Switch>
@@ -63,12 +83,14 @@ function App() {
                 <Route exact path="/lists/:id">
                   <Lists />
                 </Route>
-
                 <Route exact path="/create-book">
                   <CreateBook />
                 </Route>
                 <Route exact path="/habits/:id">
                   <Habits />
+                </Route>
+                <Route exact path="/settings">
+                  <Settings />
                 </Route>
                 <Route>
                   <NoMatch />
