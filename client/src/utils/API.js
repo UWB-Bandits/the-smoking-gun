@@ -49,4 +49,7 @@ export default {
   getUser: function (id) {
     return axios.get("/api/users/" + id);
   },
+  getWeather: function () {
+    return axios.get("/api/weather/");
+  }
 };
