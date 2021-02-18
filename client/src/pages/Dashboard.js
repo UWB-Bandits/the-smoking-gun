@@ -60,7 +60,7 @@ function Dashboard() {
   return (
     <div>
       <Box>
-        <Jumbotron userName= {user.firstName}/>
+        <Jumbotron userName={user.firstName} />
         <Grid container>
           <BookButton
             title="Create a new book!"

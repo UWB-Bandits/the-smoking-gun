@@ -15,6 +15,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import Alert from "@material-ui/lab/Alert";
+const useGravatar = require("gravatar");
 const SignInForm = (props) => {
   const {
     handleInputChange,
@@ -30,9 +31,59 @@ const SignInForm = (props) => {
     password: "",
     showPassword: false,
   });
-
+  const [gravatar, setGravatar] = useState({
+    standard:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    retro:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    robohash:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    wavatar:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    monsterid:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+    identicon:
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+  });
+  const getGravatar = () => {
+    let standard = useGravatar.url(formData.email, { s: "100" }, true);
+    let retro = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "retro" },
+      true
+    );
+    let robohash = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "robohash" },
+      true
+    );
+    let wavatar = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "wavatar" },
+      true
+    );
+    let monsterid = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "monsterid" },
+      true
+    );
+    let identicon = useGravatar.url(
+      formData.email,
+      { s: "100", r: "pg", d: "identicon" },
+      true
+    );
+    setGravatar({
+      standard: standard,
+      retro: retro,
+      robohash: robohash,
+      wavatar: wavatar,
+      monsterid: monsterid,
+      identicon: identicon,
+    });
+  };
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+    getGravatar();
     handleInputChange(event);
   };
 
@@ -49,7 +100,6 @@ const SignInForm = (props) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  console.log(formData);
   return (
     <Box
       boxShadow={2}
@@ -65,7 +115,7 @@ const SignInForm = (props) => {
     >
       <h2>Sign Up</h2>
       <form
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         style={{
           minWidth: "300px",
           display: "flex",
@@ -171,28 +221,42 @@ const SignInForm = (props) => {
             >
               <FormControlLabel
                 labelPlacement="top"
-                value={"image one"}
+                value={gravatar.standard}
                 control={<Radio />}
-                label="Image One"
+                label={<img src={gravatar.standard} alt="Default" />}
               />
               <FormControlLabel
                 labelPlacement="top"
-                value="image two"
+                value={gravatar.retro}
                 control={<Radio />}
-                label="Image Two"
+                label={<img src={gravatar.retro} alt="Retro" />}
               />
               <FormControlLabel
                 labelPlacement="top"
-                value="image three "
+                value={gravatar.robohash}
                 control={<Radio />}
-                label="Image Three"
+                label={<img src={gravatar.robohash} alt="Robohash" />}
               />
               <FormControlLabel
                 labelPlacement="top"
-                value="image four"
+                value={gravatar.wavatar}
                 // disabled
                 control={<Radio />}
-                label="Image four"
+                label={<img src={gravatar.wavatar} alt="Wavatar" />}
+              />
+              <FormControlLabel
+                labelPlacement="top"
+                value={gravatar.monsterid}
+                // disabled
+                control={<Radio />}
+                label={<img src={gravatar.monsterid} alt="Monsterid" />}
+              />
+              <FormControlLabel
+                labelPlacement="top"
+                value={gravatar.identicon}
+                // disabled
+                control={<Radio />}
+                label={<img src={gravatar.identicon} alt="Identicon" />}
               />
             </RadioGroup>
           </FormControl>
@@ -202,6 +266,7 @@ const SignInForm = (props) => {
           button2={["Have an account? ", "Log In"]}
           setPage={setPage}
           loading={loading}
+          handleSubmit={handleSubmit}
         />
       </form>
     </Box>
