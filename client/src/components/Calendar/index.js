@@ -5,22 +5,34 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import TemporaryDrawer from "../TemporaryDrawer";
 import PropTypes from "prop-types";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import API from "../../utils/API";
+import { useParams } from "react-router-dom";
 
 let eventGuid = 0;
 
 export default function Calendar(props) {
-    const [weekendsVisible, setWeekendsVisible] = useState(true);
+    const [weekendsVisible, setWeekendsVisible] = useState(false);
     const [currentEvents, setCurrentEvents] = useState([]);
-    console.log(props);
-    console.log(props.calendar.events);
-    if(props.calendar.events === undefined){
-        props.calendar.events = [];
-    }
+    // const [isLoaded, setIsLoaded] = useState([]);
+    
+    const {id} = useParams();
+
     useEffect(() => {
         setCurrentEvents(props.calendar.events);
+        loadCurrentEvents();
     }, []);
 
-
+    function loadCurrentEvents(){
+      API.getCalendar(id)
+      .then(res =>{
+        console.log(res.data.events);
+        setCurrentEvents(res.data.events);
+      })
+      .catch(err => console.log(err));
+    }
+    
+    
     function handleWeekendsToggle(){
           setWeekendsVisible(!weekendsVisible);
     }
@@ -31,12 +43,17 @@ export default function Calendar(props) {
         }
     }
 
-    function handleEvents(events) {
-        
+    function handleEvents(events) {  
         setCurrentEvents(events);
-        
     }
 
+    function addEvent(){
+      API.updateCalendar(id, {
+        ...props.calendar,
+        events: currentEvents
+      }).then(res => console.log(res))
+      .catch(err => console.log(err));
+    }
 
     function renderEventContent(eventContent: EventContentArg) {
     return (
@@ -49,7 +66,7 @@ export default function Calendar(props) {
 
     function renderInfoDrawerEvent(event: EventApi) {
         return (
-          <li key={event.id}>
+          <li key={event.title+Date.now()}>
             <b>{formatDate(event.start, {year: "numeric", month: "short", day: "numeric"})}</b>
             <i>    {event.title}</i>
           </li>
@@ -76,41 +93,44 @@ export default function Calendar(props) {
           });
         }
     }
-
-    return (
-      <div>
-          <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={setWeekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            headerToolbar={{
-               left:  "title",
-              center: "",
-              right: "today"
-              }}
-            footerToolbar={{
-                left: "prev,next",
+    if(currentEvents){
+      return (
+        <div>
+            <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={setWeekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
+            <FullCalendar
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              headerToolbar={{
+                left:  "title",
                 center: "",
-                right: "dayGridMonth,timeGridWeek,timeGridDay"
-            }}
-            initialView="dayGridMonth"
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            weekends={weekendsVisible}
-            initialEvents={currentEvents} // alternatively, use the `events` setting to fetch from a feed
-            select={handleDateSelect}
-            eventContent={renderEventContent} // custom render function
-            eventClick={handleEventClick}
-            eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-            /* you can update a remote database when these fire:
-            eventAdd={function(){}}
-            eventChange={function(){}}
-            eventRemove={function(){}}
-            */
-          />
-      </div>
+                right: "today"
+                }}
+              footerToolbar={{
+                  left: "prev,next",
+                  center: "",
+                  right: "dayGridMonth,timeGridWeek,timeGridDay"
+              }}
+              initialView="dayGridMonth"
+              editable={true}
+              selectable={true}
+              selectMirror={true}
+              dayMaxEvents={true}
+              weekends={weekendsVisible}
+              initialEvents={currentEvents} // alternatively, use the `events` setting to fetch from a feed
+              select={handleDateSelect}
+              eventContent={renderEventContent} // custom render function
+              eventClick={handleEventClick}
+              eventsSet={handleEvents} // called after events are initialized/added/changed/removed
+              eventAdd={addEvent}
+              eventChange={addEvent}
+              eventRemove={addEvent}
+            />
+        </div>
+      ); 
+    } else {
+    return (
+      <div>Loading Calendar...<CircularProgress /></div>
     );
+    }
 }
 
 Calendar.propTypes = {

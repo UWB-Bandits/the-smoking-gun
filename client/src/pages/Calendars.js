@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Box,
-} from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import API from "../utils/API";
 import Typography from "@material-ui/core/Typography";
@@ -70,7 +67,6 @@ function Calendars() {
 
   return (
     <div>
-      <Box>
       <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
@@ -89,8 +85,7 @@ function Calendars() {
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>{calendar.name}</span>
           </Typography>
         </Breadcrumbs>
-        <Calendar calendar={calendar}/>
-      </Box>
+      <Calendar calendar={calendar}/>
     </div>
   );
 }

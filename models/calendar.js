@@ -5,7 +5,8 @@ const calendarSchema = new Schema({
   name: { type: String, required: true },
   events: [{
     title: String,
-    date: String
+    start: String,
+    end: String
   }],
   date: { type: Date, default: Date.now },
   book: { type: Schema.Types.ObjectId, ref: "Book" },
