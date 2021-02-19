@@ -4,7 +4,6 @@ import Jumbotron from "../components/Jumbotron";
 import BookButton from "../components/BookButton";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
-
 import WeatherWidget from "../components/DashboardWidgets/WeatherWidget";
 // import RandomWordWidget from "../components/DashboardWidgets/RandomWordWidget";
 // import DashboardAPI from "../utils/dashboardAPI";
@@ -121,7 +120,8 @@ function Dashboard() {
             colorScheme="yellow"
           />
           {usersBooks.map((item) => (
-            <BookButton key={item._id} link={`/books/${item._id}`} {...item} />
+              console.log(item),
+              <BookButton key={item._id} edit={true} id={item._id} link={`/books/${item._id}`} {...item} />
           ))}
           {isLoaded ?
             <WeatherWidget weather={weather} />

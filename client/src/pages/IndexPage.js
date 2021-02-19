@@ -5,6 +5,7 @@ import {
   AccordionSummary,
   Typography,
   AccordionDetails,
+  Grid
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -17,6 +18,8 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import HomeIcon from "@material-ui/icons/Home";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import EditModal from "../components/EditModal";
+import DeleteModal from "../components/DeleteModal";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
@@ -24,9 +27,6 @@ function IndexPage() {
   const [book, setBook] = useState({});
   const [lists, setLists] = useState([]);
   const [calendars, setCalendars] = useState([]);
-  
-  console.log(formData);
-  console.log(calendarFormData);
   const {id} = useParams();
 
   useEffect(() => {
@@ -115,6 +115,19 @@ function IndexPage() {
     <div>
       <Box>
         <TitleItem {...book} />
+        <Grid container justify="center" >
+          <EditModal 
+          title={book.title}
+          link={book.link}
+          description={book.description}
+          colorScheme={book.colorScheme}
+          id={id}
+          />
+          <DeleteModal
+          title={book.title}
+          id={id}
+          />
+        </Grid>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
