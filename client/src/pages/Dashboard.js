@@ -7,7 +7,6 @@ import API from "../utils/API";
 
 import WeatherWidget from "../components/DashboardWidgets/WeatherWidget";
 import RandomWordWidget from "../components/DashboardWidgets/RandomWordWidget";
-// import DashboardAPI from "../../../routes/api/dashboardAPI";
 import DashboardAPI from "../utils/dashboardAPI";
 
 function Dashboard() {
@@ -45,20 +44,60 @@ function Dashboard() {
       });
   };
 
-  let query = "90210";
-
   const weatherSearch = () => {
-    API.getWeather(query)
-      .then(res => {
-        console.log(res);
-        setWeather(res.data);
-        setIsLoaded(true);
-      })
-      .catch((err) => {
-        setIsLoaded(true);
-        console.log(err);
-      });
-  };
+    let options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    function success(pos) {
+      let crd = pos.coords;
+
+      console.log("Your current position is: ");
+      console.log(`Latitude: ${crd.latitude}`);
+      console.log(`Longitude: ${crd.longitude}`);
+      console.log(`More or less ${crd.accuracy} meters.`);
+  
+      API.postWeather({Latitude: crd.latitude,Longitude: crd.longitude})
+        .then(res => {
+          console.log(res);
+          setWeather(res.data);
+          setIsLoaded(true);
+        })
+        .catch(err => {
+          setIsLoaded(true);
+          console.log(err);
+        });
+    }
+
+    function errors(err) {
+      console.log(`ERROR(${err.code}) : ${err.message}`);
+    }
+
+    if (navigator.geolocation) {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then((result) => {
+          if (result.state === "granted") {
+            console.log(result.state);
+            // If granted then you can directly call your function here
+            navigator.geolocation.getCurrentPosition(success);
+          } else if (result.state === "prompt") {
+            console.log(result.state);
+            navigator.geolocation.getCurrentPosition(success, errors, options);
+          } else if (result.state === "denied") {
+            // If denied you have to show instructions to enable location
+            console.log("enable location");
+          }
+          result.onchange = () => {
+            console.log(result.state);
+          };
+        });
+      } else {
+      alert("Sorry not available!");
+      }
+    };
 
   const wordSearch = () => {
     DashboardAPI.searchWord()
