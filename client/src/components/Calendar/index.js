@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import FullCalendar, { EventApi, EventContentArg, formatDate } from "@fullcalendar/react";
+import FullCalendar, { formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -53,7 +53,7 @@ export default function Calendar(props) {
       .catch(err => console.log(err));
     }
 
-    function renderEventContent(eventContent: EventContentArg) {
+    function renderEventContent(eventContent) {
     return (
         <>
         <b>{eventContent.timeText}</b>
@@ -62,7 +62,7 @@ export default function Calendar(props) {
     );
     }
 
-    function renderInfoDrawerEvent(event: EventApi) {
+    function renderInfoDrawerEvent(event) {
         return (
           <li key={event.title+Date.now()}>
             <b>{formatDate(event.start, {year: "numeric", month: "short", day: "numeric"})}</b>
