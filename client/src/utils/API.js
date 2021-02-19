@@ -48,6 +48,10 @@ export default {
   getUser: function (id) {
     return axios.get("/api/users/" + id);
   },
+  // Makes call to weather api with user's location
+  postWeather: function (query) {
+    return axios.post("/api/weather/", query);
+  },
   getCalendars: function () {
     return axios.get("/api/calendars");
   },

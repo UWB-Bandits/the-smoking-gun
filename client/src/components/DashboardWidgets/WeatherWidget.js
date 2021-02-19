@@ -1,0 +1,88 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+// import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+// import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles({
+    root: {
+      minWidth: 275,
+    },
+    title: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+});
+
+export default function Weather({ weather }) {
+    const classes = useStyles();
+
+    console.log(weather);
+
+    let cityName = weather.location.name + ", " + weather.location.region;
+    let weatherText = weather.current.condition.text;
+    let weatherIcon = weather.current.condition.icon;
+    let temperature = "Current Temperature: " + weather.current.temp_f + ", but Feels Like: " + weather.current.feelslike_f;
+    let wind = "Wind speeds: " + weather.current.wind_mph + " mph, Gusts at " + weather.current.gust_mph;
+    let humidity = "Humidity: " + weather.current.humidity;
+    let updated = "Last updated at: " + weather.current.last_updated;
+  
+    return (
+      <Card className={classes.root}>
+        <Typography variant="h5" component="h2">
+            Weather
+        </Typography>
+        <CardContent>
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+            {cityName}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            {weatherText} 
+            <img src={weatherIcon} />
+          </Typography>
+          <Typography variant="body2" component="p">
+            {temperature} 
+          </Typography>
+          <Typography variant="body2" component="p">
+            {wind} 
+          </Typography>
+          <Typography variant="body2" component="p">
+            {humidity}
+          </Typography>
+          <Typography variant="body2" component="p">
+            {updated}
+          </Typography>
+        </CardContent>
+        {/* <CardActions>
+          <Button size="small">Learn More</Button>
+        </CardActions> */}
+        <Typography>
+            Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>
+        </Typography>
+      </Card>
+    );
+  }
+
+Weather.propTypes = {
+    weather: PropTypes.object,
+    current: PropTypes.object,
+    condition: PropTypes.object,
+    location: PropTypes.object,
+    name: PropTypes.string,
+    region: PropTypes.string,
+    text: PropTypes.string,
+    icon: PropTypes.string,
+    feelslike_f: PropTypes.string,
+    temp_f: PropTypes.string,
+    gust_mph: PropTypes.string,
+    wind_mph: PropTypes.string,
+    humidity: PropTypes.string,
+    updated: PropTypes.string
+};
+
+// export default Weather;
