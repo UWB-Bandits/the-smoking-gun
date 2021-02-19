@@ -48,8 +48,27 @@ export default {
   getUser: function (id) {
     return axios.get("/api/users/" + id);
   },
+  // Makes call to weather api with user's location
   postWeather: function (query) {
     return axios.post("/api/weather/", query);
+  },
+  getCalendars: function () {
+    return axios.get("/api/calendars");
+  },
+  // Gets the calendar with the given id
+  getCalendar: function (id) {
+    return axios.get("/api/calendars/" + id);
+  },
+  // Deletes the calendar with the given id
+  deleteCalendar: function (id) {
+    return axios.delete("/api/calendars/" + id);
+  },
+  // Saves a calendar to the database
+  saveCalendar: function (calendarData) {
+    return axios.post("/api/calendars", calendarData);
+  },
+  updateCalendar: function (id, calendarData) {
+    return axios.put("/api/calendars/" + id, calendarData);
   },
   createHabit: function (obj) {
     return axios.post("/api/habits/", obj);
