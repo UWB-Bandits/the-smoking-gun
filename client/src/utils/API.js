@@ -48,8 +48,8 @@ export default {
   getUser: function (id) {
     return axios.get("/api/users/" + id);
   },
-  getWeather: function () {
-    return axios.get("/api/weather/");
+  postWeather: function (query) {
+    return axios.post("/api/weather/", query);
   },
   createHabit: function (obj) {
     return axios.post("/api/habits/", obj);
