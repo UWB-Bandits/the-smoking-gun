@@ -6,8 +6,8 @@ import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
 
 import WeatherWidget from "../components/DashboardWidgets/WeatherWidget";
-import RandomWordWidget from "../components/DashboardWidgets/RandomWordWidget";
-import DashboardAPI from "../utils/dashboardAPI";
+// import RandomWordWidget from "../components/DashboardWidgets/RandomWordWidget";
+// import DashboardAPI from "../utils/dashboardAPI";
 
 function Dashboard() {
   // Gets current user data
@@ -17,13 +17,13 @@ function Dashboard() {
   const { currentUser } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
   const [weather, setWeather] = useState({});
-  const [randomWord, setRandomWord] = useState({});
+  // const [randomWord, setRandomWord] = useState({});
 
   useEffect(() => {
     getUser();
     getAllBooks();
     weatherSearch();
-    wordSearch();
+    // wordSearch();
   }, []);
 
   const getAllBooks = () => {
@@ -99,15 +99,15 @@ function Dashboard() {
       }
     };
 
-  const wordSearch = () => {
-    DashboardAPI.searchWord()
-      .then(res => {
-        setRandomWord(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const wordSearch = () => {
+  //   DashboardAPI.searchWord()
+  //     .then(res => {
+  //       setRandomWord(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   return (
     <div>
@@ -127,10 +127,10 @@ function Dashboard() {
             <WeatherWidget weather={weather} />
              : <div>Loading</div> 
           }
-          {isLoaded ?
+          {/* {isLoaded ?
             <RandomWordWidget randomWord={randomWord} />
              : <div>Loading</div> 
-          }
+          } */}
         </Grid>
       </Box>
     </div>

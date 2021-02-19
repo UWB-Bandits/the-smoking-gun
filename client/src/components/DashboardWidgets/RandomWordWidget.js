@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 });
 
 export default function WordCard({ randomWord }) {
+  console.log(randomWord);
   const classes = useStyles();
 
   return (
