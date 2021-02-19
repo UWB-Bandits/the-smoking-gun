@@ -8,7 +8,6 @@ export default {
   },
   getBooksWhere: function (user) {
     return axios.get("/api/books/findWhere/" + user);
-
   },
   // Gets the book with the given id
   getBook: function (id) {
@@ -66,5 +65,20 @@ export default {
   },
   updateCalendar: function (id, calendarData) {
     return axios.put("/api/calendars/" + id, calendarData);
+  },
+  createHabit: function (obj) {
+    return axios.post("/api/habits/", obj);
+  },
+  getHabits: function (book) {
+    return axios.get("/api/habits/" + book);
+  },
+  updateHabit: function (id, habitData) {
+    return axios.put("/api/habits/" + id, habitData);
+  },
+  deleteHabit: function (id) {
+    return axios.delete("/api/habits/" + id);
+  },
+  updateUser: function (id, obj) {
+    return axios.put("api/users/" + id, obj);
   },
 };

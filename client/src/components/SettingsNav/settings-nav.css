@@ -1,0 +1,31 @@
+#menuContainer {
+  display: flex;
+  justify-content: space-around;
+  margin: 0.5rem 0 3rem 0;
+  background: #757575;
+  color: #232323;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.menuItems {
+  padding: 0.5rem;
+}
+.sn-active {
+  color: #464545;
+  text-decoration: underline;
+}
+.menuItems:hover {
+  color: #acacac;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 750px) {
+  .menuItems {
+    padding: 5px;
+    margin: 0;
+    border-bottom: solid 1px black;
+  }
+  #menuContainer {
+    flex-direction: column;
+  }
+}

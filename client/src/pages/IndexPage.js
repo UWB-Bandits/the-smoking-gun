@@ -180,8 +180,8 @@ function IndexPage() {
               />
             </ul>
           </AccordionDetails>
-        </Accordion>
-        <Accordion disabled>
+          </Accordion>
+          <Accordion>
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
@@ -189,9 +189,12 @@ function IndexPage() {
             id="panel3a-header"
           >
             <Typography className={classes.heading}>
-              Habits (Feature coming soon!)
+              Habits
             </Typography>
           </AccordionSummary>
+          <AccordionDetails>
+              <h2><a href={`/habits/${id}`}>Track your daily habits</a></h2>
+          </AccordionDetails>        
         </Accordion>
       </Box>
     </div>
