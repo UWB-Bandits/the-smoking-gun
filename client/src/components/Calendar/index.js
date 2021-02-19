@@ -14,8 +14,6 @@ let eventGuid = 0;
 export default function Calendar(props) {
     const [weekendsVisible, setWeekendsVisible] = useState(false);
     const [currentEvents, setCurrentEvents] = useState([]);
-    // const [isLoaded, setIsLoaded] = useState([]);
-    
     const {id} = useParams();
 
     useEffect(() => {
