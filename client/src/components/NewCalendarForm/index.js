@@ -4,8 +4,8 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import Box from "@material-ui/core/Box";
 
-const NewListForm = (props) => {
-  const { handleInputChange, addItem, type, formDataShown} = props;
+const NewCalendarForm = (props) => {
+  const { handleCalendarInputChange, addCalendar, type, formDataShown} = props;
   return (
     <Box style={{width:"100%"}}>
       <form
@@ -23,7 +23,7 @@ const NewListForm = (props) => {
             label={`Add a new ${type}`}
             type="text"
             name="newList"
-            onChange={handleInputChange}
+            onChange={handleCalendarInputChange}
             value={formDataShown}
           />
         </div>
@@ -35,7 +35,7 @@ const NewListForm = (props) => {
           }}
           variant="contained"
           color="primary"
-          onClick={addItem}
+          onClick={addCalendar}
         >Add
         </Button>
       </form>
@@ -43,11 +43,11 @@ const NewListForm = (props) => {
   );
 };
 
-NewListForm.propTypes = {
-  addItem: PropTypes.func,
-  handleInputChange: PropTypes.func,
+NewCalendarForm.propTypes = {
+  addCalendar: PropTypes.func,
+  handleCalendarInputChange: PropTypes.func,
   type: PropTypes.string,
   formDataShown: PropTypes.string
 };
 
-export default NewListForm;
+export default NewCalendarForm;

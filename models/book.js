@@ -7,6 +7,7 @@ const bookSchema = new Schema({
   date: { type: Date, default: Date.now },
   // lists: {id: { type: Schema.Types.ObjectId, ref: "listSchema"}}
   lists: [{ type: Schema.Types.ObjectId, ref: "List" }],
+  calendars: [{ type: Schema.Types.ObjectId, ref: "Calendar" }],
   user: { type: String, required: true },
   habits: [{ type: Schema.Types.ObjectId, ref: "Habit" }],
 });
