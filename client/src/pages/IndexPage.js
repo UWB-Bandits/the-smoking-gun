@@ -5,7 +5,14 @@ import {
   AccordionSummary,
   Typography,
   AccordionDetails,
-  Grid
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  ListItemAvatar,
+  Avatar,
+  ListItemSecondaryAction
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -20,6 +27,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import EditModal from "../components/EditModal";
 import DeleteModal from "../components/DeleteModal";
+import IconButton from "@material-ui/core/IconButton";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
@@ -86,6 +95,10 @@ function IndexPage() {
     .catch(err => console.log(err));
   };
 
+  function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+  }
+
   const classes = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -148,21 +161,45 @@ function IndexPage() {
             <Typography className={classes.heading}>Lists</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ul>
+            <List className={classes.root} aria-label="mailbox folders">
               {lists ? lists.map((item) => (
-                <li key={item._id}>
-                  <a href={`/lists/${item._id}`}>{item.name}</a>
-                </li>
+                // <li key={item._id}>
+                  
+                //   <a href={`/lists/${item._id}`}>
+                //     {item.name}
+                //     <EditModal/>
+                //     <DeleteModal/>
+                //     </a>  
+                // </li>
+                <div key={item._id}>
+                 <ListItemLink href={`/lists/${item._id}`} >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <PlaylistAddCheckIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={item.name}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteModal id={item._id} name={item.name}/>
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItemLink>
+                <Divider />
+                </div>
+            
               ))
               :
-              <li>Add a new list to get started</li>
+              <ListItem>Add a new list to get started</ListItem>
             }
               <NewListForm
                 handleInputChange={handleInputChange}
                 addItem={addList}
                 type="list"
               />
-            </ul>
+            </List>
           </AccordionDetails>
         </Accordion>
         <Accordion>

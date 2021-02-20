@@ -32,6 +32,7 @@ export default function DeleteModal(props) {
 
 DeleteModal.propTypes = {
         title: PropTypes.string.isRequired,
+        name: PropTypes.string,
         id: PropTypes.string.isRequired,
 };
 
@@ -50,7 +51,7 @@ DeleteModal.propTypes = {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <DeleteBookForm title={props.title} id={props.id} />
+      <DeleteBookForm title={props.title} id={props.id} name={props.name} />
     </div>
   );
 

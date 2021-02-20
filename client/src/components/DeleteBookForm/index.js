@@ -8,6 +8,7 @@ const DeleteBookForm = (props) => {
 
     DeleteBookForm.propTypes = {
         title: PropTypes.string.isRequired,
+        name: PropTypes.string,
         id: PropTypes.string.isRequired,
     };
 
@@ -24,11 +25,19 @@ const DeleteBookForm = (props) => {
         })
         .catch(err => console.log(err));
     };
+    
+    let buttonText;
+
+    if(props.title){
+      buttonText = "Delete Book";
+    } else {
+      buttonText = "Delete List";
+    }
 
   return (
     <div style={{ display: "flex", justifyContent: "center", margin: "3rem" }}>
       <div>
-      <h2>Delete {"'"}{props.title}{"'"} Book</h2>
+      <h2>{buttonText}{": "}{props.title}{props.name}</h2>
         <p style={{ display: "inline-block", margin: "1rem" }}>
           Are you sure you want to delete this book?
         </p>
@@ -43,7 +52,7 @@ const DeleteBookForm = (props) => {
           }}
         onClick={handleDelete}
           >
-          Delete Book
+          {buttonText}
         </Button>
       </div>
     </div>
