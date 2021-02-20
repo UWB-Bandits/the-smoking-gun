@@ -10,12 +10,23 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles({
     root: {
       minWidth: 275,
+      position: "sticky",
+      bottom: "60px",
+      maxHeight: "200px",
+      // height: "auto",
+      width: "auto",
+      border: "3px solid #000000",
+      padding: "10px",
+      boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+      float: "inherit"
     },
     title: {
-      fontSize: 14,
+      fontSize: 14
     },
     pos: {
       marginBottom: 12,
+      float: "right",
+      textAlign: "center"
     },
 });
 
@@ -28,22 +39,23 @@ export default function Weather({ weather }) {
     let weatherText = weather.current.condition.text;
     let weatherIcon = weather.current.condition.icon;
     let temperature = "Current Temperature: " + weather.current.temp_f + ", but Feels Like: " + weather.current.feelslike_f;
-    let wind = "Wind speeds: " + weather.current.wind_mph + " mph, Gusts at " + weather.current.gust_mph;
+    let wind = "Wind speeds: " + weather.current.wind_mph + " mph, Gusts at " + weather.current.gust_mph + " mph";
     let humidity = "Humidity: " + weather.current.humidity;
     let updated = "Last updated at: " + weather.current.last_updated;
   
     return (
       <Card className={classes.root}>
         <Typography variant="h5" component="h2">
-            Weather
+            Current Weather
+            <Typography className={classes.title} color="textSecondary">
+              {cityName}
+              <img src={weatherIcon} style={{float: "right"}}/>
+            </Typography>
         </Typography>
         <CardContent>
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
-            {cityName}
-          </Typography>
           <Typography className={classes.pos} color="textSecondary">
             {weatherText} 
-            <img src={weatherIcon} />
+            {/* <img src={weatherIcon} /> */}
           </Typography>
           <Typography variant="body2" component="p">
             {temperature} 
@@ -61,7 +73,7 @@ export default function Weather({ weather }) {
         {/* <CardActions>
           <Button size="small">Learn More</Button>
         </CardActions> */}
-        <Typography>
+        <Typography variant="body2" component="p">
             Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>
         </Typography>
       </Card>
