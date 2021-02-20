@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
+import Calendars from "./pages/Calendars";
 import CreateBook from "./pages/CreateBook";
 import Footer from "./components/Footer";
 import Habits from "./pages/Habits";
@@ -68,6 +69,9 @@ function App() {
                 <Route path="/">
                   <SignIn />
                 </Route>
+                <Route path="/login">
+                  <SignIn />
+                </Route>
               </Switch>
             </>
           ) : (
@@ -90,11 +94,14 @@ function App() {
                   <Route exact path="/habits/:id">
                     <Habits />
                   </Route>
-                  <Route exact path="/settings">
-                    <Settings />
-                  </Route>
                   <Route exact path="/doodle">
                     <DoodlePage />
+                  </Route>
+                  <Route exact path="/calendars/:id">
+                    <Calendars />
+                  </Route>
+                  <Route exact path="/settings">
+                    <Settings />
                   </Route>
                   <Route>
                     <NoMatch />
