@@ -6,6 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
 
 import WeatherWidget from "../components/DashboardWidgets/WeatherWidget";
+import NewsWidget from "../components/DashboardWidgets/NewsWidget";
 // import RandomWordWidget from "../components/DashboardWidgets/RandomWordWidget";
 // import DashboardAPI from "../utils/dashboardAPI";
 
@@ -17,6 +18,7 @@ function Dashboard() {
   const { currentUser } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
   const [weather, setWeather] = useState({});
+  const [news, setNews] = useState({});
   // const [randomWord, setRandomWord] = useState({});
 
   useEffect(() => {
@@ -24,6 +26,7 @@ function Dashboard() {
     getAllBooks();
     weatherSearch();
     // wordSearch();
+    newsSearch();
   }, []);
 
   const getAllBooks = () => {
@@ -99,6 +102,17 @@ function Dashboard() {
       }
     };
 
+  const newsSearch = () => {
+    API.getNews()
+      .then(res => {
+        console.log(res.data);
+        setNews(res.data[0]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   // const wordSearch = () => {
   //   DashboardAPI.searchWord()
   //     .then(res => {
@@ -131,6 +145,10 @@ function Dashboard() {
             <RandomWordWidget randomWord={randomWord} />
              : <div>Loading</div> 
           } */}
+          {isLoaded ?
+            <NewsWidget news={news} />
+             : <div>Loading</div> 
+          }
         </Grid>
       </Box>
     </div>
