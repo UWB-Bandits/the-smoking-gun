@@ -82,17 +82,13 @@ function Habits() {
   const addHabit = () => {
 
     if (formData.newItem){
-      let updatedItems = habits;
-      updatedItems.push({ name: formData.newItem, tracking: [], book: id });
-      setHabits(updatedItems );
-      setFormData({ newItem: "" });
-  
       API.createHabit({ 
         name: formData.newItem, 
         tracking: [], 
         book: id 
-      }).then(res => console.log(res))
+      }).then(loadHabits())
       .catch(err => console.log(err));
+      setFormData({ newItem: "" });
     }
   };
 
@@ -182,7 +178,7 @@ function Habits() {
 
             return (
               <ListItem
-                key={value.name}
+                key={value._id}
                 dense
                 button
                 onClick={handleToggle(value)}
