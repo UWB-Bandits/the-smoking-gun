@@ -18,7 +18,7 @@ function Dashboard() {
   const { currentUser } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
   const [weather, setWeather] = useState({});
-  const [news, setNews] = useState({});
+  const [news, setNews] = useState([]);
   // const [randomWord, setRandomWord] = useState({});
 
   useEffect(() => {
@@ -106,7 +106,8 @@ function Dashboard() {
     API.getNews()
       .then(res => {
         console.log(res.data);
-        setNews(res.data[0]);
+        let topNews = res.data.slice(0, 10);
+        setNews(topNews);
       })
       .catch(err => {
         console.log(err);
@@ -145,8 +146,8 @@ function Dashboard() {
             <RandomWordWidget randomWord={randomWord} />
              : <div>Loading</div> 
           } */}
-          {isLoaded ?
-            <NewsWidget news={news} />
+          {isLoaded ? 
+            <NewsWidget news={[...news]} />
              : <div>Loading</div> 
           }
         </Grid>
