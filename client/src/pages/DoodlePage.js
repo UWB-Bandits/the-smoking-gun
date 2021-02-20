@@ -1,14 +1,45 @@
-import React, { useRef, useEffect, useState } from "react";
-
+/* eslint-disable no-unused-vars */
+import React, { useRef, useEffect, useState, useReducer } from "react";
+import CanvasSidebar from "../components/CanvasSidebar/CanvasSidebar";
+import SaveImageModal from "../components/SaveImageModal/SaveImageModal";
+const pathname = window.location.pathname;
+if (pathname === "/doodle") {
+  require("../components/CanvasSidebar/canvas.css");
+  console.log(pathname);
+}
 const DoodlePage = () => {
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [imgURl, setImgUrl] = useState("");
-  const [lineWidth, setLineWidth] = useState(4);
-  const [lineColor, setLineColor] = useState("black");
+  const [canvasPainted, setCanvasPainted] = useState(false);
   let canvas;
   let ctx;
+
+  const ACTIONS = {
+    COLOR: "change color",
+    PEN: "change pen",
+    WIDTH: "change width",
+  };
+
+  const updateCanvas = (canvasSetting, action) => {
+    switch (action.type) {
+      case ACTIONS.COLOR:
+        return { ...canvasSetting, lineColor: action.payload.lineColor };
+      case ACTIONS.PEN:
+        return { ...canvasSetting, lineColor: action.payload.lineColor };
+      case ACTIONS.WIDTH:
+        return { ...canvasSetting, lineWidth: action.payload.lineWidth };
+      default:
+        return canvasSetting;
+    }
+  };
+
+  const [canvasSetting, dispatch] = useReducer(updateCanvas, {
+    penStyle: "round",
+    lineColor: "black",
+    lineWidth: 3,
+  });
 
   useEffect(() => {
     SetCanvas();
@@ -17,33 +48,30 @@ const DoodlePage = () => {
 
   useEffect(() => {
     SetCanvas();
-  }, [lineColor, lineWidth]);
+  }, [canvasSetting]);
 
   const SetCanvas = () => {
-    //   changeColors();
     canvas = canvasRef.current;
     ctx = canvas.getContext("2d");
-    ctx.lineCap = "round";
-    ctx.strokeStyle = lineColor;
-    ctx.lineWidth = lineWidth;
-    ctxRef.current = ctx;
-  };
+    ctx.lineCap = canvasSetting.penStyle;
+    ctx.strokeStyle = canvasSetting.lineColor;
+    ctx.lineWidth = canvasSetting.lineWidth;
+    if (!canvasPainted) {
+      ctx.fillStyle = "#f3f3f3";
+      ctx.fillRect(0, 0, window.innerWidth * 0.9, window.innerWidth * 0.9);
+      setCanvasPainted(true);
+    }
 
-  const changeColors = (e) => {
-    setLineColor(e.target.value);
-    // SetCanvas();
-  };
-  const changeWidth = (e) => {
-    setLineWidth(e.target.value);
-    //   SetCanvas();
+    ctxRef.current = ctx;
+    console.log(ctxRef.current);
   };
 
   const resize = () => {
     window.addEventListener("resize", resize);
-    canvas.width = window.innerWidth * 0.8;
-    canvas.height = window.innerHeight - 150;
-    canvas.style.width = `${window.innerWidth * 0.8}px`;
-    canvas.style.height = `${window.innerHeight * 0.8} px`;
+    canvas.width = window.innerWidth * 0.9;
+    canvas.height = window.innerHeight * 0.9;
+    canvas.style.width = `${window.innerWidth * 0.9}px`;
+    canvas.style.height = `${window.innerHeight * 0.9} px`;
   };
 
   const startDrawing = ({ nativeEvent }) => {
@@ -67,8 +95,6 @@ const DoodlePage = () => {
     ctxRef.current.stroke();
   };
   const makeImg = () => {
-    // const test = canvasRef.toDataURL();
-    // console.log(test);
     const test = canvasRef.current.toDataURL();
     console.log(test);
     console.log(canvasRef.current);
@@ -79,11 +105,14 @@ const DoodlePage = () => {
     var rect = e.target.getBoundingClientRect();
     console.log(e.changedTouches[0]);
     const { clientX, clientY } = e.changedTouches[0];
-    console.log(clientX, clientY);
+    // console.log(clientX, clientY);
+    console.log(ctxRef.current);
     ctxRef.current.beginPath();
     ctxRef.current.moveTo(clientX - rect.left, clientY - rect.top);
+
     setIsDrawing(true);
   };
+
   const touchDraw = (e) => {
     var rect = e.target.getBoundingClientRect();
     if (!isDrawing) {
@@ -92,74 +121,24 @@ const DoodlePage = () => {
     const { clientX, clientY } = e.changedTouches[0];
     ctxRef.current.lineTo(clientX - rect.left, clientY - rect.top);
     ctxRef.current.stroke();
+    ctxRef.current.stroke();
   };
-  // _______________________________________Download btn________________________________________________________________________________
-  //   const download = () => {
-  //     if (window.navigator.msSaveBlob) {
-  //       window.navigator.msSaveBlob(
-  //         canvasRef.current.msToBlob(),
-  //         "doodle-img.png"
-  //       );
-  //     }
-  //   };
 
   return (
     <div>
-      <button onClick={makeImg} ref={canvasRef}>
-        Make an Image?
-      </button>
-      <button value="red" onClick={changeColors} ref={canvasRef}>
-        change color
-      </button>
-      <button value={8} onClick={changeWidth} ref={canvasRef}>
-        change Width
-      </button>
+      <CanvasSidebar
+        canvasSetting={canvasSetting}
+        ACTIONS={ACTIONS}
+        dispatch={dispatch}
+        makeImg={makeImg}
+      />
 
-      {imgURl && (
-        <div
-          style={{ position: "absolute", zIndex: 1000, margin: "10% auto 20%" }}
-        >
-          <div>
-            {window.navigator.msSaveBlob ? (
-              <button
-                onClick={window.navigator.msSaveBlob(imgURl, "doodle-img.png")}
-              >
-                {" "}
-                i/e download
-              </button>
-            ) : (
-              <a href={imgURl} download="doodle-img.png">
-                <button> normal download</button>
-              </a>
-            )}
-            <button
-              onClick={() => {
-                setImgUrl();
-              }}
-            >
-              close
-            </button>
-          </div>
-
-          <img
-            style={{
-              background: "black",
-              width: "200px",
-              height: "200px",
-            }}
-            src={imgURl}
-          />
-        </div>
-      )}
+      {imgURl && <SaveImageModal setImgUrl={setImgUrl} imgURl={imgURl} />}
 
       <canvas
         style={{
           background: "#f3f3f3",
-          marginRight: "10%",
-          marginLeft: "10%",
-          //   position: "absolute",
-          left: "10%",
-          right: "10%",
+          margin: "8vh 5vw 2vh 5vw",
           touchAction: "none",
         }}
         onMouseDown={startDrawing}
