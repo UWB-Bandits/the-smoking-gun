@@ -97,15 +97,6 @@ function Lists() {
       marginLeft: "10px",
       marginRight: "10px",
     },
-    accordion: {
-      width: "100%",
-      marginLeft: "10px",
-      marginRight: "10px",
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-    },
     link: {
       display: "flex",
     },
@@ -117,7 +108,7 @@ function Lists() {
   }));
 
   return (
-    <div>
+    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Box>
         <TitleItem title={list.name} description={list.description}/>
         <Breadcrumbs aria-label="breadcrumb">

@@ -70,7 +70,7 @@ const SignIn = () => {
   };
 
   return (
-    <div>
+    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <div className="formContainer" style={{ marginTop: "40px" }}>
         {formDisplay === "Log In" ? (
           <LoginForm

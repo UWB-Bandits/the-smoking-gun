@@ -147,7 +147,7 @@ function Habits() {
   }));
 
   return (
-    <div>
+    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}> 
       <Box>
         <TitleItem title="Your Daily Habits" description={dateString}/>
         <Breadcrumbs aria-label="breadcrumb">
@@ -182,6 +182,7 @@ function Habits() {
                 dense
                 button
                 onClick={handleToggle(value)}
+                style={{backgroundColor:"rgba(255, 255, 255, 0.75)"}}
               >
                 <ListItemIcon>
                   <Checkbox

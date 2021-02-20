@@ -59,7 +59,7 @@ function App() {
 
   console.log(mongoUser);
 
-  return (
+  return (<div style={{minHeight:"100vh", backgroundImage:"url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)", backgroundSize:"100%"}}>
     <AuthProvider>
       <div id="App">
         <Router>
@@ -72,13 +72,16 @@ function App() {
               </Switch>
             </>
           ) : (
-            <div>
+            <div >
               <HeadingNav />
+              
               <Container>
               <Switch>
+                
                 <Route exact path={["/", "/dashboard"]}>
                   <Dashboard />
                 </Route>
+                
                 <Route exact path="/books/:id">
                   <IndexPage />
                 </Route>
@@ -117,6 +120,7 @@ function App() {
         </Router>
       </div>
     </AuthProvider>
+    </div>
   );
 }
 

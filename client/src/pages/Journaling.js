@@ -123,7 +123,7 @@ function Journaling(props) {
   }));
 
   return (
-    <div>
+    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Box>
         <TitleItem title={props.type==="old" ? entry.title : "New Journal Entry"} />
         <Breadcrumbs aria-label="breadcrumb">
