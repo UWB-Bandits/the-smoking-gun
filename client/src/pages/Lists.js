@@ -63,13 +63,12 @@ function Lists() {
     if (formData.newItem){
       let updatedItems = items;
       updatedItems.push({ name: formData.newItem, completed: false });
-      setList({ ...list, items: updatedItems });
       setFormData({ newItem: "" });
   
       API.updateList(id, {
         ...list,
-        items: items
-      }).then(res => console.log(res))
+        items: updatedItems
+      }).then(loadList())
       .catch(err => console.log(err));
     }
   };
@@ -90,7 +89,7 @@ function Lists() {
     API.updateList(id, {
       ...list,
       items: items
-    }).then(res => setList(res.data))
+    }).then(loadList())
     .catch(err => console.log(err));
 
   };
