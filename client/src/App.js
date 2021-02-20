@@ -62,10 +62,10 @@ function App() {
     <AuthProvider>
       <div id="App">
         <Router>
-          {!mongoUser && !error ? (
+          {!mongoUser && !error && !isLoggedIn ? (
             <>
               <Switch>
-                <Route exact path="/">
+                <Route path="/">
                   <SignIn />
                 </Route>
               </Switch>
@@ -73,7 +73,7 @@ function App() {
           ) : (
             <div>
               <HeadingNav />
-              <Container>
+              <Container id="appContainer">
                 <Switch>
                   <Route exact path={["/", "/dashboard"]}>
                     <Dashboard />
@@ -81,7 +81,6 @@ function App() {
                   <Route exact path="/books/:id">
                     <IndexPage />
                   </Route>
-
                   <Route exact path="/lists/:id">
                     <Lists />
                   </Route>
