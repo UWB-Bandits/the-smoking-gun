@@ -139,6 +139,7 @@ function IndexPage() {
           <DeleteModal
           title={book.title}
           id={id}
+          type="book"
           />
         </Grid>
         <Breadcrumbs aria-label="breadcrumb">
@@ -183,7 +184,7 @@ function IndexPage() {
                   />
                   <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete">
-                      <DeleteModal id={item._id} name={item.name}/>
+                      <DeleteModal id={item._id} name={item.name} type="list"/>
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItemLink>
@@ -214,7 +215,7 @@ function IndexPage() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ul>
+            {/* <ul>
               {calendars ? calendars.map((item) => (
                 <li key={item._id}>
                   <a href={`/calendars/${item._id}`}>{item.name}</a>
@@ -223,12 +224,39 @@ function IndexPage() {
               :
               <li>Add a new list to get started</li>
             }
+              
+            </ul> */}
+            <List className={classes.root} aria-label="mailbox folders">
+              {calendars ? calendars.map((item) => (
+                <div key={item._id}>
+                 <ListItemLink href={`/calendars/${item._id}`} >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <PlaylistAddCheckIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={item.name}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteModal id={item._id} name={item.name} type={"calendar"}/>
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItemLink>
+                <Divider />
+                </div>
+            
+              ))
+              :
+              <ListItem>Add a new calendar to get started</ListItem>
+            }
               <NewCalendarForm
                 handleCalendarInputChange={handleCalendarInputChange}
                 addCalendar={addCalendar}
                 type="Calendar"
               />
-            </ul>
+            </List>
           </AccordionDetails>
           </Accordion>
           <Accordion>

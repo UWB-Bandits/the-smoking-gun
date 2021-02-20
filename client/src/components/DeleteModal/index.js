@@ -31,9 +31,10 @@ const useStyles = makeStyles((theme) => ({
 export default function DeleteModal(props) {
 
 DeleteModal.propTypes = {
-        title: PropTypes.string.isRequired,
+        title: PropTypes.string,
         name: PropTypes.string,
         id: PropTypes.string.isRequired,
+        type: PropTypes.string
 };
 
   const classes = useStyles();
@@ -51,7 +52,7 @@ DeleteModal.propTypes = {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <DeleteBookForm title={props.title} id={props.id} name={props.name} />
+      <DeleteBookForm title={props.title} id={props.id} name={props.name} type={props.type} />
     </div>
   );
 
