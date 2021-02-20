@@ -69,9 +69,6 @@ function App() {
                 <Route path="/">
                   <SignIn />
                 </Route>
-                <Route path="/login">
-                  <SignIn />
-                </Route>
               </Switch>
             </>
           ) : (
