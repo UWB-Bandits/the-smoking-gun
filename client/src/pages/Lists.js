@@ -83,12 +83,9 @@ function Lists() {
       newChecked[currentIndex].completed = false;
     }
 
-
-    setItems(newChecked);
-
     API.updateList(id, {
       ...list,
-      items: items
+      items: newChecked
     }).then(loadList())
     .catch(err => console.log(err));
 
