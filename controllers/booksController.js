@@ -5,6 +5,7 @@ module.exports = {
   findAll: function (req, res) {
     db.Book.find({})
       .populate("lists")
+      .populate("calendars")
       .sort({ date: -1 })
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
@@ -13,6 +14,7 @@ module.exports = {
     db.Book.find({user: req.params.id})
       .populate("lists")
       .populate("entries")
+      .populate("calendars")
       .sort({ date: -1 })
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
@@ -21,6 +23,7 @@ module.exports = {
     db.Book.findById(req.params.id)
       .populate("lists")
       .populate("entries")
+      .populate("calendars")
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },

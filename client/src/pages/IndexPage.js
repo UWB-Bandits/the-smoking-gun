@@ -11,6 +11,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TitleItem from "../components/TitleItem";
 import { makeStyles } from "@material-ui/core/styles";
 import NewListForm from "../components/NewItemForm";
+import NewCalendarForm from "../components/NewCalendarForm";
 import API from "../utils/API";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
@@ -19,12 +20,14 @@ import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
+  const [calendarFormData, setCalendarFormData] = useState({ newCalendar: "" });
   const [book, setBook] = useState({});
   const [lists, setLists] = useState([]);
   const [entries, setEntries] = useState([]);
+  const [calendars, setCalendars] = useState([]);
   
   console.log(formData);
- 
+  console.log(calendarFormData);
   const {id} = useParams();
 
   useEffect(() => {
@@ -35,6 +38,7 @@ function IndexPage() {
         setBook(res.data);
         setLists(res.data.lists);
         setEntries(res.data.entries);
+        setCalendars(res.data.calendars);
       })
       .catch(err => console.log(err));
   }, []);
@@ -42,6 +46,11 @@ function IndexPage() {
   const handleInputChange = (e) => {
     const { value } = e.target;
     setFormData({ newList: value });
+  };
+
+  const handleCalendarInputChange = (e) => {
+    const { value } = e.target;
+    setCalendarFormData({ newCalendar: value });
   };
 
   const addList = () => {
@@ -58,6 +67,23 @@ function IndexPage() {
       }).then(res => console.log(res))
       .catch(err => console.log(err));
       window.location.href = "/lists/" + res.data._id;
+    })
+    .catch(err => console.log(err));
+  };
+
+  const addCalendar = () => {
+    API.saveCalendar({
+      name: calendarFormData.newCalendar,
+      book: book._id
+    }).then(res => {
+      let newBookCalendars = calendars.map(calendar => calendar._id);
+      newBookCalendars.push(res.data._id);
+      API.updateBook(id, {
+        ...book,
+        calendars: newBookCalendars
+      }).then(res => console.log(res))
+      .catch(err => console.log(err));
+      window.location.href = "/calendars/" + res.data._id;
     })
     .catch(err => console.log(err));
   };
@@ -128,7 +154,36 @@ function IndexPage() {
             </ul>
           </AccordionDetails>
         </Accordion>
-        <Accordion >
+        <Accordion>
+          <AccordionSummary
+            className={classes.accordion}
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>
+              Calendars
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <ul>
+              {calendars ? calendars.map((item) => (
+                <li key={item._id}>
+                  <a href={`/calendars/${item._id}`}>{item.name}</a>
+                </li>
+              ))
+              :
+              <li>Add a new list to get started</li>
+            }
+              <NewCalendarForm
+                handleCalendarInputChange={handleCalendarInputChange}
+                addCalendar={addCalendar}
+                type="Calendar"
+              />
+            </ul>
+          </AccordionDetails>
+          </Accordion>
+          <Accordion>
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
@@ -142,18 +197,6 @@ function IndexPage() {
           <AccordionDetails>
               <h2><a href={`/habits/${id}`}>Track your daily habits</a></h2>
           </AccordionDetails>        
-        </Accordion>
-        <Accordion disabled>
-          <AccordionSummary
-            className={classes.accordion}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel3a-content"
-            id="panel3a-header"
-          >
-            <Typography className={classes.heading}>
-              Calendars (Feature coming soon!)
-            </Typography>
-          </AccordionSummary>
         </Accordion>
         <Accordion>
           <AccordionSummary

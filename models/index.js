@@ -3,6 +3,7 @@ module.exports = {
     List: require("./list"),
     User: require("./user"),
     Habit: require("./habits"),
-    Entry: require("./entries")
+    Entry: require("./entries"),
+    Calendar: require("./calendar"),
   };
   
