@@ -3,6 +3,7 @@ const bookRoutes = require("./books");
 const listRoutes = require("./lists");
 const userRoutes = require("./users");
 const habitRoutes = require("./habits");
+const entryRoutes = require("./entries");
 
 // Book routes
 router.use("/books", bookRoutes);
@@ -12,5 +13,7 @@ router.use("/lists", listRoutes);
 router.use("/users", userRoutes);
 
 router.use("/habits", habitRoutes);
+
+router.use("/entries", entryRoutes);
 
 module.exports = router;

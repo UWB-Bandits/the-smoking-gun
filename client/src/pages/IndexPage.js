@@ -21,6 +21,7 @@ function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
   const [book, setBook] = useState({});
   const [lists, setLists] = useState([]);
+  const [entries, setEntries] = useState([]);
   
   console.log(formData);
  
@@ -33,6 +34,7 @@ function IndexPage() {
       
         setBook(res.data);
         setLists(res.data.lists);
+        setEntries(res.data.entries);
       })
       .catch(err => console.log(err));
   }, []);
@@ -152,6 +154,31 @@ function IndexPage() {
               Calendars (Feature coming soon!)
             </Typography>
           </AccordionSummary>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            className={classes.accordion}
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>
+              Journal Entries
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <ul>
+              {entries ? entries.map(entry => (
+                <li key={entry._id}>
+                  <a href={`/journal/${entry._id}`}>{entry.title}</a>
+                </li>
+              ))
+              :
+              <li>Add a new entry to get started</li>
+            }
+                <p><a href={`/new-entry/${id}`}>Add a new journal entry</a></p>
+            </ul>
+          </AccordionDetails>
         </Accordion>
       </Box>
     </div>

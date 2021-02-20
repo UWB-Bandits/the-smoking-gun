@@ -16,6 +16,7 @@ import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
 import { Container } from "@material-ui/core";
+import Journaling from "./pages/Journaling";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -92,6 +93,12 @@ function App() {
                 </Route>
                 <Route exact path="/settings">
                   <Settings />
+                </Route>
+                <Route exact path="/new-entry/:id">
+                  <Journaling type="new"/>
+                </Route>
+                <Route exact path="/journal/:id">
+                  <Journaling type="old"/>
                 </Route>
                 <Route>
                   <NoMatch />
