@@ -10,7 +10,6 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles({
     root: {
       minWidth: 275,
-      position: "sticky",
       bottom: "60px",
       maxHeight: "200px",
       maxWidth: "300px",
@@ -32,7 +31,7 @@ const useStyles = makeStyles({
 export default function Weather({ weather }) {
     const classes = useStyles();
 
-    console.log(weather);
+    // console.log(weather);
 
     let cityName = weather.location.name + ", " + weather.location.region;
     let weatherText = weather.current.condition.text;
