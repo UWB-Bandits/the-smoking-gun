@@ -43,8 +43,6 @@ function IndexPage() {
   useEffect(() => {
     API.getBook(id)
       .then(res => {
-        console.log(res);
-      
         setBook(res.data);
         setLists(res.data.lists);
         setEntries(res.data.entries);
@@ -74,7 +72,7 @@ function IndexPage() {
       API.updateBook(id, {
         ...book,
         lists: newBookLists
-      }).then(res => console.log(res))
+      }).then(res => res)
       .catch(err => console.log(err));
       window.location.href = "/lists/" + res.data._id;
     })
@@ -91,7 +89,7 @@ function IndexPage() {
       API.updateBook(id, {
         ...book,
         calendars: newBookCalendars
-      }).then(res => console.log(res))
+      }).then(res => res)
       .catch(err => console.log(err));
       window.location.href = "/calendars/" + res.data._id;
     })

@@ -34,7 +34,6 @@ function Calendars() {
           bookName: res.data.book.title,
           bookId: res.data.book._id
         };
-
         setCalendar(pageList);
       })
       .catch(err => console.log(err));
