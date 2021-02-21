@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
 export default function EditModal(props) {
 
   EditModal.propTypes = {
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    description: PropTypes.string,
     colorScheme: PropTypes.string,
-    id: PropTypes.string
+    id: PropTypes.string.isRequired
   };
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render

@@ -47,7 +47,6 @@ function Lists() {
         };
 
         setList(pageList);
-        console.log(res.data);
         setItems(res.data.items);
       })
       .catch(err => console.log(err));
@@ -59,7 +58,6 @@ function Lists() {
   };
 
   const addItem = () => {
-    console.log(formData);
     if (formData.newItem){
       let updatedItems = items;
       updatedItems.push({ name: formData.newItem, completed: false });
@@ -69,7 +67,7 @@ function Lists() {
       API.updateList(id, {
         ...list,
         items: items
-      }).then(res => console.log(res))
+      }).then(res => res)
       .catch(err => console.log(err));
     }
   };

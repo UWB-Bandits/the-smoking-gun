@@ -92,7 +92,7 @@ function Habits() {
         name: formData.newItem, 
         tracking: [], 
         book: id 
-      }).then(res => console.log(res))
+      }).then(res => res)
       .catch(err => console.log(err));
     }
   };

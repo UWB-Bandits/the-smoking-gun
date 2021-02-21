@@ -30,7 +30,6 @@ function Dashboard() {
     API.getBooksWhere(currentUser.uid)
       .then((res) => {
         setUsersBooks(res.data);
-        // console.log(res);
       })
       .catch((err) => console.log(err));
   };
@@ -39,7 +38,6 @@ function Dashboard() {
     API.getUser(currentUser.uid)
       .then(res => {
         setUser(res.data);
-        // console.log(res);
       });
   };
 
@@ -52,15 +50,9 @@ function Dashboard() {
 
     function success(pos) {
       let crd = pos.coords;
-
-      console.log("Your current position is: ");
-      console.log(`Latitude: ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-      console.log(`More or less ${crd.accuracy} meters.`);
   
       API.postWeather({Latitude: crd.latitude,Longitude: crd.longitude})
         .then(res => {
-          console.log(res);
           setWeather(res.data);
           setIsLoaded(true);
         })
@@ -79,11 +71,9 @@ function Dashboard() {
         .query({ name: "geolocation" })
         .then((result) => {
           if (result.state === "granted") {
-            console.log(result.state);
             // If granted then you can directly call your function here
             navigator.geolocation.getCurrentPosition(success);
           } else if (result.state === "prompt") {
-            console.log(result.state);
             navigator.geolocation.getCurrentPosition(success, errors, options);
           } else if (result.state === "denied") {
             // If denied you have to show instructions to enable location
@@ -120,7 +110,6 @@ function Dashboard() {
             colorScheme="yellow"
           />
           {usersBooks.map((item) => (
-              console.log(item),
               <BookButton key={item._id} edit={true} id={item._id} link={`/books/${item._id}`} {...item} />
           ))}
           {isLoaded ?
