@@ -7,6 +7,7 @@ import API from "../utils/API";
 
 import WeatherWidget from "../components/DashboardWidgets/WeatherWidget";
 import NewsWidget from "../components/DashboardWidgets/NewsWidget";
+// import { ThemeContext } from "../contexts/ThemeContext";
 // import RandomWordWidget from "../components/DashboardWidgets/RandomWordWidget";
 // import DashboardAPI from "../utils/dashboardAPI";
 
@@ -21,6 +22,14 @@ function Dashboard() {
   const [news, setNews] = useState([]);
   // const [randomWord, setRandomWord] = useState({});
 
+  // const [booktheme, setBookTheme] = useState();
+
+  // const grabBookTheme = (id) => {
+  //   API.getBook(id)
+  //     .then(res =>
+  //       setBookTheme(res.data.colorScheme));
+  // };
+
   useEffect(() => {
     getUser();
     getAllBooks();
@@ -28,6 +37,7 @@ function Dashboard() {
     // wordSearch();
     newsSearch();
   }, []);
+
 
   const getAllBooks = () => {
     //  for the currentUser.uid
@@ -57,14 +67,14 @@ function Dashboard() {
     function success(pos) {
       let crd = pos.coords;
 
-      console.log("Your current position is: ");
-      console.log(`Latitude: ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-      console.log(`More or less ${crd.accuracy} meters.`);
+      // console.log("Your current position is: ");
+      // console.log(`Latitude: ${crd.latitude}`);
+      // console.log(`Longitude: ${crd.longitude}`);
+      // console.log(`More or less ${crd.accuracy} meters.`);
   
       API.postWeather({Latitude: crd.latitude,Longitude: crd.longitude})
         .then(res => {
-          console.log(res);
+          // console.log(res);
           setWeather(res.data);
           setIsLoaded(true);
         })
@@ -105,7 +115,7 @@ function Dashboard() {
   const newsSearch = () => {
     API.getNews()
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         let topNews = res.data.slice(0, 10);
         setNews(topNews);
       })
@@ -136,7 +146,9 @@ function Dashboard() {
             colorScheme="yellow"
           />
           {usersBooks.map((item) => (
-            <BookButton key={item._id} link={`/books/${item._id}`} {...item} />
+            // <ThemeContext.Consumer key={item.colorScheme}>
+              <BookButton key={item._id} link={`/books/${item._id}`} {...item} />
+            // </ThemeContext.Consumer>
           ))}
           {isLoaded ?
             <WeatherWidget weather={weather} />
