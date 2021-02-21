@@ -8,40 +8,11 @@ import DeleteModal from "../DeleteModal";
 
 
 
-let bookWidth;
-let pushTop;
-let textSize;
-var width = window.innerWidth;
 
-window.onresize = () => {
-  let newWidth = window.innerWidth;
-  if ((width>1100 && newWidth<1100)||(width>550 && newWidth<550)||(width>340 && newWidth<340)||(width<1100 && newWidth>1100)||(width<550 && newWidth>550)||(width<340 && newWidth>340)){
-    location.reload();
-  }
-};
 
-if (width>1100) {
-  bookWidth= "350px";
-  pushTop= "100px";
-  textSize = "30px";
-} else if (width>550) {
-  bookWidth= "250px";
-  pushTop= "50px";
-  textSize = "25px";
-} else if (width>340) {
-  bookWidth= "150px";
-  pushTop="15px";
-  textSize = "15px";
-} else {
-  bookWidth= "120px";
-  pushTop="10px";
-  textSize = "12px";
-}
 
 const useStyles = makeStyles({
   root:{
-    width: bookWidth,
-    height: bookWidth,
     marginRight: "auto",
     marginLeft: "auto",
     marginBottom: "10px",
@@ -65,23 +36,22 @@ const useStyles = makeStyles({
     backgroundColor: "rgba(204, 204, 204, 0.75)",
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: textSize
   },
-  titleText:{
-    marginTop: pushTop
-  }
 });
 
 export default function BookButton(props) {
   const classes = useStyles();
 
+  const {bookSize} = props;
+
   BookButton.propTypes = {
     title: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.string,
     colorScheme: PropTypes.string,
     edit: PropTypes.bool,
-    id: PropTypes.string
+    id: PropTypes.string,
+    bookSize: PropTypes.object
   };
 
   if(props.edit){
@@ -89,14 +59,14 @@ export default function BookButton(props) {
       <Grid item md={4} xs={6}>
         
     <Link href={props.link}>
-        <Card className={classes.root +" " + classes[props.colorScheme]}>
+        <Card className={classes.root +" " + classes[props.colorScheme]} style={{width:bookSize.bookWidth, height:bookSize.bookWidth}}>
         
         <CardActionArea>
             <CardContent>
-            <Typography className={classes.text} gutterBottom variant="h5" component="h2">
+            <Typography className={classes.text} style={{marginTop:bookSize.pushTop, fontSize:bookSize.textSize}} gutterBottom variant="h5" component="h2">
                 {props.title}
             </Typography>
-            <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
+            <Typography className={classes.text} style={{fontSize:bookSize.textSize}} variant="body2" color="textSecondary" component="p">
                 {props.description}
             </Typography>
             </CardContent>
@@ -123,13 +93,13 @@ export default function BookButton(props) {
   return (
     <Grid item md={4} xs={6}>
     <Link href={props.link}>
-        <Card className={classes.root +" " + classes[props.colorScheme]}>
+        <Card className={classes.root +" " + classes[props.colorScheme]} style={{width:bookSize.bookWidth, height:bookSize.bookWidth}}>
         <CardActionArea>
             <CardContent>
-            <Typography className={classes.text + " " + classes.titleText} gutterBottom variant="h5" component="h2">
+            <Typography className={classes.text + " " + classes.titleText} style={{marginTop:bookSize.pushTop, fontSize:bookSize.textSize}} gutterBottom variant="h5" component="h2">
                 {props.title}
             </Typography>
-            <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
+            <Typography className={classes.text} style={{fontSize:bookSize.textSize}} variant="body2" color="textSecondary" component="p">
                 {props.description}
             </Typography>
             </CardContent>
