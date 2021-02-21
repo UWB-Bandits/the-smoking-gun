@@ -27,7 +27,7 @@ TitleItem.propTypes = {
 };
 
 export default function TitleItem(props) {
-  const bookTheme = useContext(ThemeContext);
+  const bookTheme = useContext(ThemeContext)[0];
   const currentTheme = BookThemes[bookTheme];
   // console.log(bookTheme);
 

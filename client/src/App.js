@@ -24,9 +24,10 @@ function App() {
   const [mongoUser, setMongoUser] = useState(false);
   const [firebaseID, setFirebaseID] = useState();
   const [error, setError] = useState();
+
   // const [theme, setTheme] = useState();
 
-  const theme = "blue";
+  const themeHook = useState("blue");
   // useEffect(() => {
   //   getBookTheme();
   // }, []);
@@ -87,7 +88,7 @@ function App() {
             </>
           ) : (
             <div>
-              <ThemeContext.Provider value={theme}>
+              <ThemeContext.Provider value={themeHook}>
               <HeadingNav />
               <Container>
               <Switch>
