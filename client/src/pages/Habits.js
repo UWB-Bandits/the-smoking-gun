@@ -23,6 +23,7 @@ import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import TrackChangesIcon from "@material-ui/icons/TrackChanges";
 import HabitDoughnut from "../components/HabitDoughnut";
 import DaysMenu from "../components/DaysMenu";
+import DeleteModal from "../components/DeleteModal";
 
 
 function Habits() {
@@ -195,7 +196,9 @@ function Habits() {
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={value.name} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="comments"></IconButton>
+                <IconButton edge="end" aria-label="delete item">
+                  <DeleteModal id={value._id} name={value.name} type="habit"/>
+                </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             );

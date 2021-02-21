@@ -5,6 +5,14 @@ import {
   AccordionSummary,
   Typography,
   AccordionDetails,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  ListItemAvatar,
+  Avatar,
+  ListItemSecondaryAction
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -17,6 +25,10 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import HomeIcon from "@material-ui/icons/Home";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import EditModal from "../components/EditModal";
+import DeleteModal from "../components/DeleteModal";
+import IconButton from "@material-ui/core/IconButton";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
@@ -25,9 +37,6 @@ function IndexPage() {
   const [lists, setLists] = useState([]);
   const [entries, setEntries] = useState([]);
   const [calendars, setCalendars] = useState([]);
-  
-  console.log(formData);
-  console.log(calendarFormData);
   const {id} = useParams();
 
   useEffect(() => {
@@ -88,6 +97,10 @@ function IndexPage() {
     .catch(err => console.log(err));
   };
 
+  function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+  }
+
   const classes = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -117,6 +130,20 @@ function IndexPage() {
     <div>
       <Box>
         <TitleItem {...book} />
+        <Grid container justify="center" >
+          <EditModal 
+          title={book.title}
+          link={book.link}
+          description={book.description}
+          colorScheme={book.colorScheme}
+          id={id}
+          />
+          <DeleteModal
+          title={book.title}
+          id={id}
+          type="book"
+          />
+        </Grid>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
@@ -137,21 +164,45 @@ function IndexPage() {
             <Typography className={classes.heading}>Lists</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ul>
+            <List className={classes.root} aria-label="mailbox folders">
               {lists ? lists.map((item) => (
-                <li key={item._id}>
-                  <a href={`/lists/${item._id}`}>{item.name}</a>
-                </li>
+                // <li key={item._id}>
+                  
+                //   <a href={`/lists/${item._id}`}>
+                //     {item.name}
+                //     <EditModal/>
+                //     <DeleteModal/>
+                //     </a>  
+                // </li>
+                <div key={item._id}>
+                 <ListItemLink href={`/lists/${item._id}`} >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <PlaylistAddCheckIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={item.name}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteModal id={item._id} name={item.name} type="list"/>
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItemLink>
+                <Divider />
+                </div>
+            
               ))
               :
-              <li>Add a new list to get started</li>
+              <ListItem>Add a new list to get started</ListItem>
             }
               <NewListForm
                 handleInputChange={handleInputChange}
                 addItem={addList}
                 type="list"
               />
-            </ul>
+            </List>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -166,7 +217,7 @@ function IndexPage() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ul>
+            {/* <ul>
               {calendars ? calendars.map((item) => (
                 <li key={item._id}>
                   <a href={`/calendars/${item._id}`}>{item.name}</a>
@@ -175,12 +226,39 @@ function IndexPage() {
               :
               <li>Add a new list to get started</li>
             }
+              
+            </ul> */}
+            <List className={classes.root} aria-label="mailbox folders">
+              {calendars ? calendars.map((item) => (
+                <div key={item._id}>
+                 <ListItemLink href={`/calendars/${item._id}`} >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <PlaylistAddCheckIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={item.name}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteModal id={item._id} name={item.name} type={"calendar"}/>
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItemLink>
+                <Divider />
+                </div>
+            
+              ))
+              :
+              <ListItem>Add a new calendar to get started</ListItem>
+            }
               <NewCalendarForm
                 handleCalendarInputChange={handleCalendarInputChange}
                 addCalendar={addCalendar}
                 type="Calendar"
               />
-            </ul>
+            </List>
           </AccordionDetails>
           </Accordion>
           <Accordion>

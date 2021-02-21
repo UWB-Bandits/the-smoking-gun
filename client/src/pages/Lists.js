@@ -20,7 +20,7 @@ import Link from "@material-ui/core/Link";
 import HomeIcon from "@material-ui/icons/Home";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
-
+import DeleteIcon from "@material-ui/icons/Delete";
 
 function Lists() {
   const [formData, setFormData] = useState({ newItem: "" });
@@ -59,7 +59,7 @@ function Lists() {
   };
 
   const addItem = () => {
-
+    console.log(formData);
     if (formData.newItem){
       let updatedItems = items;
       updatedItems.push({ name: formData.newItem, completed: false });
@@ -89,6 +89,17 @@ function Lists() {
     }).then(loadList())
     .catch(err => console.log(err));
 
+  };
+
+  const handleDelete = (value) => () => {
+    const newDelete = items;
+    const currentIndex = newDelete.indexOf(value);
+    newDelete.splice(currentIndex, 1);
+    API.updateList(id, {
+      ...list,
+      items: newDelete
+    }).then(res => setList(res.data))
+    .catch(err => console.log(err));
   };
 
   const classes = makeStyles((theme) => ({
@@ -140,7 +151,7 @@ function Lists() {
                 button
                 onClick={handleToggle(value)}
               >
-                <ListItemIcon>
+                <ListItemIcon >
                   <Checkbox
                     edge="start"
                     checked={value.completed}
@@ -151,7 +162,7 @@ function Lists() {
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={value.name} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="comments"></IconButton>
+                  <IconButton edge="end" aria-label="delete item"><DeleteIcon onClick={handleDelete(value)} /></IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             );
