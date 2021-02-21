@@ -17,6 +17,7 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import HomeIcon from "@material-ui/icons/Home";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+// import { ThemeContext } from "../contexts/ThemeContext";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
@@ -24,6 +25,10 @@ function IndexPage() {
   const [book, setBook] = useState({});
   const [lists, setLists] = useState([]);
   const [calendars, setCalendars] = useState([]);
+  // const [colorScheme, setColorScheme] = useState({});
+
+  // console.log(ThemeContext);
+  // const { bookTheme } = useContext(ThemeContext);
   
   console.log(formData);
   console.log(calendarFormData);
@@ -35,6 +40,7 @@ function IndexPage() {
         console.log(res);
       
         setBook(res.data);
+        // setColorScheme(res.data.colorScheme);
         setLists(res.data.lists);
         setCalendars(res.data.calendars);
       })
@@ -109,11 +115,17 @@ function IndexPage() {
       width: 20,
       height: 20,
     },
+    // backgroundColor: `${theme}`
   }));
 
   return (
     <div>
+      {/* <ThemeContext.Provider> */}
+      {/* <ThemeContext.Consumer > */}
+          {/* {theme => ( */}
       <Box>
+
+            <div>
         <TitleItem {...book} />
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
@@ -196,7 +208,11 @@ function IndexPage() {
               <h2><a href={`/habits/${id}`}>Track your daily habits</a></h2>
           </AccordionDetails>        
         </Accordion>
-      </Box>
+        </div>
+        </Box>
+        {/* </ThemeContext.Consumer> */}
+     
+      {/* </ThemeContext.Provider> */}
     </div>
   );
 }
