@@ -60,6 +60,17 @@ const DeleteBookForm = (props) => {
       })
       .catch(err => console.log(err));
   };
+
+  const handleEntryDelete = () => {
+    console.log(props.id);
+      API.deleteEntry(props.id)
+      .then( res => {
+          console.log("Entry has been Deleted");
+          console.log(res);
+          window.location.reload(true);
+      })
+      .catch(err => console.log(err));
+  };
     
     let buttonText;
     let handle;
@@ -76,6 +87,9 @@ const DeleteBookForm = (props) => {
     } else if (props.type === "habit"){
       buttonText = "delete habit";
       handle = handleHabitDelete;
+    } else if (props.type === "entry"){
+      buttonText = "delete journal entry";
+      handle = handleEntryDelete;
     }
 
   return (

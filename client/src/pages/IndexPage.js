@@ -12,7 +12,8 @@ import {
   Divider,
   ListItemAvatar,
   Avatar,
-  ListItemSecondaryAction
+  ListItemSecondaryAction,
+  Button
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -164,7 +165,7 @@ function IndexPage() {
             <Typography className={classes.heading}>Lists</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <List className={classes.root} aria-label="mailbox folders">
+            <List style={{width:"100%"}}  className={classes.root} aria-label="mailbox folders">
               {lists ? lists.map((item) => (
                 // <li key={item._id}>
                   
@@ -174,8 +175,8 @@ function IndexPage() {
                 //     <DeleteModal/>
                 //     </a>  
                 // </li>
-                <div key={item._id}>
-                 <ListItemLink href={`/lists/${item._id}`} >
+                <div style={{width:"100%"}} key={item._id}>
+                 <ListItemLink  href={`/lists/${item._id}`} >
                   <ListItemAvatar>
                     <Avatar>
                       <PlaylistAddCheckIcon />
@@ -228,7 +229,7 @@ function IndexPage() {
             }
               
             </ul> */}
-            <List className={classes.root} aria-label="mailbox folders">
+            <List style={{width:"100%"}} className={classes.root} aria-label="mailbox folders">
               {calendars ? calendars.map((item) => (
                 <div key={item._id}>
                  <ListItemLink href={`/calendars/${item._id}`} >
@@ -271,10 +272,24 @@ function IndexPage() {
             <Typography className={classes.heading}>
               Habits
             </Typography>
-          </AccordionSummary>
+          </AccordionSummary>         
           <AccordionDetails>
-              <h2><a href={`/habits/${id}`}>Track your daily habits</a></h2>
-          </AccordionDetails>        
+            <List style={{width:"100%"}}  className={classes.root} aria-label="mailbox folders">
+                <div style={{width:"100%"}}>
+                 <ListItemLink  href={`/habits/${id}`} >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <PlaylistAddCheckIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={"Track your daily habits!"}
+                  />
+                </ListItemLink>
+                <Divider />
+                </div>
+            </List>
+          </AccordionDetails>      
         </Accordion>
         <Accordion>
           <AccordionSummary
@@ -288,18 +303,44 @@ function IndexPage() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ul>
-              {entries ? entries.map(entry => (
-                <li key={entry._id}>
-                  <a href={`/journal/${entry._id}`}>{entry.title}</a>
-                </li>
+            <List style={{width:"100%"}}  className={classes.root} aria-label="mailbox folders">
+              {entries ? entries.map((item) => (
+                <div style={{width:"100%"}} key={item._id}>
+                 <ListItemLink  href={`/journal/${item._id}`} >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <PlaylistAddCheckIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={item.title}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteModal id={item._id} name={item.title} type="entry"/>
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItemLink>
+                <Divider />
+                </div>
+            
               ))
               :
-              <li>Add a new entry to get started</li>
+              <ListItem>Add a new journal entry to get started</ListItem>
             }
-                <p><a href={`/new-entry/${id}`}>Add a new journal entry</a></p>
-            </ul>
-          </AccordionDetails>
+              <Button
+                style={{
+                  margin: "10px",
+                  display: "block",
+                  textAlign: "center"
+                }}
+                href={`/new-entry/${id}`}
+                variant="contained"
+                color="primary"
+              >Add a new journal entry
+              </Button>
+            </List>
+          </AccordionDetails> 
         </Accordion>
       </Box>
     </div>
