@@ -12,50 +12,38 @@ const DeleteBookForm = (props) => {
         id: PropTypes.string.isRequired,
         type: PropTypes.string
     };
-    console.log(props.type);
-    console.log(props.name);
-    console.log(props.title);
-    console.log(props.id);
 
     const handleBookDelete = () => {
-        console.log(props.id);
         API.deleteBook(props.id)
         .then( res => {
-            console.log("Book has been Deleted");
-            console.log(res);
+            res;
             window.location.reload(true);
         })
         .catch(err => console.log(err));
     };
 
     const handleListDelete = () => {
-      console.log(props.id);
       API.deleteList(props.id)
       .then( res => {
-          console.log("List has been Deleted");
-          console.log(res);
+          res;
           window.location.reload(true);
       })
       .catch(err => console.log(err));
   };
 
   const handleCalendarDelete = () => {
-    console.log(props.id);
       API.deleteCalendar(props.id)
       .then( res => {
-          console.log("Calendar has been Deleted");
-          console.log(res);
+          res;
           window.location.reload(true);
       })
       .catch(err => console.log(err));
   };
 
   const handleHabitDelete = () => {
-    console.log(props.id);
       API.deleteHabit(props.id)
       .then( res => {
-          console.log("Habit has been Deleted");
-          console.log(res);
+          res;
           window.location.reload(true);
       })
       .catch(err => console.log(err));

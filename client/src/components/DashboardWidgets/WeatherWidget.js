@@ -22,8 +22,6 @@ const useStyles = makeStyles({
 export default function Weather({ weather }) {
     const classes = useStyles();
 
-    console.log(weather);
-
     let cityName = weather.location.name + ", " + weather.location.region;
     let weatherText = weather.current.condition.text;
     let weatherIcon = weather.current.condition.icon;

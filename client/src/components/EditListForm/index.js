@@ -30,12 +30,10 @@ const EditListForm = (props) => {
     };
 
   const handleSubmit = () => {
-    console.log(formData);
     
     API.updateList(props.id, formData)
     .then( res => {
-      console.log("List has been updated");
-      console.log(res);
+      res;
       window.location.reload(true);
     })
     .catch(err => console.log(err));
