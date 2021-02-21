@@ -17,12 +17,27 @@ import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
 import { Container } from "@material-ui/core";
+import ThemeContext from "./contexts/ThemeContext";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mongoUser, setMongoUser] = useState(false);
   const [firebaseID, setFirebaseID] = useState();
   const [error, setError] = useState();
+  // const [theme, setTheme] = useState();
+
+  const theme = "blue";
+  // useEffect(() => {
+  //   getBookTheme();
+  // }, []);
+
+  // const getBookTheme = (id) => {
+  //   API.getBook(id)
+  //     .then(res => {
+  //       console.log(res.data.colorScheme);
+  //       setTheme(res.data.colorScheme);
+  //     });
+  // };
 
   useEffect(() => {
     setMongoUser(false);
@@ -72,6 +87,7 @@ function App() {
             </>
           ) : (
             <div>
+              <ThemeContext.Provider value={theme}>
               <HeadingNav />
               <Container>
               <Switch>
@@ -105,6 +121,7 @@ function App() {
               </Switch>
               </Container>
               <Footer />
+              </ThemeContext.Provider>
             </div>
           )}
         </Router>
