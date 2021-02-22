@@ -144,7 +144,7 @@ function Lists() {
 
             return (
               <ListItem
-                key={value._id}
+                key={items.indexOf(value)}
                 dense
                 button
                 onClick={handleToggle(value)}
