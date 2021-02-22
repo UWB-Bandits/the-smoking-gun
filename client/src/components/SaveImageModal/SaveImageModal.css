@@ -76,6 +76,11 @@
   margin-top: 2rem;
 }
 
+.inputContainer {
+  margin: 1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 @media only screen and (max-width: 1250px) {
   .save-options {
     margin-top: 1rem;
