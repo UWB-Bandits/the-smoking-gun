@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import CanvasColors from "../CanvasColors/CanvasColors";
 import CanvasPenWidth from "../CanvasPenWidth/CanvasPenWidth";
+import CanvasEraser from "../CanvasEraser/CanvasEraser";
+import { useParams } from "react-router-dom";
+import HomeIcon from "@material-ui/icons/Home";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
 
 const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
   const [display, setDisplay] = useState("0");
   const [showSettings, setShowSettings] = useState("<- Hide");
   const [settingToChange, setSettingToChange] = useState("");
+  const [storedLineWidth, setStoredLineWidth] = useState(4);
+  const { id } = useParams();
 
   const showSidebar = () => {
     showSettings === "Show ->"
@@ -18,28 +24,51 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
 
   const handleSettingClick = (e) => {
     const setting = e.target.dataset.setting;
-    console.log(setting);
     setSettingToChange(setting);
-    console.log(settingToChange);
+    if (setting === ACTIONS.PEN) {
+      dispatch({
+        type: settingToChange,
+        payload: { lineColor: "#f3f3f3" },
+      });
+    }
     // changeSettings(settingToChange, "red");
   };
   const handleUpdate = (e) => {
-    console.log("SETTING:", settingToChange);
-    console.log("PAYLOAD", e.target.value);
     const payload = e.target.value;
+
     switch (settingToChange) {
       case ACTIONS.COLOR:
-        dispatch({ type: settingToChange, payload: { lineColor: payload } });
+        dispatch({
+          type: settingToChange,
+          payload: { lineColor: payload, lineWidth: storedLineWidth },
+        });
         break;
       case ACTIONS.WIDTH:
         dispatch({ type: settingToChange, payload: { lineWidth: payload } });
+        break;
+      case ACTIONS.PEN:
+        setStoredLineWidth(canvasSetting.lineWidth);
+        dispatch({
+          type: settingToChange,
+          payload: {
+            lineWidth: e.target.getAttribute("data-width"),
+            lineColor: e.target.value,
+          },
+        });
         break;
     }
   };
   return (
     <div id="canvasSidebar" style={{ left: display }}>
       <div className="link-home">
-        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/dashboard">
+          <HomeIcon /> Dashboard
+        </Link>
+      </div>
+      <div className="link-book">
+        <Link to={`/books/${id}`}>
+          <MenuBookIcon /> Book
+        </Link>
       </div>
 
       <ul id="canvasSettings">
@@ -60,13 +89,7 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
         <li
           data-setting={ACTIONS.PEN}
           className={settingToChange === ACTIONS.PEN ? "active" : ""}
-          onClick={(e) => {
-            handleSettingClick(e);
-            dispatch({
-              type: settingToChange,
-              payload: { lineColor: "#f3f3f3" },
-            });
-          }}
+          onClick={handleSettingClick}
         >
           Eraser
         </li>
@@ -85,6 +108,14 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
       )}
       {settingToChange === ACTIONS.WIDTH && (
         <CanvasPenWidth
+          canvasSetting={canvasSetting}
+          handleUpdate={handleUpdate}
+          settingToChange={settingToChange}
+          ACTIONS={ACTIONS}
+        />
+      )}
+      {settingToChange === ACTIONS.PEN && (
+        <CanvasEraser
           canvasSetting={canvasSetting}
           handleUpdate={handleUpdate}
           settingToChange={settingToChange}
