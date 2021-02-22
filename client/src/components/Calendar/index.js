@@ -9,7 +9,7 @@ import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClic
 import TemporaryDrawer from "../TemporaryDrawer";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
-//import Material-Ui
+//import Material-Ui components
 import CircularProgress from "@material-ui/core/CircularProgress";
 //import API route handler
 import API from "../../utils/API";
