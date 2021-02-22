@@ -27,7 +27,7 @@ const Settings = () => {
   };
 
   return (
-    <div>
+    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Grid container>
         <SettingsNav changeDisplay={changeDisplay} display={display} />
         <Grid item xs={12}>

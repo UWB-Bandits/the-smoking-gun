@@ -32,7 +32,6 @@ export default function Calendar(props) {
     function loadCurrentEvents(){
       API.getCalendar(calId)
       .then(res =>{
-        console.log(res.data.events);
         setCurrentEvents(res.data.events);
       })
       .catch(err => console.log(err));
@@ -56,7 +55,7 @@ export default function Calendar(props) {
       API.updateCalendar(calId, {
         ...props.calendar,
         events: currentEvents
-      }).then(res => console.log(res))
+      }).then(res => res)
       .catch(err => console.log(err));
     }
 

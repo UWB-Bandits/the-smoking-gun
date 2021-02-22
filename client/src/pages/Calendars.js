@@ -36,7 +36,6 @@ function Calendars() {
           bookName: res.data.book.title,
           bookId: res.data.book._id
         };
-
         setCalendar(pageList);
       })
       .catch(err => console.log(err));
@@ -68,7 +67,7 @@ function Calendars() {
   }));
 
   return (
-    <div className={book.colorScheme}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />

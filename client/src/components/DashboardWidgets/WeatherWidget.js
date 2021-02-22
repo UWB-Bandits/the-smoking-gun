@@ -31,8 +31,6 @@ const useStyles = makeStyles({
 export default function Weather({ weather }) {
     const classes = useStyles();
 
-    // console.log(weather);
-
     let cityName = weather.location.name + ", " + weather.location.region;
     let weatherText = weather.current.condition.text;
     let weatherIcon = weather.current.condition.icon;
@@ -53,7 +51,6 @@ export default function Weather({ weather }) {
         <CardContent>
           <Typography className={classes.pos} color="textSecondary">
             {weatherText} 
-            {/* <img src={weatherIcon} /> */}
           </Typography>
           <Typography variant="body2" component="p">
             {temperature} 
@@ -94,5 +91,3 @@ Weather.propTypes = {
     humidity: PropTypes.string,
     updated: PropTypes.string
 };
-
-// export default Weather;

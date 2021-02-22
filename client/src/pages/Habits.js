@@ -23,6 +23,7 @@ import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import TrackChangesIcon from "@material-ui/icons/TrackChanges";
 import HabitDoughnut from "../components/HabitDoughnut";
 import DaysMenu from "../components/DaysMenu";
+import DeleteModal from "../components/DeleteModal";
 
 function Habits() {
   const [formData, setFormData] = useState({ newItem: "" });
@@ -87,17 +88,13 @@ function Habits() {
   const addHabit = () => {
 
     if (formData.newItem){
-      let updatedItems = habits;
-      updatedItems.push({ name: formData.newItem, tracking: [], book: bookId });
-      setHabits(updatedItems );
-      setFormData({ newItem: "" });
-  
       API.createHabit({ 
         name: formData.newItem, 
         tracking: [], 
         book: bookId 
-      }).then(res => console.log(res))
+      }).then(loadHabits())
       .catch(err => console.log(err));
+      setFormData({ newItem: "" });
     }
   };
 
@@ -154,7 +151,7 @@ function Habits() {
   }));
 
   return (
-    <div className={book.colorScheme}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Box>
         <TitleItem title="Your Daily Habits" description={dateString}/>
         <Breadcrumbs aria-label="breadcrumb">
@@ -185,10 +182,11 @@ function Habits() {
 
             return (
               <ListItem
-                key={value.name}
+                key={value._id}
                 dense
                 button
                 onClick={handleToggle(value)}
+                style={{backgroundColor:"rgba(255, 255, 255, 0.75)"}}
               >
                 <ListItemIcon>
                   <Checkbox
@@ -201,7 +199,9 @@ function Habits() {
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={value.name} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="comments"></IconButton>
+                <IconButton edge="end" aria-label="delete item">
+                  <DeleteModal id={value._id} name={value.name} type="habit"/>
+                </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             );

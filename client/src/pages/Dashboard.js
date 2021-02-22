@@ -4,7 +4,6 @@ import Jumbotron from "../components/Jumbotron";
 import BookButton from "../components/BookButton";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
-
 import WeatherWidget from "../components/DashboardWidgets/WeatherWidget";
 import NewsWidget from "../components/DashboardWidgets/NewsWidget";
 // import RandomWordWidget from "../components/DashboardWidgets/RandomWordWidget";
@@ -20,6 +19,8 @@ function Dashboard() {
   const [weather, setWeather] = useState({});
   const [news, setNews] = useState([]);
   // const [randomWord, setRandomWord] = useState({});
+  const[bookSize, setBookSize]=useState({});
+  const [windowSize, setWindowSize]=useState("");
 
   useEffect(() => {
     getUser();
@@ -29,13 +30,48 @@ function Dashboard() {
     newsSearch();
   }, []);
 
+  useEffect(() => {
+    resizeBooks();
+  }, [windowSize]);
+
+  window.onresize = () => {
+    setWindowSize(window.innerWidth);
+  };
+
+  function resizeBooks() {
+    var width = window.innerWidth;
+    if (width>1100) {
+      setBookSize({
+        bookWidth: "350px",
+        pushTop: "100px",
+        textSize: "30px",
+      });
+    } else if (width>550) {
+      setBookSize({
+        bookWidth: "250px",
+        pushTop: "50px",
+        textSize: "25px",
+      });
+    } else if (width>340) {
+      setBookSize({
+        bookWidth: "150px",
+        pushTop: "15px",
+        textSize: "15px",
+      });
+    } else {
+      setBookSize({
+        bookWidth: "120px",
+        pushTop: "10px",
+        textSize: "12px",
+      });
+    }
+  }
 
   const getAllBooks = () => {
     //  for the currentUser.uid
     API.getBooksWhere(currentUser.uid)
       .then((res) => {
         setUsersBooks(res.data);
-        // console.log(res);
       })
       .catch((err) => console.log(err));
   };
@@ -44,7 +80,6 @@ function Dashboard() {
     API.getUser(currentUser.uid)
       .then(res => {
         setUser(res.data);
-        // console.log(res);
       });
   };
 
@@ -57,15 +92,9 @@ function Dashboard() {
 
     function success(pos) {
       let crd = pos.coords;
-
-      // console.log("Your current position is: ");
-      // console.log(`Latitude: ${crd.latitude}`);
-      // console.log(`Longitude: ${crd.longitude}`);
-      // console.log(`More or less ${crd.accuracy} meters.`);
   
       API.postWeather({Latitude: crd.latitude,Longitude: crd.longitude})
         .then(res => {
-          // console.log(res);
           setWeather(res.data);
           setIsLoaded(true);
         })
@@ -84,11 +113,9 @@ function Dashboard() {
         .query({ name: "geolocation" })
         .then((result) => {
           if (result.state === "granted") {
-            console.log(result.state);
             // If granted then you can directly call your function here
             navigator.geolocation.getCurrentPosition(success);
           } else if (result.state === "prompt") {
-            console.log(result.state);
             navigator.geolocation.getCurrentPosition(success, errors, options);
           } else if (result.state === "denied") {
             // If denied you have to show instructions to enable location
@@ -106,7 +133,6 @@ function Dashboard() {
   const newsSearch = () => {
     API.getNews()
       .then(res => {
-        // console.log(res.data);
         let topNews = res.data.slice(0, 10);
         setNews(topNews);
       })
@@ -135,9 +161,10 @@ function Dashboard() {
             description="Click here to start a new journal"
             link="/create-book"
             colorScheme="yellow"
+            bookSize={bookSize}
           />
           {usersBooks.map((item) => (
-              <BookButton key={item._id} link={`/books/${item._id}`} {...item} />
+              <BookButton key={item._id} bookSize={bookSize} edit={true} id={item._id} link={`/books/${item._id}`} {...item} />
           ))}
           {isLoaded ?
             <WeatherWidget weather={weather} />

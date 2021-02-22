@@ -27,17 +27,19 @@ function HeadingNav() {
       style={{
         display: "flex",
         justifyContent: "space-between",
-        margin: "10px",
+        marginBottom: "10px",
+        backgroundColor: "#cacacc",
+        padding: "5px"
       }}
     >
       <Link to="/dashboard">
         <img
-          style={{ display: "inline-block", height: "70px" }}
+          style={{ display: "inline-block", height: "70px", marginLeft:"20px"}}
           src={logo}
           alt="Smoking Gun Logo"
         />
       </Link>
-      <Link to="/settings" style={{ textDecoration: "none" }}>
+      <Link to="/settings" style={{ textDecoration: "none", marginRight:"20px", marginTop:"10px" }}>
         <Avatar
           style={{ width: "60px", height: "60px" }}
           alt="Avatar"

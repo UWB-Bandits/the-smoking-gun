@@ -6,6 +6,7 @@ const userRoutes = require("./users");
 const weatherRoute = require("./dashboardAPI");
 const newsRoute = require("./dashboardAPI");
 const habitRoutes = require("./habits");
+const entryRoutes = require("./entries");
 
 // Book routes
 router.use("/books", bookRoutes);
@@ -21,5 +22,7 @@ router.use("/weather", weatherRoute);
 router.use("/news", newsRoute);
 // habit tracker routes
 router.use("/habits", habitRoutes);
+// journal routes
+router.use("/entries", entryRoutes);
 
 module.exports = router;

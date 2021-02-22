@@ -17,6 +17,7 @@ import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
 import { Container } from "@material-ui/core";
+import Journaling from "./pages/Journaling";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,10 +41,8 @@ function App() {
     let unsubscribe;
 
     if (isLoggedIn && !mongoUser) {
-      console.log("something");
       unsubscribe = API.getUser(firebaseID)
-        .then((Muser) => {
-          console.log(Muser.data._id);
+        .then(() => {
           setMongoUser(true);
           setError(false);
         })
@@ -56,9 +55,7 @@ function App() {
     return unsubscribe;
   }, [firebaseID, error]);
 
-  console.log(mongoUser);
-
-  return (
+  return (<div style={{minHeight:"100vh", backgroundImage:"url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)", backgroundSize:"100%"}}>
     <AuthProvider>
       <div id="App">
         <Router>
@@ -71,10 +68,12 @@ function App() {
               </Switch>
             </>
           ) : (
-            <div>
+            <div >
               <HeadingNav />
+              
               <Container>
               <Switch>
+                
                 <Route exact path={["/", "/dashboard"]}>
                   <Dashboard />
                 </Route>
@@ -96,6 +95,12 @@ function App() {
                 <Route exact path="/settings">
                   <Settings />
                 </Route>
+                <Route exact path="/books/:bookId/new-entry/:newEntryId">
+                  <Journaling type="new"/>
+                </Route>
+                <Route exact path="/books/:bookId/journal/:journalId">
+                  <Journaling type="old"/>
+                </Route>
                 <Route>
                   <NoMatch />
                 </Route>
@@ -107,6 +112,7 @@ function App() {
         </Router>
       </div>
     </AuthProvider>
+    </div>
   );
 }
 

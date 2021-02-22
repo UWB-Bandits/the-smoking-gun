@@ -20,6 +20,7 @@ import Link from "@material-ui/core/Link";
 import HomeIcon from "@material-ui/icons/Home";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 function Lists() {
   const [formData, setFormData] = useState({ newItem: "" });
@@ -52,7 +53,6 @@ function Lists() {
         };
 
         setList(pageList);
-        console.log(res.data);
         setItems(res.data.items);
       })
       .catch(err => console.log(err));
@@ -67,13 +67,12 @@ function Lists() {
     if (formData.newItem){
       let updatedItems = items;
       updatedItems.push({ name: formData.newItem, completed: false });
-      setList({ ...list, items: updatedItems });
       setFormData({ newItem: "" });
   
       API.updateList(listId, {
         ...list,
-        items: items
-      }).then(res => console.log(res))
+        items: updatedItems
+      }).then(loadList())
       .catch(err => console.log(err));
     }
   };
@@ -92,8 +91,20 @@ function Lists() {
 
     API.updateList(listId, {
       ...list,
-      items: items
-    }).then(res => setList(res.data))
+      items: newChecked
+    }).then(loadList())
+    .catch(err => console.log(err));
+
+  };
+
+  const handleDelete = (value) => () => {
+    const newDelete = items;
+    const currentIndex = newDelete.indexOf(value);
+    newDelete.splice(currentIndex, 1);
+    API.updateList(listId, {
+      ...list,
+      items: newDelete
+    }).then(loadList())
     .catch(err => console.log(err));
   };
 
@@ -102,15 +113,6 @@ function Lists() {
       width: "100%",
       marginLeft: "10px",
       marginRight: "10px",
-    },
-    accordion: {
-      width: "100%",
-      marginLeft: "10px",
-      marginRight: "10px",
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
     },
     link: {
       display: "flex",
@@ -123,7 +125,7 @@ function Lists() {
   }));
 
   return (
-    <div className={book.colorScheme}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Box>
         <TitleItem title={list.name} description={list.description}/>
         <Breadcrumbs aria-label="breadcrumb">
@@ -150,12 +152,12 @@ function Lists() {
 
             return (
               <ListItem
-                key={value.name}
+                key={items.indexOf(value)}
                 dense
                 button
                 onClick={handleToggle(value)}
               >
-                <ListItemIcon>
+                <ListItemIcon >
                   <Checkbox
                     edge="start"
                     checked={value.completed}
@@ -166,7 +168,7 @@ function Lists() {
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={value.name} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="comments"></IconButton>
+                  <IconButton edge="end" aria-label="delete item" onClick={handleDelete(value)}><DeleteIcon  /></IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             );
