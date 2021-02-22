@@ -12,7 +12,8 @@ const useStyles = makeStyles({
     marginLeft: "auto",
     marginBottom: "10px",
     backgroundImage: `url(${BookLogo})`,
-    backgroundSize: "100%"
+    backgroundSize: "100%",
+    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
   },
   red: {
     backgroundColor: "#F07C5F",
