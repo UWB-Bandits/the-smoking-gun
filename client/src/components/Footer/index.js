@@ -13,6 +13,7 @@ const useStyles = makeStyles({
     left: "0",
     bottom: "0",
     width: "100%",
+    backgroundColor: "#cacacc",
   },
   phantom: {
     height: "50px",

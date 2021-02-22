@@ -11,6 +11,7 @@ const bookSchema = new Schema({
   calendars: [{ type: Schema.Types.ObjectId, ref: "Calendar" }],
   user: { type: String, required: true },
   habits: [{ type: Schema.Types.ObjectId, ref: "Habit" }],
+  entries: [{ type: Schema.Types.ObjectId, ref: "Entry" }],
 });
 
 const Book = mongoose.model("Book", bookSchema);

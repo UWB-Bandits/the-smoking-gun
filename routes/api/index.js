@@ -5,6 +5,7 @@ const calendarRoutes = require("./calendars");
 const userRoutes = require("./users");
 const weatherRoute = require("./dashboardAPI");
 const habitRoutes = require("./habits");
+const entryRoutes = require("./entries");
 
 // Book routes
 router.use("/books", bookRoutes);
@@ -17,5 +18,7 @@ router.use("/users", userRoutes);
 
 router.use("/weather", weatherRoute);
 router.use("/habits", habitRoutes);
+
+router.use("/entries", entryRoutes);
 
 module.exports = router;

@@ -65,7 +65,7 @@ function Calendars() {
   }));
 
   return (
-    <div>
+    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />

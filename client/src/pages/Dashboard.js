@@ -17,6 +17,8 @@ function Dashboard() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [weather, setWeather] = useState({});
   // const [randomWord, setRandomWord] = useState({});
+  const[bookSize, setBookSize]=useState({});
+  const [windowSize, setWindowSize]=useState("");
 
   useEffect(() => {
     getUser();
@@ -24,6 +26,43 @@ function Dashboard() {
     weatherSearch();
     // wordSearch();
   }, []);
+
+  useEffect(() => {
+    resizeBooks();
+  }, [windowSize]);
+
+  window.onresize = () => {
+    setWindowSize(window.innerWidth);
+  };
+
+  function resizeBooks() {
+    var width = window.innerWidth;
+    if (width>1100) {
+      setBookSize({
+        bookWidth: "350px",
+        pushTop: "100px",
+        textSize: "30px",
+      });
+    } else if (width>550) {
+      setBookSize({
+        bookWidth: "250px",
+        pushTop: "50px",
+        textSize: "25px",
+      });
+    } else if (width>340) {
+      setBookSize({
+        bookWidth: "150px",
+        pushTop: "15px",
+        textSize: "15px",
+      });
+    } else {
+      setBookSize({
+        bookWidth: "120px",
+        pushTop: "10px",
+        textSize: "12px",
+      });
+    }
+  }
 
   const getAllBooks = () => {
     //  for the currentUser.uid
@@ -108,9 +147,10 @@ function Dashboard() {
             description="Click here to start a new journal"
             link="/create-book"
             colorScheme="yellow"
+            bookSize={bookSize}
           />
           {usersBooks.map((item) => (
-              <BookButton key={item._id} edit={true} id={item._id} link={`/books/${item._id}`} {...item} />
+              <BookButton key={item._id} bookSize={bookSize} edit={true} id={item._id} link={`/books/${item._id}`} {...item} />
           ))}
           {isLoaded ?
             <WeatherWidget weather={weather} />

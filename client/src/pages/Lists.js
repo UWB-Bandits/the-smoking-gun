@@ -61,13 +61,12 @@ function Lists() {
     if (formData.newItem){
       let updatedItems = items;
       updatedItems.push({ name: formData.newItem, completed: false });
-      setList({ ...list, items: updatedItems });
       setFormData({ newItem: "" });
   
       API.updateList(id, {
         ...list,
-        items: items
-      }).then(res => res)
+        items: updatedItems
+      }).then(loadList())
       .catch(err => console.log(err));
     }
   };
@@ -82,12 +81,10 @@ function Lists() {
       newChecked[currentIndex].completed = false;
     }
 
-    setItems(newChecked);
-
     API.updateList(id, {
       ...list,
-      items: items
-    }).then(res => setList(res.data))
+      items: newChecked
+    }).then(loadList())
     .catch(err => console.log(err));
 
   };
@@ -99,7 +96,7 @@ function Lists() {
     API.updateList(id, {
       ...list,
       items: newDelete
-    }).then(res => setList(res.data))
+    }).then(loadList())
     .catch(err => console.log(err));
   };
 
@@ -108,15 +105,6 @@ function Lists() {
       width: "100%",
       marginLeft: "10px",
       marginRight: "10px",
-    },
-    accordion: {
-      width: "100%",
-      marginLeft: "10px",
-      marginRight: "10px",
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
     },
     link: {
       display: "flex",
@@ -129,7 +117,7 @@ function Lists() {
   }));
 
   return (
-    <div>
+    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Box>
         <TitleItem title={list.name} description={list.description}/>
         <Breadcrumbs aria-label="breadcrumb">
@@ -156,7 +144,7 @@ function Lists() {
 
             return (
               <ListItem
-                key={value.name}
+                key={items.indexOf(value)}
                 dense
                 button
                 onClick={handleToggle(value)}
@@ -172,7 +160,7 @@ function Lists() {
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={value.name} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete item"><DeleteIcon onClick={handleDelete(value)} /></IconButton>
+                  <IconButton edge="end" aria-label="delete item" onClick={handleDelete(value)}><DeleteIcon  /></IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             );
