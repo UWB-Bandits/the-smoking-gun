@@ -16,7 +16,8 @@ const useStyles = makeStyles({
       border: "3px solid #000000",
       padding: "10px",
       boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-      float: "inherit"
+      float: "inherit",
+      margin: "10px",
     },
     title: {
       fontSize: 14
@@ -38,6 +39,11 @@ export default function Weather({ weather }) {
     let wind = "Wind speeds: " + weather.current.wind_mph + " mph, Gusts at " + weather.current.gust_mph + " mph";
     let humidity = "Humidity: " + weather.current.humidity;
     let updated = "Last updated at: " + weather.current.last_updated;
+    // let updated = "Last updated at: " + new Date(weather.current.last_updated).toLocaleDateString("en-US", {
+    //   year: "numeric",
+    //   month: "short",
+    //   day: "numeric"
+    // });
   
     return (
       <Card className={classes.root}>
