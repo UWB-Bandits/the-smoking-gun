@@ -18,6 +18,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
 import DoodlePage from "./pages/DoodlePage";
 import { Container } from "@material-ui/core";
+import DoodleIndex from "./pages/DoodleIndex";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -91,8 +92,11 @@ function App() {
                   <Route exact path="/habits/:id">
                     <Habits />
                   </Route>
-                  <Route exact path="/doodle">
+                  <Route exact path="/doodle/:id">
                     <DoodlePage />
+                  </Route>
+                  <Route exact path="/doodleIndex/:id">
+                    <DoodleIndex />
                   </Route>
                   <Route exact path="/calendars/:id">
                     <Calendars />
