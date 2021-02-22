@@ -38,17 +38,17 @@ export default function Calendar(props) {
     }
     
     function handleWeekendsToggle(){
-          setWeekendsVisible(!weekendsVisible);
+      setWeekendsVisible(!weekendsVisible);
     }
 
     function handleEventClick(clickInfo) {
-        if (confirm(`Are you sure you want to delete the event "${clickInfo.event.title}"`)) {
-        clickInfo.event.remove();
-        }
+      if (confirm(`Are you sure you want to delete the event "${clickInfo.event.title}"`)) {
+      clickInfo.event.remove();
+      }
     }
 
     function handleEvents(events) {  
-        setCurrentEvents(events);
+      setCurrentEvents(events);
     }
 
     function addEvent(){
