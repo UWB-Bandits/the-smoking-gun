@@ -17,7 +17,6 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import HomeIcon from "@material-ui/icons/Home";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
-// import { ThemeContext } from "../contexts/ThemeContext";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
@@ -25,22 +24,16 @@ function IndexPage() {
   const [book, setBook] = useState({});
   const [lists, setLists] = useState([]);
   const [calendars, setCalendars] = useState([]);
-  // const [colorScheme, setColorScheme] = useState({});
-
-  // console.log(ThemeContext);
-  // const { bookTheme } = useContext(ThemeContext);
   
   console.log(formData);
   console.log(calendarFormData);
-  const {id} = useParams();
+  const {bookId} = useParams();
 
   useEffect(() => {
-    API.getBook(id)
+    API.getBook(bookId)
       .then(res => {
         console.log(res);
-      
         setBook(res.data);
-        // setColorScheme(res.data.colorScheme);
         setLists(res.data.lists);
         setCalendars(res.data.calendars);
       })
@@ -65,7 +58,7 @@ function IndexPage() {
     }).then(res => {
       let newBookLists = lists.map(list => list._id);
       newBookLists.push(res.data._id);
-      API.updateBook(id, {
+      API.updateBook(bookId, {
         ...book,
         lists: newBookLists
       }).then(res => console.log(res))
@@ -82,7 +75,7 @@ function IndexPage() {
     }).then(res => {
       let newBookCalendars = calendars.map(calendar => calendar._id);
       newBookCalendars.push(res.data._id);
-      API.updateBook(id, {
+      API.updateBook(bookId, {
         ...book,
         calendars: newBookCalendars
       }).then(res => console.log(res))
@@ -115,16 +108,11 @@ function IndexPage() {
       width: 20,
       height: 20,
     },
-    // backgroundColor: `${theme}`
   }));
 
   return (
-    <div>
-      {/* <ThemeContext.Provider> */}
-      {/* <ThemeContext.Consumer > */}
-          {/* {theme => ( */}
+    <div className={book.colorScheme}>
       <Box>
-
             <div>
         <TitleItem {...book} />
         <Breadcrumbs aria-label="breadcrumb">
@@ -150,7 +138,7 @@ function IndexPage() {
             <ul>
               {lists ? lists.map((item) => (
                 <li key={item._id}>
-                  <a href={`/lists/${item._id}`}>{item.name}</a>
+                  <a href={`/books/${bookId}/lists/${item._id}`}>{item.name}</a>
                 </li>
               ))
               :
@@ -179,7 +167,7 @@ function IndexPage() {
             <ul>
               {calendars ? calendars.map((item) => (
                 <li key={item._id}>
-                  <a href={`/calendars/${item._id}`}>{item.name}</a>
+                  <a href={`/books/${bookId}/calendars/${item._id}`}>{item.name}</a>
                 </li>
               ))
               :
@@ -205,14 +193,11 @@ function IndexPage() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-              <h2><a href={`/habits/${id}`}>Track your daily habits</a></h2>
+              <h2><a href={`/books/${bookId}/habits/${bookId}`}>Track your daily habits</a></h2>
           </AccordionDetails>        
         </Accordion>
         </div>
         </Box>
-        {/* </ThemeContext.Consumer> */}
-     
-      {/* </ThemeContext.Provider> */}
     </div>
   );
 }
