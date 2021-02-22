@@ -24,7 +24,6 @@ import TrackChangesIcon from "@material-ui/icons/TrackChanges";
 import HabitDoughnut from "../components/HabitDoughnut";
 import DaysMenu from "../components/DaysMenu";
 
-
 function Habits() {
   const [formData, setFormData] = useState({ newItem: "" });
   const [habits, setHabits] = useState([]);
@@ -32,7 +31,7 @@ function Habits() {
   const [completedToday, setCompletedToday] = useState([]);
   const [resultsDays, setResultsDays] = useState(7);
 
-  const {id} = useParams();
+  const {bookId, habitId} = useParams();
 
   let date = new Date();
   let dateString = date.toDateString();
@@ -40,11 +39,17 @@ function Habits() {
   let dateNeededString = new Date(dateNeeded).toDateString();
 
   useEffect(() => {
+    loadBook();
     loadHabits();
   }, []);
 
+  const loadBook = async () => {
+    const bookResponse = await API.getBook(bookId);
+    setBook(bookResponse.data);
+  };
+
   const loadHabits = () =>{
-    API.getBook(id)
+    API.getBook(habitId)
     .then(res => setBook(res.data));
     
     let todaysTracking = [];
@@ -59,7 +64,7 @@ function Habits() {
       });
     }
 
-    API.getHabits(id)
+    API.getHabits(habitId)
       .then(res => {
         let dbHabits = res.data;
         setHabits(dbHabits);
@@ -83,14 +88,14 @@ function Habits() {
 
     if (formData.newItem){
       let updatedItems = habits;
-      updatedItems.push({ name: formData.newItem, tracking: [], book: id });
+      updatedItems.push({ name: formData.newItem, tracking: [], book: bookId });
       setHabits(updatedItems );
       setFormData({ newItem: "" });
   
       API.createHabit({ 
         name: formData.newItem, 
         tracking: [], 
-        book: id 
+        book: bookId 
       }).then(res => console.log(res))
       .catch(err => console.log(err));
     }
@@ -101,7 +106,6 @@ function Habits() {
     const currentIndex = newChecked.indexOf(value);
     const todaysTrackingIndex = completedToday.indexOf(value._id);
     const completedTodayTemp = completedToday;
-
 
     if (todaysTrackingIndex === -1){
       newChecked[currentIndex].tracking.push({
@@ -122,7 +126,6 @@ function Habits() {
       ...habits[currentIndex]
     }).then(loadHabits())
     .catch(err => console.log(err));
-
   };
 
   const classes = makeStyles((theme) => ({
@@ -151,7 +154,7 @@ function Habits() {
   }));
 
   return (
-    <div>
+    <div className={book.colorScheme}>
       <Box>
         <TitleItem title="Your Daily Habits" description={dateString}/>
         <Breadcrumbs aria-label="breadcrumb">
