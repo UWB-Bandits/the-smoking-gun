@@ -17,7 +17,7 @@ const useStyles = makeStyles({
       overflow: "auto"
     },
     title: {
-      fontSize: 14,
+      fontSize: 16,
     },
     date: {
       fontSize: 12,
