@@ -5,8 +5,8 @@ import Box from "@material-ui/core/Box";
 import React from "react";
 
 const EntryForm = (props) => {
-  const { title, body, onSave, onDelete, handleInputChange, type} = props;
-
+  const { formData, onSave, onDelete, handleInputChange, type} = props;
+  const {title, body} = formData;
 
   return (
     <Box style={{width:"100%"}}>
@@ -38,7 +38,7 @@ const EntryForm = (props) => {
             multiline
             rows={10}
             variant="outlined"
-            defaultValue={body}
+            value={body}
             style ={{
                 marginTop: "20px",
                 width: "100%"
@@ -106,8 +106,7 @@ const EntryForm = (props) => {
 };
 
 EntryForm.propTypes = {
-  title: PropTypes.string,
-  body: PropTypes.string,
+  formData: PropTypes.object,
   onSave: PropTypes.func,
   onDelete: PropTypes.func,
   handleInputChange: PropTypes.func,
