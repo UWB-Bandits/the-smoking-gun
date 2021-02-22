@@ -3,10 +3,8 @@ import React, { useRef, useEffect, useState, useReducer } from "react";
 import CanvasSidebar from "../components/CanvasSidebar/CanvasSidebar";
 import SaveImageModal from "../components/SaveImageModal/SaveImageModal";
 const pathname = window.location.pathname;
-if (pathname === "/doodle") {
-  require("../components/CanvasSidebar/canvas.css");
-  console.log(pathname);
-}
+import { useParams } from "react-router-dom";
+
 const DoodlePage = () => {
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
@@ -15,6 +13,11 @@ const DoodlePage = () => {
   const [canvasPainted, setCanvasPainted] = useState(false);
   let canvas;
   let ctx;
+  const { id } = useParams();
+
+  if (pathname === `/doodle/${id}`) {
+    require("../components/CanvasSidebar/canvas.css");
+  }
 
   const ACTIONS = {
     COLOR: "change color",
@@ -25,9 +28,9 @@ const DoodlePage = () => {
   const updateCanvas = (canvasSetting, action) => {
     switch (action.type) {
       case ACTIONS.COLOR:
-        return { ...canvasSetting, lineColor: action.payload.lineColor };
+        return { ...canvasSetting, ...action.payload };
       case ACTIONS.PEN:
-        return { ...canvasSetting, lineColor: action.payload.lineColor };
+        return { ...canvasSetting, ...action.payload };
       case ACTIONS.WIDTH:
         return { ...canvasSetting, lineWidth: action.payload.lineWidth };
       default:
@@ -58,16 +61,16 @@ const DoodlePage = () => {
     ctx.lineWidth = canvasSetting.lineWidth;
     if (!canvasPainted) {
       ctx.fillStyle = "#f3f3f3";
-      ctx.fillRect(0, 0, window.innerWidth * 0.9, window.innerWidth * 0.9);
+      ctx.fillRect(0, 0, window.innerWidth, window.innerWidth);
       setCanvasPainted(true);
     }
 
     ctxRef.current = ctx;
-    console.log(ctxRef.current);
   };
 
   const resize = () => {
     window.addEventListener("resize", resize);
+    // setCanvasPainted(false);
     canvas.width = window.innerWidth * 0.9;
     canvas.height = window.innerHeight * 0.9;
     canvas.style.width = `${window.innerWidth * 0.9}px`;
@@ -96,20 +99,14 @@ const DoodlePage = () => {
   };
   const makeImg = () => {
     const test = canvasRef.current.toDataURL();
-    console.log(test);
-    console.log(canvasRef.current);
     setImgUrl(test);
   };
   // _______________________________________MOBILE TOUCH EVENTS________________________________________________________________________________
   const touchStart = (e) => {
     var rect = e.target.getBoundingClientRect();
-    console.log(e.changedTouches[0]);
     const { clientX, clientY } = e.changedTouches[0];
-    // console.log(clientX, clientY);
-    console.log(ctxRef.current);
     ctxRef.current.beginPath();
     ctxRef.current.moveTo(clientX - rect.left, clientY - rect.top);
-
     setIsDrawing(true);
   };
 
