@@ -17,28 +17,12 @@ import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
 import { Container } from "@material-ui/core";
-import ThemeContext from "./contexts/ThemeContext";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mongoUser, setMongoUser] = useState(false);
   const [firebaseID, setFirebaseID] = useState();
   const [error, setError] = useState();
-
-  // const [theme, setTheme] = useState();
-
-  const themeHook = useState("blue");
-  // useEffect(() => {
-  //   getBookTheme();
-  // }, []);
-
-  // const getBookTheme = (id) => {
-  //   API.getBook(id)
-  //     .then(res => {
-  //       console.log(res.data.colorScheme);
-  //       setTheme(res.data.colorScheme);
-  //     });
-  // };
 
   useEffect(() => {
     setMongoUser(false);
@@ -88,29 +72,25 @@ function App() {
             </>
           ) : (
             <div>
-              <ThemeContext.Provider value={themeHook}>
               <HeadingNav />
               <Container>
               <Switch>
                 <Route exact path={["/", "/dashboard"]}>
                   <Dashboard />
                 </Route>
-                <Route exact path="/books/:id">
+                <Route exact path="/books/:bookId">
                   <IndexPage />
                 </Route>
-
-                <Route exact path="/lists/:id">
+                <Route exact path="/books/:bookId/lists/:listId">
                   <Lists />
                 </Route>
-
-                <Route exact path="/calendars/:id">
+                <Route exact path="/books/:bookId/calendars/:calId">
                   <Calendars />
                 </Route>
-
                 <Route exact path="/create-book">
                   <CreateBook />
                 </Route>
-                <Route exact path="/habits/:id">
+                <Route exact path="/books/:bookId/habits/:habitId">
                   <Habits />
                 </Route>
                 <Route exact path="/settings">
@@ -122,7 +102,6 @@ function App() {
               </Switch>
               </Container>
               <Footer />
-              </ThemeContext.Provider>
             </div>
           )}
         </Router>
