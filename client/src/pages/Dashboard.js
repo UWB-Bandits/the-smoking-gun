@@ -7,7 +7,6 @@ import API from "../utils/API";
 
 import WeatherWidget from "../components/DashboardWidgets/WeatherWidget";
 import NewsWidget from "../components/DashboardWidgets/NewsWidget";
-// import ThemeContext from "../contexts/ThemeContext";
 // import RandomWordWidget from "../components/DashboardWidgets/RandomWordWidget";
 // import DashboardAPI from "../utils/dashboardAPI";
 
@@ -21,17 +20,6 @@ function Dashboard() {
   const [weather, setWeather] = useState({});
   const [news, setNews] = useState([]);
   // const [randomWord, setRandomWord] = useState({});
-
-  // const [booktheme, setBookTheme] = useState();
-  
-  // console.log(props);
-  // const [themeMode, setThemeMode] = useContext(ThemeContext);
-
-  // const grabBookTheme = (id) => {
-  //   API.getBook(id)
-  //     .then(res =>
-  //       setBookTheme(res.data.colorScheme));
-  // };
 
   useEffect(() => {
     getUser();
@@ -149,12 +137,7 @@ function Dashboard() {
             colorScheme="yellow"
           />
           {usersBooks.map((item) => (
-            // <ThemeContext.Consumer key={item.colorScheme}>
-              <BookButton key={item._id} link={`/books/${item._id}`} {...item} 
-                // onClick={() => setThemeMode(themeMode === item.colorScheme)}
-                // theme={item.colorScheme}
-              />
-            // </ThemeContext.Consumer>
+              <BookButton key={item._id} link={`/books/${item._id}`} {...item} />
           ))}
           {isLoaded ?
             <WeatherWidget weather={weather} />
