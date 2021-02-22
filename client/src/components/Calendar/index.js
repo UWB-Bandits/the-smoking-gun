@@ -24,7 +24,6 @@ export default function Calendar(props) {
     function loadCurrentEvents(){
       API.getCalendar(id)
       .then(res =>{
-        console.log(res.data.events);
         setCurrentEvents(res.data.events);
       })
       .catch(err => console.log(err));
@@ -49,7 +48,7 @@ export default function Calendar(props) {
       API.updateCalendar(id, {
         ...props.calendar,
         events: currentEvents
-      }).then(res => console.log(res))
+      }).then(res => res)
       .catch(err => console.log(err));
     }
 

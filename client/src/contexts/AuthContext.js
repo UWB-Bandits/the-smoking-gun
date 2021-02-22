@@ -42,7 +42,6 @@ export const AuthProvider = ({ children }) => {
     let unsubscribe;
     if (currentUser && !loading) {
       unsubscribe = API.getUser(currentUser.uid).then((res) => {
-        console.log("mongoUSer:: ", res);
         setMongoId(res.data._id);
       });
     }

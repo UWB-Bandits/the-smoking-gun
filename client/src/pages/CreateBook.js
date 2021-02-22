@@ -22,11 +22,9 @@ const CreateBook = () => {
   };
 
   const handleSubmit = () => {
-    console.log(formData);
     //SEND NEW BOOK TO DATABASE AND REDIRECT TO BOOK INDEX
     API.saveBook({...formData, user:currentUser.uid })
     .then( res => {
-      console.log("Books has been saved");
       window.location.href = "/books/" + res.data._id;
     }
       

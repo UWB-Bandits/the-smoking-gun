@@ -45,12 +45,9 @@ const EditBookForm = (props) => {
     };
 
   const handleSubmit = () => {
-    console.log(formData);
-    
     API.updateBook(props.id, formData)
     .then( res => {
-      console.log("Books has been updated");
-      console.log(res);
+      res;
       window.location.reload(true);
     })
     .catch(err => console.log(err));
