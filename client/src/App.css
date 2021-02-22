@@ -5,6 +5,10 @@
     background-size: cover;
 }
 
+.green .styled-button {
+    background-color: #477754;
+}
+
 .red .background {
     background-color: #9A0010;
     background-image: url("https://images.pexels.com/photos/751373/pexels-photo-751373.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
@@ -12,9 +16,17 @@
     background-size: cover;
 }
 
+.red .styled-button {
+    background-color: #CA4541;
+}
+
 .blue .background {
     background-color: #00C5FF;
     background-image: url("https://images.pexels.com/photos/1934846/pexels-photo-1934846.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.blue .styled-button {
+    background-color: #0A8CBF;
 }
