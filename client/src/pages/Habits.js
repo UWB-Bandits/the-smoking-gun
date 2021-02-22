@@ -71,7 +71,6 @@ function Habits() {
         setHabits(dbHabits);
         findCompleted(dbHabits);
         setCompletedToday(todaysTracking);
-
       })
       .catch(err => console.log(err));
   };
@@ -86,7 +85,6 @@ function Habits() {
   };
 
   const addHabit = () => {
-
     if (formData.newItem){
       API.createHabit({ 
         name: formData.newItem, 

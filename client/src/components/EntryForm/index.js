@@ -5,8 +5,7 @@ import Box from "@material-ui/core/Box";
 import React from "react";
 
 const EntryForm = (props) => {
-  const { title, body, onSave, onDelete, handleInputChange, type} = props;
-
+  const { title, body, onSave, onDelete, handleInputChange, type } = props;
 
   return (
     <Box style={{width:"100%"}}>
