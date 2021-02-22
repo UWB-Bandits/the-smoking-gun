@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
+  Snackbar,
+  IconButton
 } from "@material-ui/core";
 import TitleItem from "../components/TitleItem";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,16 +16,26 @@ import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import PropTypes from "prop-types";
 import EntryForm from "../components/EntryForm";
+import CloseIcon from "@material-ui/icons/Close";
 
 function Journaling(props) {
   const [formData, setFormData] = useState({ title: "", body: "" });
   const [entry, setEntry] = useState({});
   const [book, setBook] = useState({});
+  const [open, setOpen] = React.useState(false);
 
   const {bookId, journalId} = useParams();
   
   Journaling.propTypes = {
     type: PropTypes.string,
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -32,7 +44,7 @@ function Journaling(props) {
     } else {
       loadBook();
     }
-  }, [formData]);
+  },[]);
 
   const loadEntry = () =>{
     API.getEntry(journalId)
@@ -53,7 +65,11 @@ function Journaling(props) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (props.type === "new") {
+      setFormData({ ...formData, [name]: value });
+    } else {
+      setFormData({title: entry.title, body: value});
+    }
   };
 
   const onSave = () => {
@@ -67,7 +83,7 @@ function Journaling(props) {
         let bookEntries = book.entries;
         bookEntries.push(res.data._id);
         API.updateBook(book._id, {...book, entries: bookEntries})
-        .then(res => console.log(res))
+        .then(setOpen(true))
         .catch(err => console.log(err));
         window.location.href = "/books/" + bookId + "/journal/" + res.data._id;
       })
@@ -75,12 +91,9 @@ function Journaling(props) {
     } else {
       API.updateEntry(entry._id, {
         ...entry,
-        title: formData.title,
         body: formData.body,
       })
-      .then(res => {
-        console.log(res);
-      })
+      .then(setOpen(true))
       .catch(err => console.log(err));
     }
   };
@@ -141,8 +154,25 @@ function Journaling(props) {
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>{props.type==="old" ? entry.title : "New Entry"}</span>
           </Typography>
         </Breadcrumbs>
-        <EntryForm type={props.type} onSave={onSave} onDelete={onDelete} title={formData.title} body={formData.body} handleInputChange={handleInputChange} {...entry}/>
+        <EntryForm  type={props.type} onSave={onSave} onDelete={onDelete} formData={formData} handleInputChange={handleInputChange} {...entry}/>
       </Box>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Journal Entry Saved!"
+        action={
+          <React.Fragment>
+            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
     </div>
   );
 }
