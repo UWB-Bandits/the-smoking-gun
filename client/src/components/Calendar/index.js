@@ -14,22 +14,29 @@ let eventGuid = 0;
 export default function Calendar(props) {
     const [weekendsVisible, setWeekendsVisible] = useState(false);
     const [currentEvents, setCurrentEvents] = useState([]);
-    const {id} = useParams();
+    const [book, setBook] = useState({});
+    const {bookId, calId} = useParams();
 
     useEffect(() => {
-        setCurrentEvents(props.calendar.events);
-        loadCurrentEvents();
+      loadBook();
+      setCurrentEvents(props.calendar.events);
+      loadCurrentEvents();
     }, []);
 
+    const loadBook = async () => {
+      const bookResponse = await API.getBook(bookId);
+      setBook(bookResponse.data);
+      console.log(book);
+    };
+
     function loadCurrentEvents(){
-      API.getCalendar(id)
+      API.getCalendar(calId)
       .then(res =>{
         console.log(res.data.events);
         setCurrentEvents(res.data.events);
       })
       .catch(err => console.log(err));
     }
-    
     
     function handleWeekendsToggle(){
           setWeekendsVisible(!weekendsVisible);
@@ -46,7 +53,7 @@ export default function Calendar(props) {
     }
 
     function addEvent(){
-      API.updateCalendar(id, {
+      API.updateCalendar(calId, {
         ...props.calendar,
         events: currentEvents
       }).then(res => console.log(res))
@@ -54,44 +61,45 @@ export default function Calendar(props) {
     }
 
     function renderEventContent(eventContent) {
-    return (
+      return (
         <>
-        <b>{eventContent.timeText}</b>
-        <i>{eventContent.event.title}</i>
+          <b>{eventContent.timeText}</b>
+          <i>{eventContent.event.title}</i>
         </>
-    );
+      );
     }
 
     function renderInfoDrawerEvent(event) {
-        return (
-          <li key={event.title+Date.now()}>
-            <b>{formatDate(event.start, {year: "numeric", month: "short", day: "numeric"})}</b>
-            <i>    {event.title}</i>
-          </li>
-        );
-      }
+      return (
+        <li key={event.title+Date.now()}>
+          <b>{formatDate(event.start, {year: "numeric", month: "short", day: "numeric"})}</b>
+          <i>    {event.title}</i>
+        </li>
+      );
+    }
 
     function createEventId() {
-        return String(eventGuid++);
+      return String(eventGuid++);
     }
 
     function handleDateSelect(selectInfo) {
-        let title = prompt("Please enter a new title for your event");
-        let calendarApi = selectInfo.view.calendar;
-    
-        calendarApi.unselect(); // clear date selection
-    
-        if (title) {
-          calendarApi.addEvent({
-            id: createEventId(),
-            title,
-            start: selectInfo.startStr,
-            end: selectInfo.endStr,
-            allDay: selectInfo.allDay
-          });
-        }
+      let title = prompt("Please enter a new title for your event");
+      let calendarApi = selectInfo.view.calendar;
+  
+      calendarApi.unselect(); // clear date selection
+  
+      if (title) {
+        calendarApi.addEvent({
+          id: createEventId(),
+          title,
+          start: selectInfo.startStr,
+          end: selectInfo.endStr,
+          allDay: selectInfo.allDay
+        });
+      }
     }
-    if(currentEvents){
+
+    if (currentEvents) {
       return (
         <div>
             <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={setWeekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
