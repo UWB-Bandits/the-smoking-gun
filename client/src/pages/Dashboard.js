@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Grid } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Jumbotron from "../components/Jumbotron";
 import BookButton from "../components/BookButton";
 import { useAuth } from "../contexts/AuthContext";
@@ -156,6 +157,18 @@ function Dashboard() {
       <Box>
         <Jumbotron userName={user.firstName} />
         <Grid container>
+        {isLoaded ?
+            <WeatherWidget weather={weather} />
+             : <div>Loading Weather...<CircularProgress /></div> 
+          }
+          {isLoaded ?
+            <RandomWordWidget randomWord={randomWord} />
+             : <div>Loading Word...<CircularProgress /></div> 
+          }
+          {isLoaded ? 
+            <NewsWidget news={[...news]} />
+             : <div>Loading Top Stories...<CircularProgress /></div> 
+          }
           <BookButton
             title="Create a new book!"
             description="Click here to start a new journal"
@@ -166,7 +179,7 @@ function Dashboard() {
           {usersBooks.map((item) => (
               <BookButton key={item._id} bookSize={bookSize} edit={true} id={item._id} link={`/books/${item._id}`} {...item} />
           ))}
-          {isLoaded ?
+          {/* {isLoaded ?
             <WeatherWidget weather={weather} />
              : <div>Loading</div> 
           }
@@ -177,7 +190,7 @@ function Dashboard() {
           {isLoaded ? 
             <NewsWidget news={[...news]} />
              : <div>Loading</div> 
-          }
+          } */}
         </Grid>
       </Box>
     </div>
