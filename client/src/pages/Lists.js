@@ -21,21 +21,26 @@ import HomeIcon from "@material-ui/icons/Home";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 
-
 function Lists() {
   const [formData, setFormData] = useState({ newItem: "" });
   const [list, setList] = useState({});
   const [items, setItems] = useState([]);
+  const [book, setBook] = useState({});
 
-  const {id} = useParams();
-
+  const {bookId, listId} = useParams();
 
   useEffect(() => {
+    loadBook();
     loadList();
   }, []);
 
+  const loadBook = async () => {
+    const bookResponse = await API.getBook(bookId);
+    setBook(bookResponse.data);
+  };
+
   const loadList = () =>{
-    API.getList(id)
+    API.getList(listId)
       .then(res => {
         let pageList = {
           user: res.data.book.user,
@@ -59,14 +64,13 @@ function Lists() {
   };
 
   const addItem = () => {
-
     if (formData.newItem){
       let updatedItems = items;
       updatedItems.push({ name: formData.newItem, completed: false });
       setList({ ...list, items: updatedItems });
       setFormData({ newItem: "" });
   
-      API.updateList(id, {
+      API.updateList(listId, {
         ...list,
         items: items
       }).then(res => console.log(res))
@@ -84,15 +88,13 @@ function Lists() {
       newChecked[currentIndex].completed = false;
     }
 
-
     setItems(newChecked);
 
-    API.updateList(id, {
+    API.updateList(listId, {
       ...list,
       items: items
     }).then(res => setList(res.data))
     .catch(err => console.log(err));
-
   };
 
   const classes = makeStyles((theme) => ({
@@ -121,7 +123,7 @@ function Lists() {
   }));
 
   return (
-    <div>
+    <div className={book.colorScheme}>
       <Box>
         <TitleItem title={list.name} description={list.description}/>
         <Breadcrumbs aria-label="breadcrumb">
