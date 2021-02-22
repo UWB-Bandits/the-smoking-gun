@@ -11,7 +11,7 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   findWhere: function (req, res) {
-    db.Book.find({user: req.params.id})
+    db.Book.find({ user: req.params.id })
       .populate("lists")
       .populate("calendars")
       .sort({ date: -1 })
@@ -22,6 +22,7 @@ module.exports = {
     db.Book.findById(req.params.id)
       .populate("lists")
       .populate("calendars")
+      .populate("doodles")
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },

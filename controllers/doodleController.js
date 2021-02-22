@@ -8,6 +8,14 @@ module.exports = {
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
+  findByBook: function (req, res) {
+    db.Doodle.find({ book: req.params.book_id })
+      .populate("book")
+      .then((dbModel) => {
+        res.send(dbModel);
+      })
+      .catch((err) => res.status(422).json(err));
+  },
   findById: function (req, res) {
     db.Doodle.findById(req.params.id)
       .populate("book")
@@ -16,11 +24,6 @@ module.exports = {
   },
   create: function (req, res) {
     db.Doodle.create(req.body)
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).json(err));
-  },
-  update: function (req, res) {
-    db.Doodle.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },

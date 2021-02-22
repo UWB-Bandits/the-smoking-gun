@@ -20,6 +20,6 @@ router.use("/weather", weatherRoute);
 router.use("/habits", habitRoutes);
 
 // doodle routes
-router.use("/users", doodleRoutes);
+router.use("/doodle", doodleRoutes);
 
 module.exports = router;
