@@ -96,7 +96,7 @@ function Lists() {
     API.updateList(id, {
       ...list,
       items: newDelete
-    }).then(res => setList(res.data))
+    }).then(loadList())
     .catch(err => console.log(err));
   };
 
@@ -144,7 +144,7 @@ function Lists() {
 
             return (
               <ListItem
-                key={value.name}
+                key={items.indexOf(value)}
                 dense
                 button
                 onClick={handleToggle(value)}
@@ -160,7 +160,7 @@ function Lists() {
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={value.name} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete item"><DeleteIcon onClick={handleDelete(value)} /></IconButton>
+                  <IconButton edge="end" aria-label="delete item" onClick={handleDelete(value)}><DeleteIcon  /></IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             );
