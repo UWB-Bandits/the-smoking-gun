@@ -9,6 +9,7 @@ import {CircularProgress, Grid} from "@material-ui/core/";
 import API from "../../utils/API";
 import { useParams } from "react-router-dom";
 import PromptModal from "../promptModal";
+import ConfirmModal from "../ConfirmModal";
 
 let eventGuid = 0;
 
@@ -18,6 +19,10 @@ export default function Calendar(props) {
     const [formData, setFormData] = useState("");
     const {id} = useParams();
     const [titleOpen, setTitleOpen] = useState(false);
+    const [calendarApi, setCalendarApi] = useState({});
+    const [selectInfo, setSelectInfo] = useState({});
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [clickInfo, SetClickInfo] = useState({});
 
     useEffect(() => {
         setCurrentEvents(props.calendar.events);
@@ -37,18 +42,17 @@ export default function Calendar(props) {
     }
     
     const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
+      const { value } = e.target;
+      setFormData(value );
     };
     
     function handleWeekendsToggle(){
-      setWeekendsVisible(!weekendsVisible);
+          setWeekendsVisible(!weekendsVisible);
     }
 
-    function handleEventClick(clickInfo) {
-        if (confirm(`Are you sure you want to delete the event "${clickInfo.event.title}"`)) {
-        clickInfo.event.remove();
-        }
+    function handleEventClick(clickedInfo) {
+        setDeleteOpen(true);
+        SetClickInfo(clickedInfo);
     }
 
     function handleEvents(events) {  
@@ -59,7 +63,7 @@ export default function Calendar(props) {
       API.updateCalendar(id, {
         ...props.calendar,
         events: currentEvents
-      }).then(res => res)
+      }).then(res => console.log(res))
       .catch(err => console.log(err));
     }
 
@@ -85,23 +89,31 @@ export default function Calendar(props) {
         return String(eventGuid++);
     }
 
-    function handleDateSelect() {
-      setTitleOpen(true);
+    function handleDateSelect(selectedInfo) {
+        setTitleOpen(true);
+        setCalendarApi(selectedInfo.view.calendar);
+        setSelectInfo(selectedInfo);        
     }
 
-    const onTitleSubmit = (selectInfo) =>{
-      let calendarApi = selectInfo.view.calendar;
-      if(formData !== ""){
-        calendarApi.addEvent({
+    const onTitleSubmit = () =>{
+      setTitleOpen(false);
+      if (formData) {
+        let newEvent = {
           id: createEventId(),
           title: formData,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           allDay: selectInfo.allDay
-        });
+        };
+        calendarApi.addEvent(newEvent);
       }
-      calendarApi.unselect();
-      setTitleOpen(false);
+      setFormData("");
+    };
+
+    const onDeleteSubmit = ()=>{
+      console.log(clickInfo);
+      setDeleteOpen(false);
+      clickInfo.event.remove();
     };
 
     if(currentEvents){
@@ -137,12 +149,19 @@ export default function Calendar(props) {
             />
             <Grid container justify="center" >
               <PromptModal 
-              prompt="Please enter a new title for your event"
-              handleSubmit = {onTitleSubmit}
-              handleInputChange = {handleInputChange}
-              handleClose = {handleClose}
-              buttonLabel ="Save event"
-              open={titleOpen}
+                prompt="Please enter a new title for your event"
+                handleSubmit = {onTitleSubmit}
+                handleInputChange = {handleInputChange}
+                handleClose = {handleClose}
+                buttonLabel ="Save event"
+                open = {titleOpen}
+              />
+              <ConfirmModal 
+                prompt={`Are you sure you want to delete the event "${clickInfo.event ? clickInfo.event.title : ""}"`}
+                handleSubmit = {onDeleteSubmit}
+                handleClose = {handleClose}
+                buttonLabel ="Delete Event"
+                open = {deleteOpen}
               />
             </Grid>
     
