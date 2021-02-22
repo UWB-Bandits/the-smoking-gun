@@ -64,6 +64,7 @@ const EntryForm = (props) => {
       }
           {type === "new" ?
             <Button
+              className={"styled-button"}
               style={{
                   margin: 10,
                   display: "in-line",
@@ -77,6 +78,7 @@ const EntryForm = (props) => {
             :
             <ButtonGroup>  
               <Button
+                className={"styled-button"}
                 style={{
                     margin: 10,
                     display: "in-line",

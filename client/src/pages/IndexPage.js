@@ -129,7 +129,6 @@ function IndexPage() {
   return (
     <div className={book.colorScheme}>
       <Box>
-            <div>
         <TitleItem {...book} />
         <Grid container justify="center" >
           <EditModal 
@@ -178,7 +177,7 @@ function IndexPage() {
                 <div style={{width:"100%"}} key={item._id}>
                  <ListItemLink  href={`/books/${bookId}/lists/${item._id}`} >
                   <ListItemAvatar>
-                    <Avatar>
+                    <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -233,7 +232,7 @@ function IndexPage() {
                 <div key={item._id}>
                  <ListItemLink href={`/books/${bookId}/calendars/${item._id}`} >
                   <ListItemAvatar>
-                    <Avatar>
+                    <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -276,7 +275,7 @@ function IndexPage() {
                 <div style={{width:"100%"}}>
                  <ListItemLink  href={`/books/${bookId}/habits/${bookId}`} >
                   <ListItemAvatar>
-                    <Avatar>
+                    <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -306,7 +305,7 @@ function IndexPage() {
                 <div style={{width:"100%"}} key={item._id}>
                  <ListItemLink href={`/books/${bookId}/journal/${item._id}`} >
                   <ListItemAvatar>
-                    <Avatar>
+                    <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -340,8 +339,7 @@ function IndexPage() {
             </List>
           </AccordionDetails> 
         </Accordion>
-        </div>
-        </Box>
+      </Box>
     </div>
   );
 }
