@@ -47,7 +47,7 @@ export default function Calendar(props) {
     };
     
     function handleWeekendsToggle(){
-          setWeekendsVisible(!weekendsVisible);
+      setWeekendsVisible(!weekendsVisible);
     }
 
     function handleEventClick(clickedInfo) {
@@ -119,7 +119,7 @@ export default function Calendar(props) {
     if(currentEvents){
       return (
         <div>
-            <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={setWeekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
+            <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={weekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               headerToolbar={{
