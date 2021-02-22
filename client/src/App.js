@@ -55,63 +55,63 @@ function App() {
     return unsubscribe;
   }, [firebaseID, error]);
 
-  return (<div style={{minHeight:"100vh", backgroundImage:"url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)", backgroundSize:"100%"}}>
-    <AuthProvider>
-      <div id="App">
-        <Router>
-          {!mongoUser && !error ? (
-            <>
-              <Switch>
-                <Route exact path="/">
-                  <SignIn />
-                </Route>
-              </Switch>
-            </>
-          ) : (
-            <div >
-              <HeadingNav />
-              
-              <Container>
-              <Switch>
-                
-                <Route exact path={["/", "/dashboard"]}>
-                  <Dashboard />
-                </Route>
-                <Route exact path="/books/:bookId">
-                  <IndexPage />
-                </Route>
-                <Route exact path="/books/:bookId/lists/:listId">
-                  <Lists />
-                </Route>
-                <Route exact path="/books/:bookId/calendars/:calId">
-                  <Calendars />
-                </Route>
-                <Route exact path="/create-book">
-                  <CreateBook />
-                </Route>
-                <Route exact path="/books/:bookId/habits/:habitId">
-                  <Habits />
-                </Route>
-                <Route exact path="/settings">
-                  <Settings />
-                </Route>
-                <Route exact path="/books/:bookId/new-entry/:newEntryId">
-                  <Journaling type="new"/>
-                </Route>
-                <Route exact path="/books/:bookId/journal/:journalId">
-                  <Journaling type="old"/>
-                </Route>
-                <Route>
-                  <NoMatch />
-                </Route>
-              </Switch>
-              </Container>
-              <Footer />
-            </div>
-          )}
-        </Router>
-      </div>
-    </AuthProvider>
+  return (
+    <div style={{minHeight:"100vh", backgroundImage:"url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)", backgroundSize:"cover", backgroundRepeat:"no-repeat"}}>
+    {/* <div style={{minHeight:"100vh", backgroundImage:"url(https://images.pexels.com/photos/163084/typewriter-vintage-old-vintage-typewriter-163084.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)", backgroundSize:"cover", backgroundRepeat:"no-repeat"}}> */}
+      <AuthProvider>
+        <div id="App">
+          <Router>
+            {!mongoUser && !error ? (
+              <>
+                <Switch>
+                  <Route exact path="/">
+                    <SignIn />
+                  </Route>
+                </Switch>
+              </>
+            ) : (
+              <div >
+                <HeadingNav />
+                <Container>
+                  <Switch>
+                    <Route exact path={["/", "/dashboard"]}>
+                      <Dashboard />
+                    </Route>
+                    <Route exact path="/books/:bookId">
+                      <IndexPage />
+                    </Route>
+                    <Route exact path="/books/:bookId/lists/:listId">
+                      <Lists />
+                    </Route>
+                    <Route exact path="/books/:bookId/calendars/:calId">
+                      <Calendars />
+                    </Route>
+                    <Route exact path="/create-book">
+                      <CreateBook />
+                    </Route>
+                    <Route exact path="/books/:bookId/habits/:habitId">
+                      <Habits />
+                    </Route>
+                    <Route exact path="/settings">
+                      <Settings />
+                    </Route>
+                    <Route exact path="/books/:bookId/new-entry/:newEntryId">
+                      <Journaling type="new"/>
+                    </Route>
+                    <Route exact path="/books/:bookId/journal/:journalId">
+                      <Journaling type="old"/>
+                    </Route>
+                    <Route>
+                      <NoMatch />
+                    </Route>
+                  </Switch>
+                </Container>
+                <Footer />
+              </div>
+            )}
+          </Router>
+        </div>
+      </AuthProvider>
     </div>
   );
 }
