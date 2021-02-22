@@ -1,0 +1,13 @@
+.green .background {
+    background-color: #15A339
+}
+
+.red .background {
+    background-color: #9A0010;
+}
+
+.blue .background {
+    background-color: #00C5FF;
+    /* background-image: url("https://images.pexels.com/photos/37487/pexels-photo-37487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"); */
+
+}
