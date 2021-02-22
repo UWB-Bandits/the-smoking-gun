@@ -24,21 +24,21 @@ function IndexPage() {
   const [book, setBook] = useState({});
   const [lists, setLists] = useState([]);
   const [calendars, setCalendars] = useState([]);
-  
+
   console.log(formData);
   console.log(calendarFormData);
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     API.getBook(id)
-      .then(res => {
+      .then((res) => {
         console.log(res);
-      
+
         setBook(res.data);
         setLists(res.data.lists);
         setCalendars(res.data.calendars);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }, []);
 
   const handleInputChange = (e) => {
@@ -55,35 +55,39 @@ function IndexPage() {
     API.saveList({
       name: formData.newList,
       items: [],
-      book: book._id
-    }).then(res => {
-      let newBookLists = lists.map(list => list._id);
-      newBookLists.push(res.data._id);
-      API.updateBook(id, {
-        ...book,
-        lists: newBookLists
-      }).then(res => console.log(res))
-      .catch(err => console.log(err));
-      window.location.href = "/lists/" + res.data._id;
+      book: book._id,
     })
-    .catch(err => console.log(err));
+      .then((res) => {
+        let newBookLists = lists.map((list) => list._id);
+        newBookLists.push(res.data._id);
+        API.updateBook(id, {
+          ...book,
+          lists: newBookLists,
+        })
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+        window.location.href = "/lists/" + res.data._id;
+      })
+      .catch((err) => console.log(err));
   };
 
   const addCalendar = () => {
     API.saveCalendar({
       name: calendarFormData.newCalendar,
-      book: book._id
-    }).then(res => {
-      let newBookCalendars = calendars.map(calendar => calendar._id);
-      newBookCalendars.push(res.data._id);
-      API.updateBook(id, {
-        ...book,
-        calendars: newBookCalendars
-      }).then(res => console.log(res))
-      .catch(err => console.log(err));
-      window.location.href = "/calendars/" + res.data._id;
+      book: book._id,
     })
-    .catch(err => console.log(err));
+      .then((res) => {
+        let newBookCalendars = calendars.map((calendar) => calendar._id);
+        newBookCalendars.push(res.data._id);
+        API.updateBook(id, {
+          ...book,
+          calendars: newBookCalendars,
+        })
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+        window.location.href = "/calendars/" + res.data._id;
+      })
+      .catch((err) => console.log(err));
   };
 
   const classes = makeStyles((theme) => ({
@@ -117,12 +121,22 @@ function IndexPage() {
         <TitleItem {...book} />
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
-            <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+            <HomeIcon
+              style={{ verticalAlign: "middle" }}
+              className={classes.icon}
+            />
+            <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+              Dashboard
+            </span>
           </Link>
           <Typography color="textPrimary" className={classes.link}>
-            <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>{book.title}</span>
+            <ImportContactsIcon
+              style={{ verticalAlign: "middle" }}
+              className={classes.icon}
+            />
+            <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+              {book.title}
+            </span>
           </Typography>
         </Breadcrumbs>
         <Accordion>
@@ -136,14 +150,15 @@ function IndexPage() {
           </AccordionSummary>
           <AccordionDetails>
             <ul>
-              {lists ? lists.map((item) => (
-                <li key={item._id}>
-                  <a href={`/lists/${item._id}`}>{item.name}</a>
-                </li>
-              ))
-              :
-              <li>Add a new list to get started</li>
-            }
+              {lists ? (
+                lists.map((item) => (
+                  <li key={item._id}>
+                    <a href={`/lists/${item._id}`}>{item.name}</a>
+                  </li>
+                ))
+              ) : (
+                <li>Add a new list to get started</li>
+              )}
               <NewListForm
                 handleInputChange={handleInputChange}
                 addItem={addList}
@@ -159,20 +174,19 @@ function IndexPage() {
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
-            <Typography className={classes.heading}>
-              Calendars
-            </Typography>
+            <Typography className={classes.heading}>Calendars</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <ul>
-              {calendars ? calendars.map((item) => (
-                <li key={item._id}>
-                  <a href={`/calendars/${item._id}`}>{item.name}</a>
-                </li>
-              ))
-              :
-              <li>Add a new list to get started</li>
-            }
+              {calendars ? (
+                calendars.map((item) => (
+                  <li key={item._id}>
+                    <a href={`/calendars/${item._id}`}>{item.name}</a>
+                  </li>
+                ))
+              ) : (
+                <li>Add a new list to get started</li>
+              )}
               <NewCalendarForm
                 handleCalendarInputChange={handleCalendarInputChange}
                 addCalendar={addCalendar}
@@ -180,21 +194,36 @@ function IndexPage() {
               />
             </ul>
           </AccordionDetails>
-          </Accordion>
-          <Accordion>
+        </Accordion>
+        <Accordion>
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
-            <Typography className={classes.heading}>
-              Habits
-            </Typography>
+            <Typography className={classes.heading}>Habits</Typography>
           </AccordionSummary>
           <AccordionDetails>
-              <h2><a href={`/habits/${id}`}>Track your daily habits</a></h2>
-          </AccordionDetails>        
+            <h2>
+              <a href={`/habits/${id}`}>Track your daily habits</a>
+            </h2>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            className={classes.accordion}
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>Doodles</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <h2>
+              <a href={`/doodleIndex/${id}`}>View or Make a Doodle</a>
+            </h2>
+          </AccordionDetails>
         </Accordion>
       </Box>
     </div>
