@@ -75,7 +75,7 @@ function IndexPage() {
         lists: newBookLists
       }).then(res => res)
       .catch(err => console.log(err));
-      window.location.href = "/lists/" + res.data._id;
+      window.location.href = "/books/" + bookId + "/lists/" + res.data._id;
     })
     .catch(err => console.log(err));
   };
@@ -92,7 +92,7 @@ function IndexPage() {
         calendars: newBookCalendars
       }).then(res => res)
       .catch(err => console.log(err));
-      window.location.href = "/calendars/" + res.data._id;
+      window.location.href = "/books/" + bookId + "/calendars/" + res.data._id;
     })
     .catch(err => console.log(err));
   };
@@ -326,6 +326,7 @@ function IndexPage() {
               <ListItem>Add a new journal entry to get started</ListItem>
             }
               <Button
+                className={"styled-button"}
                 style={{
                   margin: "10px",
                   display: "block",
