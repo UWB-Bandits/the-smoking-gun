@@ -30,6 +30,7 @@ import EditModal from "../components/EditModal";
 import DeleteModal from "../components/DeleteModal";
 import IconButton from "@material-ui/core/IconButton";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import { useAuth } from "../contexts/AuthContext";
 
 function IndexPage() {
   const [formData, setFormData] = useState({ newList: "" });
@@ -38,11 +39,11 @@ function IndexPage() {
   const [lists, setLists] = useState([]);
   const [entries, setEntries] = useState([]);
   const [calendars, setCalendars] = useState([]);
-  
+  const { currentUser } = useAuth();
   const {bookId} = useParams();
-
+  console.log(bookId);
   useEffect(() => {
-    API.getBook(bookId)
+    API.getBook(bookId, currentUser.uid)
       .then(res => {
         setBook(res.data);
         setLists(res.data.lists);
