@@ -52,6 +52,10 @@ export default {
   postWeather: function (query) {
     return axios.post("/api/weather/", query);
   },
+  // Makes call to nyt api to retrieve top stories
+  getNews: function () {
+    return axios.get("/api/news");
+  },
   getCalendars: function () {
     return axios.get("/api/calendars");
   },

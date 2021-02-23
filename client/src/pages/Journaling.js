@@ -24,7 +24,7 @@ function Journaling(props) {
   const [book, setBook] = useState({});
   const [open, setOpen] = React.useState(false);
 
-  const {id} = useParams();
+  const {bookId, journalId} = useParams();
   
   Journaling.propTypes = {
     type: PropTypes.string,
@@ -47,8 +47,9 @@ function Journaling(props) {
   },[]);
 
   const loadEntry = () =>{
-    API.getEntry(id)
+    API.getEntry(journalId)
     .then(res => {
+      console.log(res.data);
       setEntry(res.data);
       setBook(res.data.book);
       setFormData({ ...formData, title: res.data.title, body: res.data.body });
@@ -57,7 +58,7 @@ function Journaling(props) {
   };
 
   const loadBook = () => {
-    API.getBook(id)
+    API.getBook(bookId)
     .then(res => setBook(res.data))
     .catch(err => console.log(err));
   };
@@ -76,7 +77,7 @@ function Journaling(props) {
       API.saveEntry({
         title: formData.title,
         body: formData.body,
-        book: id
+        book: bookId
       })
       .then(res => {
         let bookEntries = book.entries;
@@ -84,10 +85,9 @@ function Journaling(props) {
         API.updateBook(book._id, {...book, entries: bookEntries})
         .then(setOpen(true))
         .catch(err => console.log(err));
-        window.location.href = "/journal/" + res.data._id;
+        window.location.href = "/books/" + bookId + "/journal/" + res.data._id;
       })
-      .catch(err => console.log(err));
-
+      .catch(err => console.log(err));      
     } else {
       API.updateEntry(entry._id, {
         ...entry,
@@ -102,12 +102,10 @@ function Journaling(props) {
     API.deleteEntry(entry._id)
     .then(res => {
       console.log(res);
-      window.location.href="/books/"+book._id;
+      window.location.href = "/books/" + book._id;
     })
     .catch(err => console.log(err));
   };
-
-
 
   const classes = makeStyles((theme) => ({
     root: {
@@ -135,7 +133,7 @@ function Journaling(props) {
   }));
 
   return (
-    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Box>
         <TitleItem title={props.type==="old" ? entry.title : "New Journal Entry"} />
         <Breadcrumbs aria-label="breadcrumb">

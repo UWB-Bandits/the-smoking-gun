@@ -17,11 +17,11 @@ const useStyles = makeStyles({
     marginLeft: "auto",
     marginBottom: "10px",
     backgroundImage: `url(${BookLogo})`,
-    backgroundSize: "100%"
+    backgroundSize: "100%",
+    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
   },
   red: {
     backgroundColor: "#F07C5F",
-
   },
   blue: {
     backgroundColor: "#48C1F0"
@@ -43,7 +43,7 @@ export default function BookButton(props) {
   //initialize the classes variable with our useStyles hook
   const classes = useStyles();
   //deconstruct bookSize from props
-  const {bookSize} = props;
+  const { bookSize } = props;
   //sets up prop types for the BookButton component
   BookButton.propTypes = {
     title: PropTypes.string.isRequired,
@@ -55,14 +55,14 @@ export default function BookButton(props) {
     bookSize: PropTypes.object
   };
   //checks the prop edit if true returns a clickable book with edit and delete options
-  if(props.edit){
+  if (props.edit) {
     return(
       //Material-UI's Grid component sets up a responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.
       <Grid item md={4} xs={6}>
         {/*Material-UI's Link component allows you to easily customize anchor elements with your theme colors and typography styles.*/}
         <Link href={props.link}>
           {/**Material-UI's Card component contain content and actions about a single subject  */}
-          <Card className={classes.root +" " + classes[props.colorScheme]} style={{width:bookSize.bookWidth, height:bookSize.bookWidth}}>
+          <Card className={classes.root + " " + classes[props.colorScheme]} style={{width:bookSize.bookWidth, height:bookSize.bookWidth}}>
             {/*Material-UI's CardActionArea component creates a clickable area inside a card component  */}
             <CardActionArea>
               {/*Material-UI's CardContent component is used to create the "body" of a card component  */}
@@ -80,7 +80,7 @@ export default function BookButton(props) {
             </CardActionArea>
           </Card>
         </Link>
-        <Grid container justify="center" >
+        <Grid container justify="center">
           {/* this component brings up a modal with the ability to edit the book information  */}
           <EditModal 
           title={props.title}
@@ -100,20 +100,20 @@ export default function BookButton(props) {
   //this returns the create a book icon on the dashboard directs users to CreateBook page
   return (
     <Grid item md={4} xs={6}>
-    <Link href={props.link}>
+      <Link href={props.link}>
         <Card className={classes.root +" " + classes[props.colorScheme]} style={{width:bookSize.bookWidth, height:bookSize.bookWidth}}>
-        <CardActionArea>
+          <CardActionArea>
             <CardContent>
-            <Typography className={classes.text + " " + classes.titleText} style={{marginTop:bookSize.pushTop, fontSize:bookSize.textSize}} gutterBottom variant="h5" component="h2">
-                {props.title}
-            </Typography>
-            <Typography className={classes.text} style={{fontSize:bookSize.textSize}} variant="body2" color="textSecondary" component="p">
-                {props.description}
-            </Typography>
+              <Typography className={classes.text + " " + classes.titleText} style={{marginTop:bookSize.pushTop, fontSize:bookSize.textSize}} gutterBottom variant="h5" component="h2">
+                  {props.title}
+              </Typography>
+              <Typography className={classes.text} style={{fontSize:bookSize.textSize}} variant="body2" color="textSecondary" component="p">
+                  {props.description}
+              </Typography>
             </CardContent>
-        </CardActionArea>
+          </CardActionArea>
         </Card>
-    </Link>
+      </Link>
     </Grid>
   );
 }

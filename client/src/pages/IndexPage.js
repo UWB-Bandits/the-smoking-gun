@@ -38,10 +38,11 @@ function IndexPage() {
   const [lists, setLists] = useState([]);
   const [entries, setEntries] = useState([]);
   const [calendars, setCalendars] = useState([]);
-  const {id} = useParams();
+  
+  const {bookId} = useParams();
 
   useEffect(() => {
-    API.getBook(id)
+    API.getBook(bookId)
       .then(res => {
         setBook(res.data);
         setLists(res.data.lists);
@@ -69,12 +70,12 @@ function IndexPage() {
     }).then(res => {
       let newBookLists = lists.map(list => list._id);
       newBookLists.push(res.data._id);
-      API.updateBook(id, {
+      API.updateBook(bookId, {
         ...book,
         lists: newBookLists
       }).then(res => res)
       .catch(err => console.log(err));
-      window.location.href = "/lists/" + res.data._id;
+      window.location.href = "/books/" + bookId + "/lists/" + res.data._id;
     })
     .catch(err => console.log(err));
   };
@@ -86,12 +87,12 @@ function IndexPage() {
     }).then(res => {
       let newBookCalendars = calendars.map(calendar => calendar._id);
       newBookCalendars.push(res.data._id);
-      API.updateBook(id, {
+      API.updateBook(bookId, {
         ...book,
         calendars: newBookCalendars
       }).then(res => res)
       .catch(err => console.log(err));
-      window.location.href = "/calendars/" + res.data._id;
+      window.location.href = "/books/" + bookId + "/calendars/" + res.data._id;
     })
     .catch(err => console.log(err));
   };
@@ -126,7 +127,7 @@ function IndexPage() {
   }));
 
   return (
-    <div>
+    <div className={book.colorScheme}>
       <Box>
         <TitleItem {...book} />
         <Grid container justify="center" >
@@ -135,11 +136,11 @@ function IndexPage() {
           link={book.link}
           description={book.description}
           colorScheme={book.colorScheme}
-          id={id}
+          id={bookId}
           />
           <DeleteModal
           title={book.title}
-          id={id}
+          id={bookId}
           type="book"
           />
         </Grid>
@@ -165,18 +166,18 @@ function IndexPage() {
           <AccordionDetails>
             <List style={{width:"100%"}}  className={classes.root} aria-label="mailbox folders">
               {lists ? lists.map((item) => (
-                // <li key={item._id}>
-                  
-                //   <a href={`/lists/${item._id}`}>
-                //     {item.name}
-                //     <EditModal/>
-                //     <DeleteModal/>
-                //     </a>  
+                // <li = key={item._id}>
+
+                // <a href={`/lists/${item.id}`}>
+                //  {item.name}
+                //  <EditModal/>
+                // <DeleteModal/>
+                //  </a>
                 // </li>
                 <div style={{width:"100%"}} key={item._id}>
-                 <ListItemLink  href={`/lists/${item._id}`} >
+                 <ListItemLink  href={`/books/${bookId}/lists/${item._id}`} >
                   <ListItemAvatar>
-                    <Avatar>
+                    <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -191,7 +192,6 @@ function IndexPage() {
                 </ListItemLink>
                 <Divider />
                 </div>
-            
               ))
               :
               <ListItem>Add a new list to get started</ListItem>
@@ -219,7 +219,7 @@ function IndexPage() {
             {/* <ul>
               {calendars ? calendars.map((item) => (
                 <li key={item._id}>
-                  <a href={`/calendars/${item._id}`}>{item.name}</a>
+                  <a href={`/books/${bookId}/calendars/${item._id}`}>{item.name}</a>
                 </li>
               ))
               :
@@ -230,9 +230,9 @@ function IndexPage() {
             <List style={{width:"100%"}} className={classes.root} aria-label="mailbox folders">
               {calendars ? calendars.map((item) => (
                 <div key={item._id}>
-                 <ListItemLink href={`/calendars/${item._id}`} >
+                 <ListItemLink href={`/books/${bookId}/calendars/${item._id}`} >
                   <ListItemAvatar>
-                    <Avatar>
+                    <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -247,7 +247,6 @@ function IndexPage() {
                 </ListItemLink>
                 <Divider />
                 </div>
-            
               ))
               :
               <ListItem>Add a new calendar to get started</ListItem>
@@ -274,9 +273,9 @@ function IndexPage() {
           <AccordionDetails>
             <List style={{width:"100%"}}  className={classes.root} aria-label="mailbox folders">
                 <div style={{width:"100%"}}>
-                 <ListItemLink  href={`/habits/${id}`} >
+                 <ListItemLink  href={`/books/${bookId}/habits/${bookId}`} >
                   <ListItemAvatar>
-                    <Avatar>
+                    <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -304,9 +303,9 @@ function IndexPage() {
             <List style={{width:"100%"}}  className={classes.root} aria-label="mailbox folders">
               {entries ? entries.map((item) => (
                 <div style={{width:"100%"}} key={item._id}>
-                 <ListItemLink  href={`/journal/${item._id}`} >
+                 <ListItemLink href={`/books/${bookId}/journal/${item._id}`} >
                   <ListItemAvatar>
-                    <Avatar>
+                    <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -321,18 +320,18 @@ function IndexPage() {
                 </ListItemLink>
                 <Divider />
                 </div>
-            
               ))
               :
               <ListItem>Add a new journal entry to get started</ListItem>
             }
               <Button
+                className={"styled-button"}
                 style={{
                   margin: "10px",
                   display: "block",
                   textAlign: "center"
                 }}
-                href={`/new-entry/${id}`}
+                href={`/books/${bookId}/new-entry/${bookId}`}
                 variant="contained"
                 color="primary"
               >Add a new journal entry

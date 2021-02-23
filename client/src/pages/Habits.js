@@ -25,7 +25,6 @@ import HabitDoughnut from "../components/HabitDoughnut";
 import DaysMenu from "../components/DaysMenu";
 import DeleteModal from "../components/DeleteModal";
 
-
 function Habits() {
   const [formData, setFormData] = useState({ newItem: "" });
   const [habits, setHabits] = useState([]);
@@ -33,7 +32,7 @@ function Habits() {
   const [completedToday, setCompletedToday] = useState([]);
   const [resultsDays, setResultsDays] = useState(7);
 
-  const {id} = useParams();
+  const {bookId, habitId} = useParams();
 
   let date = new Date();
   let dateString = date.toDateString();
@@ -41,11 +40,17 @@ function Habits() {
   let dateNeededString = new Date(dateNeeded).toDateString();
 
   useEffect(() => {
+    loadBook();
     loadHabits();
   }, []);
 
+  const loadBook = async () => {
+    const bookResponse = await API.getBook(bookId);
+    setBook(bookResponse.data);
+  };
+
   const loadHabits = () =>{
-    API.getBook(id)
+    API.getBook(habitId)
     .then(res => setBook(res.data));
     
     let todaysTracking = [];
@@ -60,13 +65,12 @@ function Habits() {
       });
     }
 
-    API.getHabits(id)
+    API.getHabits(habitId)
       .then(res => {
         let dbHabits = res.data;
         setHabits(dbHabits);
         findCompleted(dbHabits);
         setCompletedToday(todaysTracking);
-
       })
       .catch(err => console.log(err));
   };
@@ -81,12 +85,11 @@ function Habits() {
   };
 
   const addHabit = () => {
-
     if (formData.newItem){
       API.createHabit({ 
         name: formData.newItem, 
         tracking: [], 
-        book: id 
+        book: bookId 
       }).then(loadHabits())
       .catch(err => console.log(err));
       setFormData({ newItem: "" });
@@ -98,7 +101,6 @@ function Habits() {
     const currentIndex = newChecked.indexOf(value);
     const todaysTrackingIndex = completedToday.indexOf(value._id);
     const completedTodayTemp = completedToday;
-
 
     if (todaysTrackingIndex === -1){
       newChecked[currentIndex].tracking.push({
@@ -119,7 +121,6 @@ function Habits() {
       ...habits[currentIndex]
     }).then(loadHabits())
     .catch(err => console.log(err));
-
   };
 
   const classes = makeStyles((theme) => ({
@@ -148,7 +149,7 @@ function Habits() {
   }));
 
   return (
-    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}> 
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Box>
         <TitleItem title="Your Daily Habits" description={dateString}/>
         <Breadcrumbs aria-label="breadcrumb">
