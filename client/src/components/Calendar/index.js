@@ -43,23 +43,35 @@ export default function Calendar(props) {
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [clickInfo, SetClickInfo] = useState({});
 
-    //initialize the variable id that grabs the URL parameters
-    const {id} = useParams();
     //this lets you perform side effects in function component
+    // use state to get book information
+    const [book, setBook] = useState({});
+    // initialize the id variable for the bookId and calendarId (calId) that grabs the URL parameters
+    const {bookId, calId} = useParams();
+
     useEffect(() => {
-      //sets the currentEvents with the handed down events array 
+      // load book information
+      loadBook();
+      // sets the currentEvents with the handed down events array
       setCurrentEvents(props.calendar.events);
-      //this does another database call to load the current events 
+      // this does another database call to load the current events
       loadCurrentEvents();
     }, []);
     //closes the modal
     const handleClose = () => {
       setTitleOpen(false);
     };
+    // this function makes a database query to get the book information the calendar is contained in
+    // in order to access the colorScheme
+    const loadBook = async () => {
+      const bookResponse = await API.getBook(bookId);
+      setBook(bookResponse.data);
+      console.log(book);
+    };
     //this function makes a database query and sets the currentEvents state to the events stored in the database
     function loadCurrentEvents(){
       //this searches by calendar the calendar id
-      API.getCalendar(id)
+      API.getCalendar(calId)
       //then the currentEvents state is set to the events array
       .then(res =>{
         //this is a react hook that sets the currentEvents state
@@ -91,7 +103,7 @@ export default function Calendar(props) {
     }
     //this function adds events to the database saved to the calendar collection by id
     function addEvent(){
-      API.updateCalendar(id, {
+      API.updateCalendar(calId, {
         ...props.calendar,
         events: currentEvents
       }).then()
@@ -99,12 +111,12 @@ export default function Calendar(props) {
     }
     //this function returns a custom render of an event when the user clicks on an event
     function renderEventContent(eventContent) {
-    return (
+      return (
         <>
-        <b>{eventContent.timeText}</b>
-        <i>{eventContent.event.title}</i>
+          <b>{eventContent.timeText}</b>
+          <i>{eventContent.event.title}</i>
         </>
-    );
+      );
     }
     //this function lists all events that are in the calendar inside the temporary drawer
     function renderInfoDrawerEvent(event) {
@@ -117,7 +129,7 @@ export default function Calendar(props) {
       }
     //this function creates an eventId that is unique by adding one to the evenGuid variable
     function createEventId() {
-        return String(eventGuid++);
+      return String(eventGuid++);
     }
     //this function is triggered when a date is selected and prompts the modal to name an event to open. 
     function handleDateSelect(selectedInfo) {
@@ -161,7 +173,7 @@ export default function Calendar(props) {
       //removes event from Full Calendar
       clickInfo.event.remove();
       //removes event from database
-      API.updateCalendar(id, {
+      API.updateCalendar(calId, {
         ...props.calendar,
         events: leftEvents
       }).then(console.log("event deleted"))

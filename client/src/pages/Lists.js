@@ -26,16 +26,22 @@ function Lists() {
   const [formData, setFormData] = useState({ newItem: "" });
   const [list, setList] = useState({});
   const [items, setItems] = useState([]);
+  const [book, setBook] = useState({});
 
-  const {id} = useParams();
-
+  const {bookId, listId} = useParams();
 
   useEffect(() => {
+    loadBook();
     loadList();
   }, []);
 
+  const loadBook = async () => {
+    const bookResponse = await API.getBook(bookId);
+    setBook(bookResponse.data);
+  };
+
   const loadList = () =>{
-    API.getList(id)
+    API.getList(listId)
       .then(res => {
         let pageList = {
           user: res.data.book.user,
@@ -63,7 +69,7 @@ function Lists() {
       updatedItems.push({ name: formData.newItem, completed: false });
       setFormData({ newItem: "" });
   
-      API.updateList(id, {
+      API.updateList(listId, {
         ...list,
         items: updatedItems
       }).then(loadList())
@@ -81,7 +87,9 @@ function Lists() {
       newChecked[currentIndex].completed = false;
     }
 
-    API.updateList(id, {
+    setItems(newChecked);
+
+    API.updateList(listId, {
       ...list,
       items: newChecked
     }).then(loadList())
@@ -93,7 +101,7 @@ function Lists() {
     const newDelete = items;
     const currentIndex = newDelete.indexOf(value);
     newDelete.splice(currentIndex, 1);
-    API.updateList(id, {
+    API.updateList(listId, {
       ...list,
       items: newDelete
     }).then(loadList())
@@ -117,7 +125,7 @@ function Lists() {
   }));
 
   return (
-    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Box>
         <TitleItem title={list.name} description={list.description}/>
         <Breadcrumbs aria-label="breadcrumb">
