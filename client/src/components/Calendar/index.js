@@ -94,7 +94,7 @@ export default function Calendar(props) {
       API.updateCalendar(id, {
         ...props.calendar,
         events: currentEvents
-      }).then(res => console.log(res))
+      }).then()
       .catch(err => console.log(err));
     }
     //this function returns a custom render of an event when the user clicks on an event
@@ -119,15 +119,18 @@ export default function Calendar(props) {
     function createEventId() {
         return String(eventGuid++);
     }
-
+    //this function is triggered when a date is selected and prompts the modal to name an event to open. 
     function handleDateSelect(selectedInfo) {
         setTitleOpen(true);
+        //saves the info passed in from Full Calendar to state
         setCalendarApi(selectedInfo.view.calendar);
         setSelectInfo(selectedInfo);        
     }
-
+    //This function runs after a title is saved using the modal
     const onTitleSubmit = () =>{
+      //closes the modal
       setTitleOpen(false);
+      //checks for form data and updates state if there is data
       if (formData) {
         let newEvent = {
           id: createEventId(),
@@ -136,15 +139,33 @@ export default function Calendar(props) {
           end: selectInfo.endStr,
           allDay: selectInfo.allDay
         };
+        //sends event to Full Calendar
         calendarApi.addEvent(newEvent);
+        let newEvents = currentEvents;
+        newEvents.push(newEvent);
+        setCurrentEvents(newEvents);
+        //sends new event to the database
+        addEvent();
       }
+      //resets the modal form
       setFormData("");
     };
-
+    //triggers after user confirms they want to delete an event
     const onDeleteSubmit = ()=>{
-      console.log(clickInfo);
+      //closes modal
       setDeleteOpen(false);
+      //filters out the deleted event
+      let leftEvents = currentEvents.filter(event => event._instance !== clickInfo.event._instance);
+      //updates state
+      setCurrentEvents (leftEvents);
+      //removes event from Full Calendar
       clickInfo.event.remove();
+      //removes event from database
+      API.updateCalendar(id, {
+        ...props.calendar,
+        events: leftEvents
+      }).then(console.log("event deleted"))
+      .catch(err => console.log(err));
     };
 
     if(currentEvents){
