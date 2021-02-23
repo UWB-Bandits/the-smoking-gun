@@ -85,7 +85,7 @@ const EntryForm = (props) => {
                     width:"50%"
                 }}
                 variant="contained"
-                color="primary"
+                // color="primary"
                 onClick={onSave}
                 >Save Entry
               </Button>
@@ -96,7 +96,7 @@ const EntryForm = (props) => {
                     width:"50%"
                 }}
                 variant="contained"
-                color="secondary"
+                // color="secondary"
                 onClick={onDelete}
                 >Delete Entry
               </Button>
