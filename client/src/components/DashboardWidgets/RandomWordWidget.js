@@ -35,10 +35,10 @@ export default function WordCard({ randomWord }) {
 
   return (
     <Card className={classes.root}>
-      <Typography variant="h5" component="h2" gutterbottom>
+      <Typography variant="h5" component="h2">
         Word of the Day
       </Typography>
-      <Typography className={classes.title} variant="h5" component="h2" gutterBottom>
+      <Typography className={classes.title} variant="h5" component="h2">
         {randomWord[0].word}
       </Typography>
       <Typography className={classes.pos} color="textSecondary">
