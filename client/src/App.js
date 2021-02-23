@@ -57,7 +57,6 @@ function App() {
 
   return (
     <div style={{minHeight:"100vh", backgroundImage:"url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)", backgroundSize:"cover", backgroundRepeat:"no-repeat"}}>
-    {/* <div style={{minHeight:"100vh", backgroundImage:"url(https://images.pexels.com/photos/163084/typewriter-vintage-old-vintage-typewriter-163084.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)", backgroundSize:"cover", backgroundRepeat:"no-repeat"}}> */}
       <AuthProvider>
         <div id="App">
           <Router>
