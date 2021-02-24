@@ -9,13 +9,16 @@ import {Grid} from "@material-ui/core/";
 
 export default function HabitDoughnut(props) {
 
-    const {date, tracking, days} = props;
-    let parsedDate = Date.parse(date);
+    const {tracking, days} = props;
 
+    let date = new Date();
+    date.setDate(date.getDate() - days);
+    let parsedDate = date;
     let completed = tracking.filter(entry => {
         let trackingDate = Date.parse(entry.day);
-        if (trackingDate>parsedDate)
+        if (trackingDate.valueOf()>parsedDate.valueOf()){
             return entry;
+        }
         });
     let incomplete = days-completed.length;
 
