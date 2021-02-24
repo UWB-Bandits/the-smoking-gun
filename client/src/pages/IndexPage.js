@@ -319,9 +319,23 @@ function IndexPage() {
           </AccordionSummary>
 
           <AccordionDetails>
-            <h2>
-              <a href={`/doodleIndex/${bookId}`}>View or Make a Doodle</a>
-            </h2>
+            <List
+              style={{ width: "100%" }}
+              className={classes.root}
+              aria-label="mailbox folders"
+            >
+              <div style={{ width: "100%" }}>
+                <ListItemLink href={`/doodleIndex/${bookId}`}>
+                  <ListItemAvatar>
+                    <Avatar className={"list-icon"}>
+                      <PlaylistAddCheckIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={"View or Make a Doodle"} />
+                </ListItemLink>
+                <Divider />
+              </div>
+            </List>
           </AccordionDetails>
         </Accordion>
 
