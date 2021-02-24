@@ -24,6 +24,7 @@ function HeadingNav() {
 
   return (
     <nav
+      id="headingNav"
       style={{
         display: "flex",
         justifyContent: "space-between",

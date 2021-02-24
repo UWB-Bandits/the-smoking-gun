@@ -26,7 +26,7 @@ export default function SimpleBottomNavigation() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div id="footer">
       <div className={classes.phantom} />
       <BottomNavigation showLabels className={classes.root}>
         <BottomNavigationAction

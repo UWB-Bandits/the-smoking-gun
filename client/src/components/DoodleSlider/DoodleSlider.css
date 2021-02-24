@@ -1,0 +1,85 @@
+.doodleItem img {
+  min-width: 150px;
+  width: 80%;
+  max-width: 300px;
+  min-height: 150px;
+}
+
+.horizontalSlider {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.sliderContainer {
+  justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.doodleItem {
+  margin: 1rem;
+  text-align: center;
+  min-width: 30%;
+  box-shadow: 4px 3px 7px #4e4e4e6b;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.iconContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  max-width: 300px;
+  width: 80%;
+  margin: 10px auto;
+}
+button.deleteDoodle > * {
+  pointer-events: none;
+}
+@media only screen and (max-width: 729px) {
+  .doodleItem {
+    margin: 1rem auto;
+  }
+}
+
+@media only screen and (max-width: 729px) {
+  .doodleItem {
+    min-width: 40%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .horizontalSlider {
+    display: block;
+    width: 100%;
+    overflow-x: scroll;
+    box-sizing: border-box;
+  }
+  .horizontalSlider::-webkit-scrollbar {
+    display: none;
+  }
+  .sliderContainer {
+    display: block;
+    white-space: nowrap;
+  }
+  .iconContainer {
+    padding: 10px 0;
+    width: 100%;
+    margin: 0;
+  }
+  .doodleItem {
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+  }
+  .doodleItem img {
+    width: 150px;
+    height: 150px;
+  }
+}

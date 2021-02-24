@@ -16,7 +16,9 @@ import fire from "./utils/firebase";
 import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
 import Settings from "./pages/Settings";
+import DoodlePage from "./pages/DoodlePage";
 import { Container } from "@material-ui/core";
+import DoodleIndex from "./pages/DoodleIndex";
 import Journaling from "./pages/Journaling";
 
 function App() {
@@ -56,7 +58,15 @@ function App() {
   }, [firebaseID, error]);
 
   return (
-    <div style={{minHeight:"100vh", backgroundImage:"url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)", backgroundSize:"cover", backgroundRepeat:"no-repeat"}}>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundImage:
+          "url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <AuthProvider>
         <div id="App">
           <Router>
@@ -69,9 +79,9 @@ function App() {
                 </Switch>
               </>
             ) : (
-              <div >
+              <div>
                 <HeadingNav />
-                <Container>
+                <Container id="appContainer">
                   <Switch>
                     <Route exact path={["/", "/dashboard"]}>
                       <Dashboard />
@@ -95,10 +105,16 @@ function App() {
                       <Settings />
                     </Route>
                     <Route exact path="/books/:bookId/new-entry/:newEntryId">
-                      <Journaling type="new"/>
+                      <Journaling type="new" />
                     </Route>
                     <Route exact path="/books/:bookId/journal/:journalId">
-                      <Journaling type="old"/>
+                      <Journaling type="old" />
+                    </Route>
+                    <Route exact path="/doodle/:id">
+                      <DoodlePage />
+                    </Route>
+                    <Route exact path="/doodleIndex/:id">
+                      <DoodleIndex />
                     </Route>
                     <Route>
                       <NoMatch />

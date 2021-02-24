@@ -10,8 +10,12 @@ export default {
     return axios.get("/api/books/findWhere/" + user);
   },
   // Gets the book with the given id
-  getBook: function (id) {
-    return axios.get("/api/books/" + id);
+  getBook: function (id, uid) {
+    return axios.get("/api/books/" + id, {
+      params: {
+        uid: uid
+      }
+    });
   },
   // Deletes the book with the given id
   deleteBook: function (id) {
@@ -86,6 +90,17 @@ export default {
   deleteHabit: function (id) {
     return axios.delete("/api/habits/" + id);
   },
+  //  Doodle API Calls__________________
+  createDoodle: function (obj) {
+    return axios.post("/api/doodle/", obj);
+  },
+  getDoodles: function (book_id) {
+    return axios.get("/api/doodle/" + book_id);
+  },
+  deleteDoodle: function (id) {
+    return axios.delete("/api/doodle/" + id);
+  },
+  //______________End of Doodle Calls
   updateUser: function (id, obj) {
     return axios.put("api/users/" + id, obj);
   },
