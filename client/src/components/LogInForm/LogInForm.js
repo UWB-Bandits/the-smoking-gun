@@ -39,7 +39,10 @@ const LogInForm = (props) => {
       p={2}
       style={{
         width: "80%",
-        margin: "10px auto",
+        marginTop: "10px",
+        marginRight: "auto",
+        marginLeft: "auto",
+        marginBottom: "75px",
         borderRadius: "5px",
       }}
       bgcolor="background.paper"
