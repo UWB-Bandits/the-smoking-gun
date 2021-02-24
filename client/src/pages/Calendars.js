@@ -9,11 +9,13 @@ import HomeIcon from "@material-ui/icons/Home";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import Calendar from "../components/Calendar";
+import { useAuth } from "../contexts/AuthContext";
 
 function Calendars() {
   const [calendar, setCalendar] = useState({});
   const [book, setBook] = useState({});
   const {bookId, calId} = useParams();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     loadBook();
@@ -21,7 +23,7 @@ function Calendars() {
   }, []);
 
   const loadBook = async () => {
-    const bookResponse = await API.getBook(bookId);
+    const bookResponse = await API.getBook(bookId, currentUser.uid);
     setBook(bookResponse.data);
   };
 

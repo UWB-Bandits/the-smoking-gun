@@ -21,13 +21,15 @@ import HomeIcon from "@material-ui/icons/Home";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useAuth } from "../contexts/AuthContext";
+
 
 function Lists() {
   const [formData, setFormData] = useState({ newItem: "" });
   const [list, setList] = useState({});
   const [items, setItems] = useState([]);
   const [book, setBook] = useState({});
-
+  const { currentUser } = useAuth();
   const {bookId, listId} = useParams();
 
   useEffect(() => {
@@ -36,7 +38,7 @@ function Lists() {
   }, []);
 
   const loadBook = async () => {
-    const bookResponse = await API.getBook(bookId);
+    const bookResponse = await API.getBook(bookId, currentUser.uid);
     setBook(bookResponse.data);
   };
 

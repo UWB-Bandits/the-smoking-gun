@@ -20,12 +20,19 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   findById: function (req, res) {
+    let param = req.query.uid;
     db.Book.findById(req.params.id)
       .populate("lists")
       .populate("entries")
       .populate("calendars")
       .populate("doodles")
-      .then((dbModel) => res.json(dbModel))
+      .then((dbModel) => {
+        if (param === dbModel.user) {
+          res.json(dbModel);
+        } else {
+          res.status(404);
+        }
+      })
       .catch((err) => res.status(422).json(err));
   },
   create: function (req, res) {

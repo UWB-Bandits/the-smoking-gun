@@ -17,12 +17,14 @@ import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import PropTypes from "prop-types";
 import EntryForm from "../components/EntryForm";
 import CloseIcon from "@material-ui/icons/Close";
+import { useAuth } from "../contexts/AuthContext";
 
 function Journaling(props) {
   const [formData, setFormData] = useState({ title: "", body: "" });
   const [entry, setEntry] = useState({});
   const [book, setBook] = useState({});
   const [open, setOpen] = React.useState(false);
+  const { currentUser } = useAuth();
 
   const {bookId, journalId} = useParams();
   
@@ -58,7 +60,7 @@ function Journaling(props) {
   };
 
   const loadBook = () => {
-    API.getBook(bookId)
+    API.getBook(bookId, currentUser.uid)
     .then(res => setBook(res.data))
     .catch(err => console.log(err));
   };
