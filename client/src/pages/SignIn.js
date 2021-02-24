@@ -72,7 +72,7 @@ const SignIn = () => {
 
 
   return (
-    <Grid container >
+    <Grid container style={{minHeight:"80vh"}}>
       <Grid item xs={12}>
         <img style={{width: "100%", maxWidth:"300px",display:"block", marginTop:"10px", marginLeft:"auto", marginRight:"auto"}} src={Logo} alt="The Smoking Gun logo"></img>
       </Grid>
@@ -88,6 +88,7 @@ const SignIn = () => {
           borderRadius: "5px",
           fontSize: "20px",
           fontFamily: "'La Belle Aurore', cursive",
+          verticalAlign:"center"
         }}
         bgcolor="background.paper"
         >
