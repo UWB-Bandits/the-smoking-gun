@@ -1,47 +1,52 @@
 /* Green color scheme */
 .green .background {
-    background-color: #477754;
-    background-image: url("https://images.pexels.com/photos/732548/pexels-photo-732548.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-color: #477754;
+  background-image: url("https://images.pexels.com/photos/732548/pexels-photo-732548.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .green .styled-button {
-    background-color: #477754;
+  background-color: #477754;
 }
 
 .green .list-icon {
-    background-color: #477754;
+  background-color: #477754;
 }
 
 /* Red color scheme */
 .red .background {
-    background-color: #CA4541;
-    background-image: url("https://images.pexels.com/photos/751373/pexels-photo-751373.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-color: #ca4541;
+  background-image: url("https://images.pexels.com/photos/751373/pexels-photo-751373.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .red .styled-button {
-    background-color: #CA4541;
+  background-color: #ca4541;
 }
 
 .red .list-icon {
-    background-color: #CA4541;
+  background-color: #ca4541;
 }
 
 /* Blue color scheme */
 .blue .background {
-    background-color: #0A8CBF;
-    background-image: url("https://images.pexels.com/photos/1934846/pexels-photo-1934846.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-color: #0a8cbf;
+  background-image: url("https://images.pexels.com/photos/1934846/pexels-photo-1934846.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .blue .styled-button {
-    background-color: #0A8CBF;
+  background-color: #0a8cbf;
 }
 
 .blue .list-icon {
-    background-color: #0A8CBF;
+  background-color: #0a8cbf;
+}
+
+.no-spacing {
+  margin: 0 !important;
+  padding: 0 !important;
 }
