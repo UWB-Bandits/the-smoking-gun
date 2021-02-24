@@ -27,9 +27,9 @@ module.exports = {
       .populate("calendars")
       .then((dbModel) => {
         if(param === dbModel.user){
-          res.json(dbModel)  
+          res.json(dbModel);  
         } else {
-          res.status(404)
+          res.status(404);
         }
       })  
       .catch((err) => res.status(422).json(err));
