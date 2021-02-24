@@ -24,6 +24,7 @@ import TrackChangesIcon from "@material-ui/icons/TrackChanges";
 import HabitDoughnut from "../components/HabitDoughnut";
 import DaysMenu from "../components/DaysMenu";
 import DeleteModal from "../components/DeleteModal";
+import { useAuth } from "../contexts/AuthContext";
 
 function Habits() {
   const [formData, setFormData] = useState({ newItem: "" });
@@ -31,7 +32,7 @@ function Habits() {
   const [book, setBook] = useState({});
   const [completedToday, setCompletedToday] = useState([]);
   const [resultsDays, setResultsDays] = useState(7);
-
+  const { currentUser } = useAuth();
   const {bookId, habitId} = useParams();
 
   let date = new Date();
@@ -45,12 +46,12 @@ function Habits() {
   }, []);
 
   const loadBook = async () => {
-    const bookResponse = await API.getBook(bookId);
+    const bookResponse = await API.getBook(bookId, currentUser.uid);
     setBook(bookResponse.data);
   };
 
   const loadHabits = () =>{
-    API.getBook(habitId)
+    API.getBook(habitId, currentUser.uid)
     .then(res => setBook(res.data));
     
     let todaysTracking = [];

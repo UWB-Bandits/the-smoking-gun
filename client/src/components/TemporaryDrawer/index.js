@@ -47,10 +47,10 @@ export default function TemporaryDrawer(props) {
         <label>
             <input
               type="checkbox"
-              checked={props.weekendVisible}
+              checked={props.weekends}
               onChange={props.toggle}
             ></input>
-            toggle weekends
+            Show weekends
           </label>
           <div>
           <h2>All Events ({props.currentEvents.length})</h2>
@@ -74,7 +74,7 @@ export default function TemporaryDrawer(props) {
 }
 
 TemporaryDrawer.propTypes = {
-  weekendVisible: PropTypes.bool,
+  weekends: PropTypes.bool,
   toggle: PropTypes.func,
   currentEvents: PropTypes.array,
   renderInfoDrawerEvent: PropTypes.func

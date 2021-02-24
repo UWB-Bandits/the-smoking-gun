@@ -9,28 +9,22 @@ const CreateBook = () => {
     description: "",
     colorScheme: "",
   });
-
   const { currentUser } = useAuth();
-
   const handleThemeChange = (event) => {
     setFormData({ ...formData, colorScheme: event.target.value });
   };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = () => {
     //SEND NEW BOOK TO DATABASE AND REDIRECT TO BOOK INDEX
     API.saveBook({...formData, user:currentUser.uid })
     .then( res => {
       window.location.href = "/books/" + res.data._id;
-    }
-      
+      }
     ).catch(err => console.log(err));
   };
-
   return (
     <div>
       {/* <h1>Sign In page</h1> */}
@@ -40,5 +34,4 @@ const CreateBook = () => {
     </div>
   );
 };
-
 export default CreateBook;

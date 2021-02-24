@@ -11,7 +11,7 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   findWhere: function (req, res) {
-    db.Book.find({user: req.params.id})
+    db.Book.find({ user: req.params.id })
       .populate("lists")
       .populate("entries")
       .populate("calendars")
@@ -20,11 +20,19 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   findById: function (req, res) {
+    let param = req.query.uid;
     db.Book.findById(req.params.id)
       .populate("lists")
       .populate("entries")
       .populate("calendars")
-      .then((dbModel) => res.json(dbModel))
+      .populate("doodles")
+      .then((dbModel) => {
+        if (param === dbModel.user) {
+          res.json(dbModel);
+        } else {
+          res.status(404);
+        }
+      })
       .catch((err) => res.status(422).json(err));
   },
   create: function (req, res) {

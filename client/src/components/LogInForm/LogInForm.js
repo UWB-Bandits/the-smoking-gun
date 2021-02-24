@@ -38,18 +38,19 @@ const LogInForm = (props) => {
       boxShadow={2}
       p={2}
       style={{
-        width: "70%",
-        maxWidth: "400px",
-        margin: "10px auto",
-        minWidth: "300px",
+        width: "80%",
+        marginTop: "10px",
+        marginRight: "auto",
+        marginLeft: "auto",
+        marginBottom: "75px",
         borderRadius: "5px",
       }}
+      bgcolor="background.paper"
     >
       <h2>Log In</h2>
       <form
         // onSubmit={handleSubmit}
         style={{
-          minWidth: "300px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
