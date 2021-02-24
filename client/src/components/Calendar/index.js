@@ -10,11 +10,15 @@ import TemporaryDrawer from "../TemporaryDrawer";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
 //import Material-Ui components
-import CircularProgress from "@material-ui/core/CircularProgress";
+import {CircularProgress, Grid} from "@material-ui/core/";
 //import API route handler
 import API from "../../utils/API";
 //import useParams to grab the URL parameter used to identify the book id
 import { useParams } from "react-router-dom";
+//import modal components
+import PromptModal from "../promptModal";
+import ConfirmModal from "../ConfirmModal";
+
 //initializes a variable that keeps a count and helps set an id for events in the calendar
 let eventGuid = 0;
 /*
@@ -32,6 +36,14 @@ export default function Calendar(props) {
     //sets the state variable hooks
     const [weekendsVisible, setWeekendsVisible] = useState(false);
     const [currentEvents, setCurrentEvents] = useState([]);
+    const [formData, setFormData] = useState("");
+    const [titleOpen, setTitleOpen] = useState(false);
+    const [calendarApi, setCalendarApi] = useState({});
+    const [selectInfo, setSelectInfo] = useState({});
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [clickInfo, SetClickInfo] = useState({});
+
+    //this lets you perform side effects in function component
     // use state to get book information
     const [book, setBook] = useState({});
     // initialize the id variable for the bookId and calendarId (calId) that grabs the URL parameters
@@ -45,6 +57,10 @@ export default function Calendar(props) {
       // this does another database call to load the current events
       loadCurrentEvents();
     }, []);
+    //closes the modal
+    const handleClose = () => {
+      setTitleOpen(false);
+    };
     // this function makes a database query to get the book information the calendar is contained in
     // in order to access the colorScheme
     const loadBook = async () => {
@@ -64,18 +80,22 @@ export default function Calendar(props) {
       //this console logs any errors that may occur
       .catch(err => console.log(err));
     }
+    
+    const handleInputChange = (e) => {
+      const { value } = e.target;
+      setFormData(value );
+    };
+    //this function handles events that are clicked on, this then sends a confirm delete and if confirmed the event is removed from the calendar
+    function handleEventClick(clickedInfo) {
+        //opens modal that checks the confirm from the user to wants to delete this event
+        setDeleteOpen(true);
+        //sets the info from the event into state so it can be called on later
+        SetClickInfo(clickedInfo);
+    }
     //this function handles the weekendsVisible toggle to display weekends or not on the calendar
     function handleWeekendsToggle(){
       //this is a react hook that sets the state of weekendsVisible  
       setWeekendsVisible(!weekendsVisible);
-    }
-    //this function handles events that are clicked on, this then sends a confirm delete and if confirmed the event is removed from the calendar
-    function handleEventClick(clickInfo) {
-      //checks the confirm from the user to wants to delete this event
-      if (confirm(`Are you sure you want to delete the event "${clickInfo.event.title}"`)) {
-        //the interactionPlugin allows you to click on an event, this grabs that event info and removes it from the calendar.
-        clickInfo.event.remove();
-        }
     }
     //this function uses the react hook to set currentEvents this is called after events are initialized/added/changed/removed
     function handleEvents(events) {  
@@ -86,7 +106,7 @@ export default function Calendar(props) {
       API.updateCalendar(calId, {
         ...props.calendar,
         events: currentEvents
-      }).then(res => res)
+      }).then()
       .catch(err => console.log(err));
     }
     //this function returns a custom render of an event when the user clicks on an event
@@ -111,33 +131,59 @@ export default function Calendar(props) {
     function createEventId() {
       return String(eventGuid++);
     }
-    //this function handles a date that is selected by the user and prompts for a title
-    function handleDateSelect(selectInfo) {
-      //initialize a variable that prompts the user for a title of the event
-      let title = prompt("Please enter a new title for your event");
-      //this grabs where the user is viewing on the calendar to store this event
-      let calendarApi = selectInfo.view.calendar;
-      //this clears the date selection
-      calendarApi.unselect();
-      //this checks if the title was entered in by the user
-      if (title) {
-        //this adds the event to the calendar
-        calendarApi.addEvent({
+    //this function is triggered when a date is selected and prompts the modal to name an event to open. 
+    function handleDateSelect(selectedInfo) {
+        setTitleOpen(true);
+        //saves the info passed in from Full Calendar to state
+        setCalendarApi(selectedInfo.view.calendar);
+        setSelectInfo(selectedInfo);        
+    }
+    //This function runs after a title is saved using the modal
+    const onTitleSubmit = () =>{
+      //closes the modal
+      setTitleOpen(false);
+      //checks for form data and updates state if there is data
+      if (formData) {
+        let newEvent = {
           id: createEventId(),
-          title,
+          title: formData,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           allDay: selectInfo.allDay
-        });
+        };
+        //sends event to Full Calendar
+        calendarApi.addEvent(newEvent);
+        let newEvents = currentEvents;
+        newEvents.push(newEvent);
+        setCurrentEvents(newEvents);
+        //sends new event to the database
+        addEvent();
       }
-    }
-    //this checks if currentEvents has data if so render the calendar
+      //resets the modal form
+      setFormData("");
+    };
+    //triggers after user confirms they want to delete an event
+    const onDeleteSubmit = ()=>{
+      //closes modal
+      setDeleteOpen(false);
+      //filters out the deleted event
+      let leftEvents = currentEvents.filter(event => event._instance !== clickInfo.event._instance);
+      //updates state
+      setCurrentEvents (leftEvents);
+      //removes event from Full Calendar
+      clickInfo.event.remove();
+      //removes event from database
+      API.updateCalendar(calId, {
+        ...props.calendar,
+        events: leftEvents
+      }).then(console.log("event deleted"))
+      .catch(err => console.log(err));
+    };
+
     if(currentEvents){
       return (
         <div>
-            {/* This component returns a temporaryDrawer that opens from the left when a user clicks the info button */}
-            <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={setWeekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
-            {/* This is the fullCalendar.io react component that makes the interactive event calendar */}
+            <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={weekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               headerToolbar={{
@@ -165,6 +211,24 @@ export default function Calendar(props) {
               eventChange={addEvent}
               eventRemove={addEvent}
             />
+            <Grid container justify="center" >
+              <PromptModal 
+                prompt="Please enter a new title for your event"
+                handleSubmit = {onTitleSubmit}
+                handleInputChange = {handleInputChange}
+                handleClose = {handleClose}
+                buttonLabel ="Save event"
+                open = {titleOpen}
+              />
+              <ConfirmModal 
+                prompt={`Are you sure you want to delete the event "${clickInfo.event ? clickInfo.event.title : ""}"`}
+                handleSubmit = {onDeleteSubmit}
+                handleClose = {handleClose}
+                buttonLabel ="Delete Event"
+                open = {deleteOpen}
+              />
+            </Grid>
+    
         </div>
       ); 
     //If currentEvents does not have data render this
