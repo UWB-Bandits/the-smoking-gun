@@ -10,8 +10,12 @@ export default {
     return axios.get("/api/books/findWhere/" + user);
   },
   // Gets the book with the given id
-  getBook: function (id) {
-    return axios.get("/api/books/" + id);
+  getBook: function (id, uid) {
+    return axios.get("/api/books/" + id, {
+      params: {
+        uid: uid
+      }
+    });
   },
   // Deletes the book with the given id
   deleteBook: function (id) {
