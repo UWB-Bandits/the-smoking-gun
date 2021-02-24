@@ -60,7 +60,6 @@ const DialogTitle = withStyles(styles) ((props) => {
   );
 });
 //initialize the Material-UI DialogContent component with custom styles
-
 const DialogContent = withStyles((theme) => ({
   root: {
       padding: theme.spacing(2),
