@@ -307,21 +307,6 @@ function IndexPage() {
             </List>
           </AccordionDetails>
         </Accordion>
-        <Accordion>
-          <AccordionSummary
-            className={classes.accordion}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel3a-content"
-            id="panel3a-header"
-          >
-            <Typography className={classes.heading}>Habits</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <h2>
-              <a href={`/habits/${bookId}`}>Track your daily habits</a>
-            </h2>
-          </AccordionDetails>
-        </Accordion>
 
         <Accordion>
           <AccordionSummary
