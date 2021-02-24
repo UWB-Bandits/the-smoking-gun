@@ -6,7 +6,6 @@ import Box from "@material-ui/core/Box";
 
 const NewListForm = (props) => {
   const { handleInputChange, addItem, type, formDataShown} = props;
-
   return (
     <Box style={{width:"100%"}}>
       <form
@@ -30,6 +29,7 @@ const NewListForm = (props) => {
         </div>
 
         <Button
+          className={"styled-button"}
           style={{
             margin: "10px",
             display: "block",

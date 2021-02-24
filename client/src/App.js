@@ -7,73 +7,127 @@ import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import IndexPage from "./pages/IndexPage";
 import Lists from "./pages/Lists";
+import Calendars from "./pages/Calendars";
 import CreateBook from "./pages/CreateBook";
 import Footer from "./components/Footer";
+import Habits from "./pages/Habits";
 import NoMatch from "./pages/NoMatch";
 import fire from "./utils/firebase";
 import API from "./utils/API";
 import { AuthProvider } from "./contexts/AuthContext";
-// import { useAuth } from "./contexts/AuthContext";
-
-// Routes:
-// / → signin                           ------------- done
-// /sign-up → sign up page          -- same as sign in
-// /:userid → dashboard                  --------------- done
-// /:bookid → Index                      ----------- done
-// /create-book → Create Book page           ----------- done
-// /create-list → Create List page
-// /caledar/:date → Daily calendar page
+import Settings from "./pages/Settings";
+import DoodlePage from "./pages/DoodlePage";
+import { Container } from "@material-ui/core";
+import DoodleIndex from "./pages/DoodleIndex";
+import Journaling from "./pages/Journaling";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [mongoUser, setMongoUser] = useState(false);
+  const [firebaseID, setFirebaseID] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
+    setMongoUser(false);
     fire.auth().onAuthStateChanged((user) => {
-      return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+      if (isLoggedIn && user) {
+        setFirebaseID(user.uid);
+      }
+      return user
+        ? setIsLoggedIn(true)
+        : (setIsLoggedIn(false), setFirebaseID(false));
     });
   }, [isLoggedIn]);
 
-  console.log("logged in?", isLoggedIn);
+  useEffect(() => {
+    let unsubscribe;
+
+    if (isLoggedIn && !mongoUser) {
+      unsubscribe = API.getUser(firebaseID)
+        .then(() => {
+          setMongoUser(true);
+          setError(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setMongoUser(false);
+          setError(true);
+        });
+    }
+    return unsubscribe;
+  }, [firebaseID, error]);
+
   return (
-    <AuthProvider>
-      <div className="App">
-        <Router>
-          {!isLoggedIn ? (
-            <>
-              <Switch>
-                <Route path="/">
-                  <SignIn />
-                </Route>
-              </Switch>
-            </>
-          ) : (
-            <div>
-              <HeadingNav />
-              <Switch>
-                <Route exact path={["/", "/dashboard"]}>
-                  <Dashboard />
-                </Route>
-                <Route exact path="/books/:id">
-                  <IndexPage />
-                </Route>
-
-                <Route exact path="/lists/:id">
-                  <Lists />
-                </Route>
-
-                <Route exact path="/create-book">
-                  <CreateBook />
-                </Route>
-                <Route>
-                  <NoMatch />
-                </Route>
-              </Switch>
-              <Footer />
-            </div>
-          )}
-        </Router>
-      </div>
-    </AuthProvider>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundImage:
+          "url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <AuthProvider>
+        <div id="App">
+          <Router>
+            {!mongoUser && !error ? (
+              <>
+                <Switch>
+                  <Route exact path="/">
+                    <SignIn />
+                  </Route>
+                </Switch>
+              </>
+            ) : (
+              <div>
+                <HeadingNav />
+                <Container id="appContainer">
+                  <Switch>
+                    <Route exact path={["/", "/dashboard"]}>
+                      <Dashboard />
+                    </Route>
+                    <Route exact path="/books/:bookId">
+                      <IndexPage />
+                    </Route>
+                    <Route exact path="/books/:bookId/lists/:listId">
+                      <Lists />
+                    </Route>
+                    <Route exact path="/books/:bookId/calendars/:calId">
+                      <Calendars />
+                    </Route>
+                    <Route exact path="/create-book">
+                      <CreateBook />
+                    </Route>
+                    <Route exact path="/books/:bookId/habits/:habitId">
+                      <Habits />
+                    </Route>
+                    <Route exact path="/settings">
+                      <Settings />
+                    </Route>
+                    <Route exact path="/books/:bookId/new-entry/:newEntryId">
+                      <Journaling type="new" />
+                    </Route>
+                    <Route exact path="/books/:bookId/journal/:journalId">
+                      <Journaling type="old" />
+                    </Route>
+                    <Route exact path="/doodle/:id">
+                      <DoodlePage />
+                    </Route>
+                    <Route exact path="/doodleIndex/:id">
+                      <DoodleIndex />
+                    </Route>
+                    <Route>
+                      <NoMatch />
+                    </Route>
+                  </Switch>
+                </Container>
+                <Footer />
+              </div>
+            )}
+          </Router>
+        </div>
+      </AuthProvider>
+    </div>
   );
 }
 

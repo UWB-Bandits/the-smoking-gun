@@ -13,6 +13,7 @@ import Box from "@material-ui/core/Box";
 import Alert from "@material-ui/lab/Alert";
 
 const LogInForm = (props) => {
+  // eslint-disable-next-line no-unused-vars
   const { handleInputChange, setPage, handleSubmit, loading, error } = props;
   const [values, setValues] = useState({
     password: "",
@@ -37,18 +38,19 @@ const LogInForm = (props) => {
       boxShadow={2}
       p={2}
       style={{
-        width: "70%",
-        maxWidth: "400px",
-        margin: "10px auto",
-        minWidth: "300px",
+        width: "80%",
+        marginTop: "10px",
+        marginRight: "auto",
+        marginLeft: "auto",
+        marginBottom: "75px",
         borderRadius: "5px",
       }}
+      bgcolor="background.paper"
     >
       <h2>Log In</h2>
       <form
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         style={{
-          minWidth: "300px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -94,6 +96,7 @@ const LogInForm = (props) => {
           button2={["Don't have an account? ", "Sign Up"]}
           setPage={setPage}
           loading={loading}
+          handleSubmit={handleSubmit}
         />
       </form>
     </Box>

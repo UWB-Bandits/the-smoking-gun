@@ -8,11 +8,14 @@ export default {
   },
   getBooksWhere: function (user) {
     return axios.get("/api/books/findWhere/" + user);
-
   },
   // Gets the book with the given id
-  getBook: function (id) {
-    return axios.get("/api/books/" + id);
+  getBook: function (id, uid) {
+    return axios.get("/api/books/" + id, {
+      params: {
+        uid: uid
+      }
+    });
   },
   // Deletes the book with the given id
   deleteBook: function (id) {
@@ -48,5 +51,79 @@ export default {
   },
   getUser: function (id) {
     return axios.get("/api/users/" + id);
+  },
+  // Makes call to weather api with user's location
+  postWeather: function (query) {
+    return axios.post("/api/weather/", query);
+  },
+  // Makes call to nyt api to retrieve top stories
+  getNews: function () {
+    return axios.get("/api/news");
+  },
+  getCalendars: function () {
+    return axios.get("/api/calendars");
+  },
+  // Gets the calendar with the given id
+  getCalendar: function (id) {
+    return axios.get("/api/calendars/" + id);
+  },
+  // Deletes the calendar with the given id
+  deleteCalendar: function (id) {
+    return axios.delete("/api/calendars/" + id);
+  },
+  // Saves a calendar to the database
+  saveCalendar: function (calendarData) {
+    return axios.post("/api/calendars", calendarData);
+  },
+  updateCalendar: function (id, calendarData) {
+    return axios.put("/api/calendars/" + id, calendarData);
+  },
+  createHabit: function (obj) {
+    return axios.post("/api/habits/", obj);
+  },
+  getHabits: function (book) {
+    return axios.get("/api/habits/" + book);
+  },
+  updateHabit: function (id, habitData) {
+    return axios.put("/api/habits/" + id, habitData);
+  },
+  deleteHabit: function (id) {
+    return axios.delete("/api/habits/" + id);
+  },
+  //  Doodle API Calls__________________
+  createDoodle: function (obj) {
+    return axios.post("/api/doodle/", obj);
+  },
+  getDoodles: function (book_id) {
+    return axios.get("/api/doodle/" + book_id);
+  },
+  deleteDoodle: function (id) {
+    return axios.delete("/api/doodle/" + id);
+  },
+  //______________End of Doodle Calls
+  updateUser: function (id, obj) {
+    return axios.put("api/users/" + id, obj);
+  },
+  getEntries: function () {
+    return axios.get("/api/entries/");
+    // return axios.get("/api/entries" + user_id);
+  },
+  getEntriesWhere: function (user) {
+    return axios.get("/api/entries/findWhere/" + user);
+  },
+  // Gets the book with the given id
+  getEntry: function (id) {
+    return axios.get("/api/entries/" + id);
+  },
+  // Deletes the book with the given id
+  deleteEntry: function (id) {
+    return axios.delete("/api/entries/" + id);
+  },
+  // Saves a book to the database
+  saveEntry: function (entryData) {
+    return axios.post("/api/entries", entryData);
+  },
+  updateEntry: function (id, entryData) {
+    return axios.put("/api/entries/" + id, entryData);
   },
 };

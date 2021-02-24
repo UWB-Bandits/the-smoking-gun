@@ -14,23 +14,47 @@ import { makeStyles } from "@material-ui/core/styles";
 import NewItemForm from "../components/NewItemForm";
 import { useParams } from "react-router-dom";
 import API from "../utils/API";
+import Typography from "@material-ui/core/Typography";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Link from "@material-ui/core/Link";
+import HomeIcon from "@material-ui/icons/Home";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { useAuth } from "../contexts/AuthContext";
+
 
 function Lists() {
   const [formData, setFormData] = useState({ newItem: "" });
   const [list, setList] = useState({});
   const [items, setItems] = useState([]);
-
-  const {id} = useParams();
-
+  const [book, setBook] = useState({});
+  const { currentUser } = useAuth();
+  const {bookId, listId} = useParams();
 
   useEffect(() => {
+    loadBook();
     loadList();
   }, []);
 
+  const loadBook = async () => {
+    const bookResponse = await API.getBook(bookId, currentUser.uid);
+    setBook(bookResponse.data);
+  };
+
   const loadList = () =>{
-    API.getList(id)
+    API.getList(listId)
       .then(res => {
-        setList(res.data);
+        let pageList = {
+          user: res.data.book.user,
+          name: res.data.name,
+          items: res.data.items,
+          date: res.data.date,
+          bookName: res.data.book.title,
+          bookId: res.data.book._id
+        };
+
+        setList(pageList);
         setItems(res.data.items);
       })
       .catch(err => console.log(err));
@@ -42,18 +66,17 @@ function Lists() {
   };
 
   const addItem = () => {
-    
-    let updatedItems = items;
-    updatedItems.push({ name: formData.newItem, completed: false });
-    setList({ ...list, items: updatedItems });
-    setFormData({ newItem: "" });
-
-    API.updateList(id, {
-      ...list,
-      items: items
-    }).then(res => console.log(res))
-    .catch(err => console.log(err));
-
+    if (formData.newItem){
+      let updatedItems = items;
+      updatedItems.push({ name: formData.newItem, completed: false });
+      setFormData({ newItem: "" });
+  
+      API.updateList(listId, {
+        ...list,
+        items: updatedItems
+      }).then(loadList())
+      .catch(err => console.log(err));
+    }
   };
 
   const handleToggle = (value) => () => {
@@ -66,16 +89,25 @@ function Lists() {
       newChecked[currentIndex].completed = false;
     }
 
-
     setItems(newChecked);
 
-    API.updateList(id, {
+    API.updateList(listId, {
       ...list,
-      items: items
-    }).then(res => setList(res))
+      items: newChecked
+    }).then(loadList())
     .catch(err => console.log(err));
 
-    //HAVE COMPLETED STATUS UPDATE IN DATABASE
+  };
+
+  const handleDelete = (value) => () => {
+    const newDelete = items;
+    const currentIndex = newDelete.indexOf(value);
+    newDelete.splice(currentIndex, 1);
+    API.updateList(listId, {
+      ...list,
+      items: newDelete
+    }).then(loadList())
+    .catch(err => console.log(err));
   };
 
   const classes = makeStyles((theme) => ({
@@ -84,33 +116,50 @@ function Lists() {
       marginLeft: "10px",
       marginRight: "10px",
     },
-    accordion: {
-      width: "100%",
-      marginLeft: "10px",
-      marginRight: "10px",
+    link: {
+      display: "flex",
     },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
+    icon: {
+      marginRight: theme.spacing(0.5),
+      width: 20,
+      height: 20,
     },
   }));
 
   return (
-    <div>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <Box>
         <TitleItem title={list.name} description={list.description}/>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" href="/dashboard" className={classes.link}>
+            <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+          </Link>
+          <Link
+            color="inherit"
+            href={"/books/" + list.bookId}
+            className={classes.link}
+          >
+            <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+            <span style={{fontSize: "12px", marginLeft: "2px"}}>{list.bookName}</span>
+          </Link>
+          <Typography color="textPrimary" className={classes.link}>
+            <PlaylistAddCheckIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+            <span style={{fontSize: "12px",  marginLeft: "2px"}}>{list.name}</span>
+          </Typography>
+        </Breadcrumbs>
         <List className={classes.root}>
           {items.map((value) => {
             const labelId = `checkbox-list-label-${value}`;
 
             return (
               <ListItem
-                key={value.name}
+                key={items.indexOf(value)}
                 dense
                 button
                 onClick={handleToggle(value)}
               >
-                <ListItemIcon>
+                <ListItemIcon >
                   <Checkbox
                     edge="start"
                     checked={value.completed}
@@ -121,7 +170,7 @@ function Lists() {
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={value.name} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="comments"></IconButton>
+                  <IconButton edge="end" aria-label="delete item" onClick={handleDelete(value)}><DeleteIcon  /></IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             );
