@@ -26,7 +26,6 @@ const SignIn = () => {
     e.preventDefault();
     const value =
       e.target.value === undefined ? e.target.parentNode.value : e.target.value;
-    console.log(value);
     setFormDisplay(value);
     setFormData({});
   };
@@ -51,10 +50,7 @@ const SignIn = () => {
               ...formData,
               firebase_uid: res.user.uid,
             }).then((res) => {
-              console.log("____________________________________________");
-              console.log("user created");
-              console.log(res);
-              console.log("____________________________________________");
+              res;
               setLoading(false);
             });
           })
@@ -70,7 +66,7 @@ const SignIn = () => {
   };
 
   return (
-    <div>
+    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
       <div className="formContainer" style={{ marginTop: "40px" }}>
         {formDisplay === "Log In" ? (
           <LoginForm

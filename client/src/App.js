@@ -19,6 +19,7 @@ import Settings from "./pages/Settings";
 import DoodlePage from "./pages/DoodlePage";
 import { Container } from "@material-ui/core";
 import DoodleIndex from "./pages/DoodleIndex";
+import Journaling from "./pages/Journaling";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,10 +43,8 @@ function App() {
     let unsubscribe;
 
     if (isLoggedIn && !mongoUser) {
-      console.log("something");
       unsubscribe = API.getUser(firebaseID)
-        .then((Muser) => {
-          console.log(Muser.data._id);
+        .then(() => {
           setMongoUser(true);
           setError(false);
         })
@@ -58,63 +57,77 @@ function App() {
     return unsubscribe;
   }, [firebaseID, error]);
 
-  console.log(mongoUser);
-
   return (
-    <AuthProvider>
-      <div id="App">
-        <Router>
-          {!mongoUser && !error && !isLoggedIn ? (
-            <>
-              <Switch>
-                <Route path="/">
-                  <SignIn />
-                </Route>
-              </Switch>
-            </>
-          ) : (
-            <div>
-              <HeadingNav />
-              <Container id="appContainer">
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundImage:
+          "url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <AuthProvider>
+        <div id="App">
+          <Router>
+            {!mongoUser && !error ? (
+              <>
                 <Switch>
-                  <Route exact path={["/", "/dashboard"]}>
-                    <Dashboard />
-                  </Route>
-                  <Route exact path="/books/:id">
-                    <IndexPage />
-                  </Route>
-                  <Route exact path="/lists/:id">
-                    <Lists />
-                  </Route>
-                  <Route exact path="/create-book">
-                    <CreateBook />
-                  </Route>
-                  <Route exact path="/habits/:id">
-                    <Habits />
-                  </Route>
-                  <Route exact path="/doodle/:id">
-                    <DoodlePage />
-                  </Route>
-                  <Route exact path="/doodleIndex/:id">
-                    <DoodleIndex />
-                  </Route>
-                  <Route exact path="/calendars/:id">
-                    <Calendars />
-                  </Route>
-                  <Route exact path="/settings">
-                    <Settings />
-                  </Route>
-                  <Route>
-                    <NoMatch />
+                  <Route exact path="/">
+                    <SignIn />
                   </Route>
                 </Switch>
-              </Container>
-              <Footer />
-            </div>
-          )}
-        </Router>
-      </div>
-    </AuthProvider>
+              </>
+            ) : (
+              <div>
+                <HeadingNav />
+                <Container>
+                  <Switch>
+                    <Route exact path={["/", "/dashboard"]}>
+                      <Dashboard />
+                    </Route>
+                    <Route exact path="/books/:bookId">
+                      <IndexPage />
+                    </Route>
+                    <Route exact path="/books/:bookId/lists/:listId">
+                      <Lists />
+                    </Route>
+                    <Route exact path="/books/:bookId/calendars/:calId">
+                      <Calendars />
+                    </Route>
+                    <Route exact path="/create-book">
+                      <CreateBook />
+                    </Route>
+                    <Route exact path="/books/:bookId/habits/:habitId">
+                      <Habits />
+                    </Route>
+                    <Route exact path="/settings">
+                      <Settings />
+                    </Route>
+                    <Route exact path="/books/:bookId/new-entry/:newEntryId">
+                      <Journaling type="new" />
+                    </Route>
+                    <Route exact path="/books/:bookId/journal/:journalId">
+                      <Journaling type="old" />
+                    </Route>
+                    <Route exact path="/doodle/:id">
+                      <DoodlePage />
+                    </Route>
+                    <Route exact path="/doodleIndex/:id">
+                      <DoodleIndex />
+                    </Route>
+                    <Route>
+                      <NoMatch />
+                    </Route>
+                  </Switch>
+                </Container>
+                <Footer />
+              </div>
+            )}
+          </Router>
+        </div>
+      </AuthProvider>
+    </div>
   );
 }
 

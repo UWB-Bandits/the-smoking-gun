@@ -14,9 +14,10 @@ const useStyles = makeStyles({
     backgroundSize: "100%"
   },
   title: {
-    fontSize: 20,
+    fontSize: 30,
     fontFamily: "'Rock Salt', cursive",
     textAlign: "center",
+    fontWeight: "bold",
     backgroundColor: "rgba(204, 204, 204, 0.5)"
   },
   date: {

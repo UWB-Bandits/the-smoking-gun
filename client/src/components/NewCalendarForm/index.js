@@ -29,6 +29,7 @@ const NewCalendarForm = (props) => {
         </div>
 
         <Button
+          className={"styled-button"}
           style={{
             margin: "10px",
             display: "block",

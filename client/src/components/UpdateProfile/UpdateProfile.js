@@ -14,7 +14,6 @@ const UpdateProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     API.updateUser(mongoID, formData)
       .then(() => {
         setMessage(

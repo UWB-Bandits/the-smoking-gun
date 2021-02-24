@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const bookSchema = new Schema({
   title: { type: String, required: true },
+  description: { type: String, required: true },
   colorScheme: String,
   date: { type: Date, default: Date.now },
   // lists: {id: { type: Schema.Types.ObjectId, ref: "listSchema"}}
@@ -11,6 +12,7 @@ const bookSchema = new Schema({
   user: { type: String, required: true },
   habits: [{ type: Schema.Types.ObjectId, ref: "Habit" }],
   doodles: [{ type: Schema.Types.ObjectId, ref: "Doodle" }],
+  entries: [{ type: Schema.Types.ObjectId, ref: "Entry" }],
 });
 
 const Book = mongoose.model("Book", bookSchema);

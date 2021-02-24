@@ -5,4 +5,5 @@ module.exports = {
   Calendar: require("./calendar"),
   Habit: require("./habits"),
   Doodle: require("./doodle"),
+  Entry: require("./entries"),
 };
