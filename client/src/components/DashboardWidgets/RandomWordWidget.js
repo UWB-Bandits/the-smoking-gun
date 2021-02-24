@@ -1,53 +1,102 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Fab from "@material-ui/core/Fab";
+import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
+import Dialog from "@material-ui/core/Dialog";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import MuiDialogContent from "@material-ui/core/DialogContent";
+import MuiDialogActions from "@material-ui/core/DialogActions";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
-const useStyles = makeStyles({
+// Icon Style
+const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 275,
-    bottom: "60px",
-    maxHeight: "200px",
-    maxWidth: "300px",
-    border: "3px solid #000000",
-    padding: "10px",
-    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-    float: "inherit",
-    margin: "10px",
+    "& > *": {
+      margin: theme.spacing(1),
+    },
   },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
+  extendedIcon: {
+    marginRight: theme.spacing(1),
   },
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
+}));
+
+// Modal style
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
   },
-  pos: {
-    marginBottom: 12,
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
   },
 });
 
+const DialogTitle = withStyles(styles) ((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+      <MuiDialogTitle disableTypography className={classes.root} {...other}>
+          <Typography variant="h6">
+              {children}
+          </Typography>
+          {onClose ? (
+              <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+                  <CloseIcon />
+              </IconButton>
+          ) : null}
+      </MuiDialogTitle>
+  );
+});
+
+const DialogContent = withStyles((theme) => ({
+  root: {
+      padding: theme.spacing(2),
+  },
+}))(MuiDialogContent);
+
+const DialogActions = withStyles((theme) => ({
+  root: {
+      margin: 0,
+      padding: theme.spacing(2),
+  },
+}))(MuiDialogActions);
+
 export default function WordCard({ randomWord }) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <Card className={classes.root}>
-      <Typography variant="h5" component="h2">
+    <div style={{marginRight: "10px", marginLeft: "10px", marginBottom: "10px"}}>
+      <Fab color="secondary" aria-label="word of the day" variant="extended" onClick={handleClickOpen}>
+        <LocalLibraryIcon className={classes.extendedIcon} />
         Word of the Day
-      </Typography>
-      <Typography className={classes.title} variant="h5" component="h2">
-        {randomWord[0].word}
-      </Typography>
-      <Typography className={classes.pos} color="textSecondary">
-        {randomWord[0].definition}
-      </Typography>
-      <Typography variant="body2" component="p">
-        Pronunciation: {randomWord[0].pronunciation}
-      </Typography>
-    </Card>
+      </Fab>
+      <Dialog style={{backgroundColor: "#CACACC"}} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            {randomWord[0].word}
+          </DialogTitle>
+          <DialogContent dividers>
+            <Typography gutterBottom>
+              {randomWord[0].definition}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            Pronunciation: {randomWord[0].pronunciation}
+          </DialogActions>
+        </Dialog>
+    </div>
   );
 }
 

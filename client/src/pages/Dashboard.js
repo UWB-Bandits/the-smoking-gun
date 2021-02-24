@@ -156,8 +156,8 @@ function Dashboard() {
     <div>
       <Box>
         <Jumbotron userName={user.firstName} />
-        <Grid container>
-        {isLoaded ?
+        <Grid container justify="center">
+          {isLoaded ?
             <WeatherWidget weather={weather} />
              : <div>Loading Weather...<CircularProgress /></div> 
           }
@@ -169,6 +169,8 @@ function Dashboard() {
             <NewsWidget news={[...news]} />
              : <div>Loading Top Stories...<CircularProgress /></div> 
           }
+        </Grid>
+        <Grid container>
           <BookButton
             title="Create a new book!"
             description="Click here to start a new journal"
@@ -177,20 +179,8 @@ function Dashboard() {
             bookSize={bookSize}
           />
           {usersBooks.map((item) => (
-              <BookButton key={item._id} bookSize={bookSize} edit={true} id={item._id} link={`/books/${item._id}`} {...item} />
+            <BookButton key={item._id} bookSize={bookSize} edit={true} id={item._id} link={`/books/${item._id}`} {...item} />
           ))}
-          {/* {isLoaded ?
-            <WeatherWidget weather={weather} />
-             : <div>Loading</div> 
-          }
-          {isLoaded ?
-            <RandomWordWidget randomWord={randomWord} />
-             : <div>Loading</div> 
-          }
-          {isLoaded ? 
-            <NewsWidget news={[...news]} />
-             : <div>Loading</div> 
-          } */}
         </Grid>
       </Box>
     </div>
