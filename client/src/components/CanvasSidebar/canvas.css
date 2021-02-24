@@ -1,0 +1,90 @@
+#headingNav,
+#footer {
+  display: none !important;
+}
+#appContainer {
+  margin: 0;
+  padding: 0;
+}
+
+.link-home,
+.link-book {
+  text-align: center;
+  margin: 10px 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.link-home a {
+  font-size: 1.3rem;
+  text-decoration: none;
+  color: #212121;
+  font-weight: bold;
+}
+.link-book a {
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #212121;
+  font-weight: bold;
+}
+
+#canvasSidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 200px;
+  background-color: #859488;
+}
+
+#showSettings {
+  position: absolute;
+  top: 15px;
+  right: -90px;
+  padding: 5px 10px;
+  background-color: #888787;
+  border: none;
+  cursor: pointer;
+  font-size: large;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px #4e4e4eb7;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#showSettings:focus {
+  outline: none;
+}
+
+#canvasSettings {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#canvasSettings li {
+  color: #212121;
+  list-style: none;
+  margin: 0.2rem 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#canvasSettings li.active {
+  color: #2a3613;
+  font-weight: bold;
+}
+#canvasSettings li:hover {
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+.save-btn {
+  padding: 10px 15px;
+  background-color: #888787;
+  border: none;
+  cursor: pointer;
+  font-size: large;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px #4e4e4eb7;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: inline-block;
+  margin: 0 25.5px;
+}

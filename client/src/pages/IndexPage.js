@@ -13,7 +13,7 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemSecondaryAction,
-  Button
+  Button,
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -40,17 +40,17 @@ function IndexPage() {
   const [entries, setEntries] = useState([]);
   const [calendars, setCalendars] = useState([]);
   const { currentUser } = useAuth();
-  const {bookId} = useParams();
+  const { bookId } = useParams();
   console.log(bookId);
   useEffect(() => {
     API.getBook(bookId, currentUser.uid)
-      .then(res => {
+      .then((res) => {
         setBook(res.data);
         setLists(res.data.lists);
         setEntries(res.data.entries);
         setCalendars(res.data.calendars);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }, []);
 
   const handleInputChange = (e) => {
@@ -67,35 +67,62 @@ function IndexPage() {
     API.saveList({
       name: formData.newList,
       items: [],
-      book: book._id
-    }).then(res => {
-      let newBookLists = lists.map(list => list._id);
-      newBookLists.push(res.data._id);
-      API.updateBook(bookId, {
-        ...book,
-        lists: newBookLists
-      }).then(res => res)
-      .catch(err => console.log(err));
-      window.location.href = "/books/" + bookId + "/lists/" + res.data._id;
+      book: book._id,
     })
-    .catch(err => console.log(err));
+      .then((res) => {
+        let newBookLists = lists.map((list) => list._id);
+        newBookLists.push(res.data._id);
+        API.updateBook(bookId, {
+          ...book,
+          lists: newBookLists,
+        })
+          .then((res) => res)
+          .catch((err) => console.log(err));
+        window.location.href = "/books/" + bookId + "/lists/" + res.data._id;
+      })
+      .then((res) => {
+        let newBookLists = lists.map((list) => list._id);
+        newBookLists.push(res.data._id);
+        API.updateBook(bookId, {
+          ...book,
+          lists: newBookLists,
+        })
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+        window.location.href = "/lists/" + res.data._id;
+      })
+      .catch((err) => console.log(err));
   };
 
   const addCalendar = () => {
     API.saveCalendar({
       name: calendarFormData.newCalendar,
-      book: book._id
-    }).then(res => {
-      let newBookCalendars = calendars.map(calendar => calendar._id);
-      newBookCalendars.push(res.data._id);
-      API.updateBook(bookId, {
-        ...book,
-        calendars: newBookCalendars
-      }).then(res => res)
-      .catch(err => console.log(err));
-      window.location.href = "/books/" + bookId + "/calendars/" + res.data._id;
+      book: book._id,
     })
-    .catch(err => console.log(err));
+      .then((res) => {
+        let newBookCalendars = calendars.map((calendar) => calendar._id);
+        newBookCalendars.push(res.data._id);
+        API.updateBook(bookId, {
+          ...book,
+          calendars: newBookCalendars,
+        })
+          .then((res) => res)
+          .catch((err) => console.log(err));
+        window.location.href =
+          "/books/" + bookId + "/calendars/" + res.data._id;
+      })
+      .then((res) => {
+        let newBookCalendars = calendars.map((calendar) => calendar._id);
+        newBookCalendars.push(res.data._id);
+        API.updateBook(bookId, {
+          ...book,
+          calendars: newBookCalendars,
+        })
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+        window.location.href = "/calendars/" + res.data._id;
+      })
+      .catch((err) => console.log(err));
   };
 
   function ListItemLink(props) {
@@ -131,28 +158,34 @@ function IndexPage() {
     <div className={book.colorScheme}>
       <Box>
         <TitleItem {...book} />
-        <Grid container justify="center" >
-          <EditModal 
-          title={book.title}
-          link={book.link}
-          description={book.description}
-          colorScheme={book.colorScheme}
-          id={bookId}
+        <Grid container justify="center">
+          <EditModal
+            title={book.title}
+            link={book.link}
+            description={book.description}
+            colorScheme={book.colorScheme}
+            id={bookId}
           />
-          <DeleteModal
-          title={book.title}
-          id={bookId}
-          type="book"
-          />
+          <DeleteModal title={book.title} id={bookId} type="book" />
         </Grid>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/dashboard" className={classes.link}>
-            <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+            <HomeIcon
+              style={{ verticalAlign: "middle" }}
+              className={classes.icon}
+            />
+            <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+              Dashboard
+            </span>
           </Link>
           <Typography color="textPrimary" className={classes.link}>
-            <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>{book.title}</span>
+            <ImportContactsIcon
+              style={{ verticalAlign: "middle" }}
+              className={classes.icon}
+            />
+            <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+              {book.title}
+            </span>
           </Typography>
         </Breadcrumbs>
         <Accordion>
@@ -165,38 +198,45 @@ function IndexPage() {
             <Typography className={classes.heading}>Lists</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <List style={{width:"100%"}}  className={classes.root} aria-label="mailbox folders">
-              {lists ? lists.map((item) => (
-                // <li = key={item._id}>
+            <List
+              style={{ width: "100%" }}
+              className={classes.root}
+              aria-label="mailbox folders"
+            >
+              {lists ? (
+                lists.map((item) => (
+                  // <li = key={item._id}>
 
-                // <a href={`/lists/${item.id}`}>
-                //  {item.name}
-                //  <EditModal/>
-                // <DeleteModal/>
-                //  </a>
-                // </li>
-                <div style={{width:"100%"}} key={item._id}>
-                 <ListItemLink  href={`/books/${bookId}/lists/${item._id}`} >
-                  <ListItemAvatar>
-                    <Avatar className={"list-icon"}>
-                      <PlaylistAddCheckIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={item.name}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete">
-                      <DeleteModal id={item._id} name={item.name} type="list"/>
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItemLink>
-                <Divider />
-                </div>
-              ))
-              :
-              <ListItem>Add a new list to get started</ListItem>
-            }
+                  // <a href={`/lists/${item.id}`}>
+                  //  {item.name}
+                  //  <EditModal/>
+                  // <DeleteModal/>
+                  //  </a>
+                  // </li>
+                  <div style={{ width: "100%" }} key={item._id}>
+                    <ListItemLink href={`/books/${bookId}/lists/${item._id}`}>
+                      <ListItemAvatar>
+                        <Avatar className={"list-icon"}>
+                          <PlaylistAddCheckIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary={item.name} />
+                      <ListItemSecondaryAction>
+                        <IconButton edge="end" aria-label="delete">
+                          <DeleteModal
+                            id={item._id}
+                            name={item.name}
+                            type="list"
+                          />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItemLink>
+                    <Divider />
+                  </div>
+                ))
+              ) : (
+                <ListItem>Add a new list to get started</ListItem>
+              )}
               <NewListForm
                 handleInputChange={handleInputChange}
                 addItem={addList}
@@ -212,9 +252,7 @@ function IndexPage() {
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
-            <Typography className={classes.heading}>
-              Calendars
-            </Typography>
+            <Typography className={classes.heading}>Calendars</Typography>
           </AccordionSummary>
           <AccordionDetails>
             {/* <ul>
@@ -228,30 +266,39 @@ function IndexPage() {
             }
               
             </ul> */}
-            <List style={{width:"100%"}} className={classes.root} aria-label="mailbox folders">
-              {calendars ? calendars.map((item) => (
-                <div key={item._id}>
-                 <ListItemLink href={`/books/${bookId}/calendars/${item._id}`} >
-                  <ListItemAvatar>
-                    <Avatar className={"list-icon"}>
-                      <PlaylistAddCheckIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={item.name}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete">
-                      <DeleteModal id={item._id} name={item.name} type={"calendar"}/>
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItemLink>
-                <Divider />
-                </div>
-              ))
-              :
-              <ListItem>Add a new calendar to get started</ListItem>
-            }
+            <List
+              style={{ width: "100%" }}
+              className={classes.root}
+              aria-label="mailbox folders"
+            >
+              {calendars ? (
+                calendars.map((item) => (
+                  <div key={item._id}>
+                    <ListItemLink
+                      href={`/books/${bookId}/calendars/${item._id}`}
+                    >
+                      <ListItemAvatar>
+                        <Avatar className={"list-icon"}>
+                          <PlaylistAddCheckIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary={item.name} />
+                      <ListItemSecondaryAction>
+                        <IconButton edge="end" aria-label="delete">
+                          <DeleteModal
+                            id={item._id}
+                            name={item.name}
+                            type={"calendar"}
+                          />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItemLink>
+                    <Divider />
+                  </div>
+                ))
+              ) : (
+                <ListItem>Add a new calendar to get started</ListItem>
+              )}
               <NewCalendarForm
                 handleCalendarInputChange={handleCalendarInputChange}
                 addCalendar={addCalendar}
@@ -259,36 +306,8 @@ function IndexPage() {
               />
             </List>
           </AccordionDetails>
-          </Accordion>
-          <Accordion>
-          <AccordionSummary
-            className={classes.accordion}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel3a-content"
-            id="panel3a-header"
-          >
-            <Typography className={classes.heading}>
-              Habits
-            </Typography>
-          </AccordionSummary>         
-          <AccordionDetails>
-            <List style={{width:"100%"}}  className={classes.root} aria-label="mailbox folders">
-                <div style={{width:"100%"}}>
-                 <ListItemLink  href={`/books/${bookId}/habits/${bookId}`} >
-                  <ListItemAvatar>
-                    <Avatar className={"list-icon"}>
-                      <PlaylistAddCheckIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={"Track your daily habits!"}
-                  />
-                </ListItemLink>
-                <Divider />
-                </div>
-            </List>
-          </AccordionDetails>      
         </Accordion>
+
         <Accordion>
           <AccordionSummary
             className={classes.accordion}
@@ -296,49 +315,102 @@ function IndexPage() {
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
-            <Typography className={classes.heading}>
-              Journal Entries
-            </Typography>
+            <Typography className={classes.heading}>Doodles</Typography>
+          </AccordionSummary>
+
+          <AccordionDetails>
+            <h2>
+              <a href={`/doodleIndex/${bookId}`}>View or Make a Doodle</a>
+            </h2>
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion>
+          <AccordionSummary
+            className={classes.accordion}
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>Habits</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <List style={{width:"100%"}}  className={classes.root} aria-label="mailbox folders">
-              {entries ? entries.map((item) => (
-                <div style={{width:"100%"}} key={item._id}>
-                 <ListItemLink href={`/books/${bookId}/journal/${item._id}`} >
+            <List
+              style={{ width: "100%" }}
+              className={classes.root}
+              aria-label="mailbox folders"
+            >
+              <div style={{ width: "100%" }}>
+                <ListItemLink href={`/books/${bookId}/habits/${bookId}`}>
                   <ListItemAvatar>
                     <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText
-                    primary={item.title}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete">
-                      <DeleteModal id={item._id} name={item.title} type="entry"/>
-                    </IconButton>
-                  </ListItemSecondaryAction>
+                  <ListItemText primary={"Track your daily habits!"} />
                 </ListItemLink>
                 <Divider />
-                </div>
-              ))
-              :
-              <ListItem>Add a new journal entry to get started</ListItem>
-            }
+              </div>
+            </List>
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion>
+          <AccordionSummary
+            className={classes.accordion}
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>Journal Entries</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <List
+              style={{ width: "100%" }}
+              className={classes.root}
+              aria-label="mailbox folders"
+            >
+              {entries ? (
+                entries.map((item) => (
+                  <div style={{ width: "100%" }} key={item._id}>
+                    <ListItemLink href={`/books/${bookId}/journal/${item._id}`}>
+                      <ListItemAvatar>
+                        <Avatar className={"list-icon"}>
+                          <PlaylistAddCheckIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary={item.title} />
+                      <ListItemSecondaryAction>
+                        <IconButton edge="end" aria-label="delete">
+                          <DeleteModal
+                            id={item._id}
+                            name={item.title}
+                            type="entry"
+                          />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItemLink>
+                    <Divider />
+                  </div>
+                ))
+              ) : (
+                <ListItem>Add a new journal entry to get started</ListItem>
+              )}
               <Button
                 className={"styled-button"}
                 style={{
                   margin: "10px",
                   display: "block",
-                  textAlign: "center"
+                  textAlign: "center",
                 }}
                 href={`/books/${bookId}/new-entry/${bookId}`}
                 variant="contained"
                 color="primary"
-              >Add a new journal entry
+              >
+                Add a new journal entry
               </Button>
             </List>
-          </AccordionDetails> 
+          </AccordionDetails>
         </Accordion>
       </Box>
     </div>
