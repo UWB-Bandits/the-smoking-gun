@@ -25,6 +25,7 @@ const CanvasControls = ({ handleUpdate }) => {
     >
       <h4>Change Pen Color</h4>
       <div>
+        {/* Blue Color */}
         <button
           className="colorOption"
           style={{
@@ -35,6 +36,7 @@ const CanvasControls = ({ handleUpdate }) => {
         ></button>
       </div>
       <div>
+        {/* Red Color */}
         <button
           className="colorOption"
           style={{
@@ -45,6 +47,7 @@ const CanvasControls = ({ handleUpdate }) => {
         ></button>
       </div>
       <div>
+        {/* Green Color */}
         <button
           className="colorOption"
           style={{
@@ -61,6 +64,7 @@ const CanvasControls = ({ handleUpdate }) => {
           marginTop: "15px",
         }}
       >
+        {/* Custom Color */}
         <input
           style={{
             padding: "0",
