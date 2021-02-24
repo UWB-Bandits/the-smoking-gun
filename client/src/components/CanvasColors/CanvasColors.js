@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 //import this components css file
 import "./canvas-colors.css";
-//initialize CanvasControls component which takes in an object
-const CanvasControls = ({ handleUpdate }) => {
+//initialize CanvasColors component which takes in an object
+const CanvasColors = ({ handleUpdate }) => {
   //initialize state hooks
   const [customColor, setCustomColor] = useState("#e7f4a8");
   //this function handles the color change and sets customColor state
@@ -93,11 +93,11 @@ const CanvasControls = ({ handleUpdate }) => {
     </div>
   );
 };
-//sets up prop types for the CanvasControls component
-CanvasControls.propTypes = {
+//sets up prop types for the CanvasColors component
+CanvasColors.propTypes = {
   handleUpdate: PropTypes.func,
   settingToChange: PropTypes.string,
   ACTIONS: PropTypes.object,
 };
-//exports CanvasControls component
-export default CanvasControls;
+//exports CanvasColors component
+export default CanvasColors;
