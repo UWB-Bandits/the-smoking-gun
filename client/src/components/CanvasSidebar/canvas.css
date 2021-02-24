@@ -1,12 +1,3 @@
-#headingNav,
-#footer {
-  display: none !important;
-}
-#appContainer {
-  margin: 0;
-  padding: 0;
-}
-
 .link-home,
 .link-book {
   text-align: center;
