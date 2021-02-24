@@ -81,7 +81,7 @@ function App() {
             ) : (
               <div>
                 <HeadingNav />
-                <Container>
+                <Container id="appContainer">
                   <Switch>
                     <Route exact path={["/", "/dashboard"]}>
                       <Dashboard />
