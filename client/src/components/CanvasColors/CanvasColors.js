@@ -1,24 +1,19 @@
+//import react and the useState method
 import React, { useState } from "react";
+//import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
+//import this components css file
 import "./canvas-colors.css";
-
+//initialize CanvasControls component which takes in an object
 const CanvasControls = ({ handleUpdate }) => {
-  //   let data = [];
-  // const [message, setMessage] = useState("");
-  // const [data, setData] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  //initialize state hooks
   const [customColor, setCustomColor] = useState("#e7f4a8");
-
-  // useEffect(() => {
-
-  //   setLoading(false);
-  // }, [loading]);
-
+  //this function handles the color change and sets customColor state
   const handleColorChange = (e) => {
     setCustomColor(e.target.value);
     handleUpdate(e);
   };
-
+  //this returns a menu component that allows users to select a color on the doodle page
   return (
     <div
       style={{
@@ -94,10 +89,11 @@ const CanvasControls = ({ handleUpdate }) => {
     </div>
   );
 };
+//sets up prop types for the CanvasControls component
 CanvasControls.propTypes = {
   handleUpdate: PropTypes.func,
   settingToChange: PropTypes.string,
   ACTIONS: PropTypes.object,
 };
-
+//exports CanvasControls component
 export default CanvasControls;
