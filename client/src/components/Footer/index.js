@@ -39,17 +39,17 @@ export default function SimpleBottomNavigation() {
         <BottomNavigationAction
           href="/dashboard"
           label="Dashboard"
-          icon={<HomeIcon />}
+          icon={<HomeIcon />}//Material-UI's Icon
         />
         <BottomNavigationAction
           href="/create-book"
           label="Create New Book"
-          icon={<ImportContactsIcon />}
+          icon={<ImportContactsIcon />}//Material-UI's Icon
         />
         <BottomNavigationAction
           href="/settings"
           label="Settings"
-          icon={<SettingsIcon />}
+          icon={<SettingsIcon />}//Material-UI's Icon
         />
       </BottomNavigation>
     </div>
