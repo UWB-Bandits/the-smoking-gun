@@ -41,6 +41,7 @@ const LogInForm = (props) => {
   };
   //this returns aform that allows users to login
   return (
+    //Material-UI component that serves as a wrapper component for most of the CSS utility needs.
     <Box
       boxShadow={2}
       p={2}
