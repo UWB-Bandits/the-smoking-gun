@@ -22,7 +22,7 @@ const DeleteBookForm = (props) => {
     API.deleteBook(props.id)
     .then( res => {
       res;
-      window.location.reload(true);
+      window.location.href = "/dashboard";
     })
     .catch(err => console.log(err));
   };

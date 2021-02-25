@@ -1,43 +1,46 @@
+//import react, and useState and useEffect methods
 import React, {useState, useEffect} from "react";
+//import Material-Ui components
 import InputLabel from "@material-ui/core/InputLabel";
-// import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import PropTypes from "prop-types";
 import Box from "@material-ui/core/Box";
-// import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+//import Material-Ui icon
 import SaveIcon from "@material-ui/icons/Save";
+//import a dependency that keeps track of the prop types
+import PropTypes from "prop-types";
+//import API route handler
 import API from "../../utils/API";
-
+//initialize the EditBookForm component that receives props
 const EditBookForm = (props) => {
-    
-    const [formData, setFormData] = useState({
-        title: "",
-        description: "",
-        colorScheme: "",
+  //sets the state variable hooks
+  const [formData, setFormData] = useState({
+      title: "",
+      description: "",
+      colorScheme: "",
+    });
+  //this lets you perform side effects in function component
+  useEffect(() => {
+      setFormData({
+          title: props.title,
+          description: props.description,
+          colorScheme: props.colorScheme
       });
-
-    useEffect(() => {
-        setFormData({
-            title: props.title,
-            description: props.description,
-            colorScheme: props.colorScheme
-        });
-    }, []);
-
-   EditBookForm.propTypes = {
+  }, []);
+  //this lets you perform side effects in function component
+  EditBookForm.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     colorScheme: PropTypes.string,
     id: PropTypes.string
-   };
-
-   const handleThemeChange = (event) => {
+  };
+  
+  const handleThemeChange = (event) => {
     setFormData({ ...formData, colorScheme: event.target.value });
-    };
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
