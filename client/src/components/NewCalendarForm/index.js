@@ -50,12 +50,12 @@ const NewCalendarForm = (props) => {
     </Box>
   );
 };
-//sets up prop types for the NewCalendar component
+//sets up prop types for the NewCalendarForm component
 NewCalendarForm.propTypes = {
   addCalendar: PropTypes.func,
   handleCalendarInputChange: PropTypes.func,
   type: PropTypes.string,
   formDataShown: PropTypes.string
 };
-//export the NewCalendar component
+//export the NewCalendarForm component
 export default NewCalendarForm;
