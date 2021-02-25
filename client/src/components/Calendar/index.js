@@ -42,13 +42,10 @@ export default function Calendar(props) {
     const [selectInfo, setSelectInfo] = useState({});
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [clickInfo, SetClickInfo] = useState({});
-
-    //this lets you perform side effects in function component
-    // use state to get book information
     const [book, setBook] = useState({});
     // initialize the id variable for the bookId and calendarId (calId) that grabs the URL parameters
     const {bookId, calId} = useParams();
-
+    //this lets you perform side effects in function component
     useEffect(() => {
       // load book information
       loadBook();
