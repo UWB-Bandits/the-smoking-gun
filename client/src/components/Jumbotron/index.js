@@ -1,11 +1,16 @@
+//import react
 import React from "react";
+//import Material-Ui function
 import { makeStyles } from "@material-ui/core/styles";
+//import Material-Ui components
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+//import image
 import Hero from "../../utils/images/hero.jpg";
+//import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
-
+//initialize useStyles variable that uses Material-UI's styling solution makeStyles() function
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -27,14 +32,15 @@ const useStyles = makeStyles({
     fontFamily: "'Raleway', sans-serif",
   }
 });
-
+//initialize a date variable and assign a new date
 let date = new Date();
-
+//turn the date variable into a string
 date = date.toDateString();
-
+//export and initialize the Jumbotron component that is handed down props
 export default function Jumbotron(props) {
+  //initialize the classes variable with our useStyles hook
   const classes = useStyles();
-
+  //this returns a jumbotron with a background image that welcomes users to the site by name and displays todays date. 
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -48,7 +54,7 @@ export default function Jumbotron(props) {
     </Card>
   );
 }
-
+//sets up prop types for the Jumbotron component
 Jumbotron.propTypes = {
   userName: PropTypes.string,
 };
