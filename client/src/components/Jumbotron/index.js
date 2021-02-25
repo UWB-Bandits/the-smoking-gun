@@ -42,8 +42,11 @@ export default function Jumbotron(props) {
   const classes = useStyles();
   //this returns a jumbotron with a background image that welcomes users to the site by name and displays todays date. 
   return (
+    //Material-UI's Card component contain content and actions about a single subject
     <Card className={classes.root} variant="outlined">
+      {/* Material-UI's CardContent component is used to create the "body" of a card component */}
       <CardContent>
+        {/* Material-UI's Typography component allows you to present your design and content as clearly and efficiently as possible. */}
         <Typography className={classes.title} gutterBottom>
           Welcome {props.userName}!
         </Typography>

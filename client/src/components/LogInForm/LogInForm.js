@@ -1,38 +1,45 @@
+//import react with useState method
 import React, { useState } from "react";
+//import Material-Ui components
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
+import Box from "@material-ui/core/Box";
+//import Material-Ui Icons
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import PropTypes from "prop-types";
-import FormButtons from "../FormButtons/FormButtons";
-import Box from "@material-ui/core/Box";
+//import Material-Ui Lab
 import Alert from "@material-ui/lab/Alert";
-
+//import a dependency that keeps track of the prop types
+import PropTypes from "prop-types";
+//import components
+import FormButtons from "../FormButtons/FormButtons";
+//initialize LogInForm component
 const LogInForm = (props) => {
   // eslint-disable-next-line no-unused-vars
   const { handleInputChange, setPage, handleSubmit, loading, error } = props;
+  //initialize state hooks
   const [values, setValues] = useState({
     password: "",
     showPassword: false,
   });
-
+  //this handles changes in the form and sets value state to the currernt value of the event target
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
     handleInputChange(event);
   };
-
+  //this shows/hides the user password they have entered
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
-
+  //this keeps track of mouse down clicks 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  //this returns aform that allows users to login
   return (
     <Box
       boxShadow={2}
@@ -49,13 +56,13 @@ const LogInForm = (props) => {
     >
       <h2>Log In</h2>
       <form
-        // onSubmit={handleSubmit}
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
         }}
       >
+        {/* Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
         {error && <Alert severity="error">{error}</Alert>}
         <div style={{ margin: "0px 5px" }}>
           <TextField
@@ -68,10 +75,13 @@ const LogInForm = (props) => {
             onChange={handleInputChange}
           />
         </div>
+        {/* Material-Ui component that provides context such as filled/focused/error/required for form inputs. */}
         <FormControl className={""} style={{ margin: "0px 5px" }}>
+          {/* Material-Ui component that provides a label for fields inside a form. */}
           <InputLabel htmlFor="standard-adornment-password">
             Password
           </InputLabel>
+          {/* Material-Ui component that allows users to type in a field */}
           <Input
             id="standard-adornment-password"
             type={values.showPassword ? "text" : "password"}
@@ -91,6 +101,7 @@ const LogInForm = (props) => {
             }
           />
         </FormControl>
+        {/* This is custom made component to provide buttons as needed */}
         <FormButtons
           button1="Log In"
           button2={["Don't have an account? ", "Sign Up"]}
@@ -102,7 +113,7 @@ const LogInForm = (props) => {
     </Box>
   );
 };
-
+//sets up prop types for the LogInForm component
 LogInForm.propTypes = {
   setPage: PropTypes.func,
   handleInputChange: PropTypes.func,
@@ -110,5 +121,5 @@ LogInForm.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
 };
-
+//exports LogInForm component
 export default LogInForm;
