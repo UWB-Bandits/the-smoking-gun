@@ -14,7 +14,7 @@ const CreateBook = () => {
     description: "",
     colorScheme: "",
   });
-  //this grabs the current user infomation 
+  //this grabs the current user information 
   const { currentUser } = useAuth();
   //this sets formData colorScheme on the event target
   const handleThemeChange = (event) => {

@@ -1,12 +1,12 @@
 //import react with react hooks
 import React, { useState, useEffect } from "react";
-//import Matierial-UI functions
+//import Material-UI functions
 import { makeStyles } from "@material-ui/core/styles";
-//import Matierial-UI components
+//import Material-UI components
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
-//import Matierial-UI icons
+//import Material-UI icons
 import HomeIcon from "@material-ui/icons/Home";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
@@ -25,7 +25,7 @@ function Calendars() {
   const [book, setBook] = useState({});
   //grabs the URL params
   const {bookId, calId} = useParams();
-  //deconstucts a currentUser from our context
+  //deconstructs a currentUser from our context
   const { currentUser } = useAuth();
   //this side effect runs load books and calender functions
   useEffect(() => {

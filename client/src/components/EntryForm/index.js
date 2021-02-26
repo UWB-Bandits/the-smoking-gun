@@ -12,7 +12,7 @@ const EntryForm = (props) => {
   const { formData, onSave, onDelete, handleInputChange, type} = props;
   //initialize the title and body variables from formData
   const {title, body} = formData;
-  //this returns a form for useres to to a journal entry
+  //this returns a form for users to to a journal entry
   return (
     //Material-UI component that serves as a wrapper component for most of the CSS utility needs.
     <Box style={{width:"100%"}}>
