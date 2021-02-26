@@ -51,7 +51,7 @@ function Habits() {
   };
 
   const loadHabits = () =>{
-    API.getBook(habitId, currentUser.uid)
+    API.getBook(bookId, currentUser.uid)
     .then(res => setBook(res.data));
     
     let todaysTracking = [];

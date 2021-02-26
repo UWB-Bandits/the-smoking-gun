@@ -26,6 +26,22 @@ function App() {
   const [mongoUser, setMongoUser] = useState(false);
   const [firebaseID, setFirebaseID] = useState();
   const [error, setError] = useState();
+  const [pathname, setPathname] = useState(window.location.pathname);
+  const [doodleRoute, setDoodleRoute] = useState(false);
+
+  const usePathname = () => {
+    const location = window.location.pathname;
+    setPathname(location);
+    console.log(pathname);
+    return location;
+  };
+
+  useEffect(() => {
+    usePathname();
+    pathname.includes("/doodle/") === true
+      ? setDoodleRoute(true)
+      : setDoodleRoute(false);
+  }, []);
 
   useEffect(() => {
     setMongoUser(false);
@@ -80,8 +96,8 @@ function App() {
               </>
             ) : (
               <div>
-                <HeadingNav />
-                <Container id="appContainer">
+                {!doodleRoute && <HeadingNav />}
+                <Container className={doodleRoute === true ? "no-spacing" : ""}>
                   <Switch>
                     <Route exact path={["/", "/dashboard"]}>
                       <Dashboard />
@@ -121,7 +137,8 @@ function App() {
                     </Route>
                   </Switch>
                 </Container>
-                <Footer />
+
+                {!doodleRoute && <Footer />}
               </div>
             )}
           </Router>

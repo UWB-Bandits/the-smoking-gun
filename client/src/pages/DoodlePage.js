@@ -2,8 +2,7 @@
 import React, { useRef, useEffect, useState, useReducer } from "react";
 import CanvasSidebar from "../components/CanvasSidebar/CanvasSidebar";
 import SaveImageModal from "../components/SaveImageModal/SaveImageModal";
-const pathname = window.location.pathname;
-import { useParams } from "react-router-dom";
+import "../components/CanvasSidebar/canvas.css";
 
 const DoodlePage = () => {
   const canvasRef = useRef(null);
@@ -13,11 +12,6 @@ const DoodlePage = () => {
   const [canvasPainted, setCanvasPainted] = useState(false);
   let canvas;
   let ctx;
-  const { id } = useParams();
-
-  if (pathname === `/doodle/${id}`) {
-    require("../components/CanvasSidebar/canvas.css");
-  }
 
   const ACTIONS = {
     COLOR: "change color",
