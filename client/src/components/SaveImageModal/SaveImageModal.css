@@ -17,7 +17,6 @@
   min-height: 400px;
   min-width: 325px;
   width: 30%;
-  height: 30%;
   text-align: center;
   border-radius: 5px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -26,10 +25,11 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  padding-bottom: 5px;
 }
 #modal-img {
   box-shadow: 2px 2px 5px #4e4e4eb7;
-  background: white;
+  background: #f3f3f3;
   max-width: 200px;
   max-height: 200px;
   width: 50%;
