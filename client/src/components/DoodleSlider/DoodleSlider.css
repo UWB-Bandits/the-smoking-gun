@@ -32,6 +32,7 @@
   background-color: rgb(221 221 221);
   padding-left: 5px;
   padding-right: 5px;
+  box-sizing: border-box;
 }
 /* icon */
 .iconContainer {
@@ -49,17 +50,24 @@ button.deleteDoodle > * {
   pointer-events: none;
 }
 /* Media Query's */
-@media only screen and (max-width: 729px) {
+
+@media only screen and (max-width: 1073px) {
+  .sliderContainer {
+    justify-content: flex-start;
+  }
+  .doodleItem {
+    min-width: 40%;
+    margin: 1rem 5%;
+  }
+}
+@media only screen and (max-width: 830px) {
   .doodleItem {
     margin: 1rem auto;
     box-shadow: 2px 3px 7px #4e4e4e67;
+    /* min-width: 40%; */
   }
 }
-@media only screen and (max-width: 729px) {
-  .doodleItem {
-    min-width: 40%;
-  }
-}
+
 @media only screen and (max-width: 600px) {
   .horizontalSlider {
     display: block;
