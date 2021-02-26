@@ -4,7 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 //import Material-Ui component 
 import Button from "@material-ui/core/Button";
-//initialize FormButton component and vairous props
+//initialize FormButton component and various props
 const FormButtons = ({ button1, button2, setPage, loading, handleSubmit }) => {
   //this returns buttons designed for the Login and SignUp form
   return (

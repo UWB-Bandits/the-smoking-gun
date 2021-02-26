@@ -10,13 +10,13 @@ import { Alert, AlertTitle } from "@material-ui/lab";
 import API from "../../utils/API";
 //import context
 import { useAuth } from "../../contexts/AuthContext";
-//initialize UpdatePorfile component
+//initialize UpdateProfile component
 const UpdateProfile = () => {
   //set state variable hooks
   const [formData, setFormData] = useState({ firstName: "", lastName: "" });
   const [message, setMessage] = useState();
   const [error, setError] = useState();
-  //deconstruct mongoID from contect
+  //deconstruct mongoID from context
   const { mongoID } = useAuth();
   //this handles the submit on update profile
   const handleSubmit = (e) => {
@@ -54,7 +54,7 @@ const UpdateProfile = () => {
       }}
       bgcolor="background.paper"
     >
-      {/* Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
+      {/* Material UI Alert component displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
       {message && (
         <Alert severity="success">
           <AlertTitle>Success</AlertTitle>

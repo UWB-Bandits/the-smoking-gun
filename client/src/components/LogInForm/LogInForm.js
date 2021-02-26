@@ -25,7 +25,7 @@ const LogInForm = (props) => {
     password: "",
     showPassword: false,
   });
-  //this handles changes in the form and sets value state to the currernt value of the event target
+  //this handles changes in the form and sets value state to the current value of the event target
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
     handleInputChange(event);
@@ -34,7 +34,7 @@ const LogInForm = (props) => {
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
-  //this returns aform that allows users to login
+  //this returns a form that allows users to login
   return (
     //Material-UI component that serves as a wrapper component for most of the CSS utility needs.
     <Box
@@ -58,7 +58,7 @@ const LogInForm = (props) => {
           justifyContent: "center",
         }}
       >
-        {/* Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
+        {/* Material UI Alert component displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
         {error ? <Alert severity="error">{error}</Alert> : ""}
 
         <div style={{ margin: "0px 5px" }}>
