@@ -1,8 +1,12 @@
+//import react
 import React from "react";
+//import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
+//import this components css file
 import "./canvas-width.css";
-
-const CanvasControls = ({ handleUpdate, canvasSetting }) => {
+//initialize CanvasPenWidth component that takes in the handleUpdate function and canvasSetting object
+const CanvasPenWidth = ({ handleUpdate, canvasSetting }) => {
+  //this returns a menu to allow users to change their pen width
   return (
     <div
       style={{
@@ -14,6 +18,7 @@ const CanvasControls = ({ handleUpdate, canvasSetting }) => {
     >
       <h4>Change Pen Width</h4>
       <div>
+        {/* extra small */}
         <button
           className="penOption"
           style={{
@@ -26,6 +31,7 @@ const CanvasControls = ({ handleUpdate, canvasSetting }) => {
         ></button>
       </div>
       <div>
+        {/* small */}
         <button
           className="penOption"
           style={{
@@ -38,6 +44,7 @@ const CanvasControls = ({ handleUpdate, canvasSetting }) => {
         ></button>
       </div>
       <div>
+        {/* medium */}
         <button
           className="penOption"
           style={{
@@ -50,6 +57,7 @@ const CanvasControls = ({ handleUpdate, canvasSetting }) => {
         ></button>
       </div>
       <div>
+        {/* large */}
         <button
           className="penOption"
           style={{
@@ -64,10 +72,11 @@ const CanvasControls = ({ handleUpdate, canvasSetting }) => {
     </div>
   );
 };
-CanvasControls.propTypes = {
+//sets up prop types for the CanvasPenWidth component
+CanvasPenWidth.propTypes = {
   handleUpdate: PropTypes.func,
   canvasSetting: PropTypes.object,
   ACTIONS: PropTypes.object,
 };
-
-export default CanvasControls;
+//exports CanvasPenWidth component
+export default CanvasPenWidth;

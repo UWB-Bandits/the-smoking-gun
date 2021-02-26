@@ -1,8 +1,10 @@
+//import react
 import React from "react";
+//import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
-// import "./canvas-width.css";
-
+//initialize the CanvasEraser component that take in the handleUpdate function
 const CanvasEraser = ({ handleUpdate }) => {
+  //This returns a menu that allows users to select an eraser size that will return the same color of the canvas
   return (
     <div
       style={{
@@ -14,6 +16,7 @@ const CanvasEraser = ({ handleUpdate }) => {
     >
       <h4>Set Eraser</h4>
       <div>
+        {/* Extra Small */}
         <button
           className="penOption"
           style={{
@@ -28,6 +31,7 @@ const CanvasEraser = ({ handleUpdate }) => {
         ></button>
       </div>
       <div>
+        {/* Small */}
         <button
           className="penOption"
           style={{
@@ -42,6 +46,7 @@ const CanvasEraser = ({ handleUpdate }) => {
         ></button>
       </div>
       <div>
+        {/* Medium */}
         <button
           className="penOption"
           style={{
@@ -56,6 +61,7 @@ const CanvasEraser = ({ handleUpdate }) => {
         ></button>
       </div>
       <div>
+        {/* Large */}
         <button
           className="penOption"
           style={{
@@ -72,10 +78,11 @@ const CanvasEraser = ({ handleUpdate }) => {
     </div>
   );
 };
-
+//sets up prop types for the CanvasControls component
 CanvasEraser.propTypes = {
   handleUpdate: PropTypes.func,
   canvasSetting: PropTypes.object,
   ACTIONS: PropTypes.object,
 };
+//exports CanvasEraser component
 export default CanvasEraser;

@@ -42,13 +42,10 @@ export default function Calendar(props) {
     const [selectInfo, setSelectInfo] = useState({});
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [clickInfo, SetClickInfo] = useState({});
-
-    //this lets you perform side effects in function component
-    // use state to get book information
     const [book, setBook] = useState({});
     // initialize the id variable for the bookId and calendarId (calId) that grabs the URL parameters
     const {bookId, calId} = useParams();
-
+    //this lets you perform side effects in function component
     useEffect(() => {
       // load book information
       loadBook();
@@ -183,6 +180,7 @@ export default function Calendar(props) {
     if(currentEvents){
       return (
         <div>
+            {/* This will open a drawer on the left with info on how to use the calendar and events */}
             <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={weekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -211,6 +209,7 @@ export default function Calendar(props) {
               eventChange={addEvent}
               eventRemove={addEvent}
             />
+            {/* Material-UI's Grid component sets up a responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts. */}
             <Grid container justify="center" >
               <PromptModal 
                 prompt="Please enter a new title for your event"

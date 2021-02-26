@@ -92,6 +92,7 @@ export default function BookButton(props) {
           <DeleteModal
           title={props.title}
           id={props.id}
+          type="book"
           />
         </Grid>
       </Grid>

@@ -182,6 +182,5 @@ const ChangeAvatar = (props) => {
 ChangeAvatar.propTypes = {
   user: PropTypes.object
 };
-
 //export ChangeAvatar component
 export default ChangeAvatar;

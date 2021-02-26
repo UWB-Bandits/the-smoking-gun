@@ -1,17 +1,24 @@
+//import react with useState method
 import React, { useState } from "react";
+//import Material-UI components
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import { Button, Link } from "@material-ui/core";
-import API from "../../utils/API";
-import { useAuth } from "../../contexts/AuthContext";
+//import Material-UI labs
 import { Alert, AlertTitle } from "@material-ui/lab";
-
+//import API routes
+import API from "../../utils/API";
+//import context
+import { useAuth } from "../../contexts/AuthContext";
+//initialize UpdatePorfile component
 const UpdateProfile = () => {
+  //set state variable hooks
   const [formData, setFormData] = useState({ firstName: "", lastName: "" });
   const [message, setMessage] = useState();
   const [error, setError] = useState();
+  //deconstruct mongoID from contect
   const { mongoID } = useAuth();
-
+  //this handles the submit on update profile
   const handleSubmit = (e) => {
     e.preventDefault();
     API.updateUser(mongoID, formData)
@@ -25,15 +32,16 @@ const UpdateProfile = () => {
         setError("Failed to update user");
       });
   };
-
+  //this handles changes to the form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setError();
     setMessage();
   };
-
+  //this returns a form to allow users to change their first and last name in the account page
   return (
+    // Material-UI component that serves as a wrapper component for most of the CSS utility needs.
     <Box
       boxShadow={2}
       p={2}
@@ -46,6 +54,7 @@ const UpdateProfile = () => {
       }}
       bgcolor="background.paper"
     >
+      {/* Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
       {message && (
         <Alert severity="success">
           <AlertTitle>Success</AlertTitle>
@@ -70,6 +79,7 @@ const UpdateProfile = () => {
       >
         {/* _______________________first name______________________________________________ */}
         <div style={{ margin: "0px 5px" }}>
+          {/* Material-Ui component that serves as a convenience wrapper */}
           <TextField
             style={{ width: "100%" }}
             id="first-name-input"
@@ -90,6 +100,7 @@ const UpdateProfile = () => {
             onChange={handleInputChange}
           />
         </div>
+        {/* Material-UI component that allows users to take actions, and make choices, with a single tap. */}
         <Button
           variant="contained"
           color="primary"
