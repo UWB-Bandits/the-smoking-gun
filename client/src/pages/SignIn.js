@@ -4,10 +4,22 @@ import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
 import Logo from "../utils/images/logo.png";
-import {Grid, Box} from "@material-ui/core/";
+import {
+  Grid,
+  Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from "@material-ui/core/";
 import LoginFooter from "../components/LoginFooter";
+import Screenshot from "../components/Screenshot";
+import Screenshots from "../utils/images/screenshots/screenshots";
+import BanditPhotos from "../components/BanditPhotos";
+import Bandits from "../utils/images/bandits/bandits";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { makeStyles } from "@material-ui/core/styles";
 
-// import { useHistory } from "react-router-dom";
 const SignIn = () => {
   const [formDisplay, setFormDisplay] = useState("Log In");
   const [formData, setFormData] = useState({
@@ -17,17 +29,65 @@ const SignIn = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  // let history = useHistory();
+
+  //Use On Blur
+  const checkEmail = (e) => {
+    // Regex for valid email
+    const verifyEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const check = e.target.value.match(verifyEmail) ? true : false;
+    check === true
+      ? setError("")
+      : setError("invalid email example: name@email.com");
+  };
+
+  const checkPassword = (e, password) => {
+    // only check to make sure new passwords match to avoid old users having errors.
+    if (formDisplay === "Sign Up") {
+      // Regex for password is 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter
+      const verifyPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+      if (e) {
+        const check = e.target.value.match(verifyPassword) ? true : false;
+        check === true
+          ? setError("")
+          : setError(
+              "Password needs to be 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter."
+            );
+      }
+      if (password) {
+        let passwordCorrect = password.match(verifyPassword) ? true : false;
+        if (!passwordCorrect) {
+          setError(
+            "Password needs to be 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter."
+          );
+        }
+        return passwordCorrect;
+      }
+    }
+  };
+  const passwordsMatch = (name, value) => {
+    if (name === "confirmPassword") {
+      const password = formData.password;
+      const check = password === value ? true : false;
+      check === true ? setError("") : setError("password don't match");
+      return check;
+    }
+  };
 
   const { signUp, logIn } = useAuth();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name !== "firstName" && name !== "lastName") {
+      setError("");
+    }
     setFormData({ ...formData, [name]: value });
-    setError("");
+    passwordsMatch(name, value);
   };
 
   const setPage = (e) => {
     e.preventDefault();
+    setError("");
     const value =
       e.target.value === undefined ? e.target.parentNode.value : e.target.value;
     setFormDisplay(value);
@@ -36,16 +96,17 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formDisplay === "Log In") {
+    if (formDisplay === "Log In" && !error) {
       try {
-        setError("");
         await logIn(formData.email.trim(), formData.password);
-        // history.push("/dashboard");
       } catch {
         setError("Incorrect email or password");
       }
-    } else if (formDisplay === "Sign Up") {
-      if (formData.password === formData.confirmPassword) {
+    } else if (formDisplay === "Sign Up" && !error) {
+      if (
+        passwordsMatch("confirmPassword", formData.confirmPassword) &&
+        checkPassword(null, formData.password)
+      ) {
         signUp(formData.email, formData.password)
           .then((res) => {
             setLoading(true);
@@ -63,47 +124,72 @@ const SignIn = () => {
             setError(err.message);
             setLoading(false);
           });
-      } else {
-        setError("passwords don't match");
       }
     }
   };
 
-
+  const classes = makeStyles((theme) => ({
+    accordion: {
+      width: "70%",
+      marginLeft: "10px",
+      marginRight: "10px",
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+  }));
 
   return (
-    <Grid container style={{minHeight:"80vh"}}>
+    <Grid container style={{ minHeight: "80vh" }}>
       <Grid item xs={12}>
-        <img style={{width: "100%", maxWidth:"300px",display:"block", marginTop:"10px", marginLeft:"auto", marginRight:"auto"}} src={Logo} alt="The Smoking Gun logo"></img>
+        <img
+          style={{
+            width: "100%",
+            maxWidth: "300px",
+            display: "block",
+            marginTop: "10px",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+          src={Logo}
+          alt="The Smoking Gun logo"
+        ></img>
       </Grid>
 
-
-      <Grid item xs={12} md={6}> 
+      <Grid item xs={12} md={6}>
         <Box
-        boxShadow={2}
-        p={2}
-        style={{
-          width: "80%",
-          margin: "20px auto",
-          borderRadius: "5px",
-          fontSize: "20px",
-          fontFamily: "'La Belle Aurore', cursive",
-          verticalAlign:"center"
-        }}
-        bgcolor="background.paper"
+          boxShadow={2}
+          p={2}
+          style={{
+            width: "80%",
+            margin: "20px auto",
+            borderRadius: "5px",
+            fontSize: "20px",
+            fontFamily: "'La Belle Aurore', cursive",
+            verticalAlign: "center",
+          }}
+          bgcolor="background.paper"
         >
           <p>Welcome!</p>
-          <p>The Smoking Gun is your own digital bullet journal. Stay organized by keeping everything you need in one place. Keep as many journals as you need, each with the option to store lists, track habits, keep a calendar, write journal entries, or save digital drawings.</p>
+          <p>
+            The Smoking Gun is your own digital bullet journal. Stay organized
+            by keeping everything you need in one place. Keep as many journals
+            as you need, each with the option to store lists, track habits, keep
+            a calendar, write journal entries, or save digital drawings.
+          </p>
           <p>--- The Bandits</p>
-
         </Box>
-
-
       </Grid>
-      <Grid item xs={12} md={6} className="formContainer" style={{ marginTop: "10px" }}>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        className="formContainer"
+        style={{ marginTop: "10px" }}
+      >
         {formDisplay === "Log In" ? (
           <div>
-
             <LoginForm
               handleInputChange={handleInputChange}
               setPage={setPage}
@@ -121,10 +207,53 @@ const SignIn = () => {
             formData={formData}
             loading={loading}
             error={error}
+            checkEmail={checkEmail}
+            checkPassword={checkPassword}
           />
         )}
       </Grid>
-      <LoginFooter/>
+      <h1 style={{ marginLeft: "auto", marginRight: "auto" }}>
+        Who are The Bandits?
+      </h1>
+      <Grid style={{ margin: "20px" }} spacing={2} container>
+        {Bandits.map((entry) => (
+          <BanditPhotos
+            key={entry.name}
+            name={entry.name}
+            image={entry.image}
+            link={entry.link}
+          />
+        ))}
+      </Grid>
+      <Grid style={{ margin: "20px" }} spacing={2} container>
+        <Accordion>
+          <AccordionSummary
+            className={classes.accordion}
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>
+              How does it work?
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid style={{ margin: "20px" }} spacing={2} container>
+              {Screenshots.map((entry) => (
+                <Screenshot
+                  key={entry.title}
+                  title={entry.title}
+                  description={entry.description}
+                  image={entry.image}
+                />
+              ))}
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      </Grid>
+
+      <div>. </div>
+      <LoginFooter />
     </Grid>
   );
 };

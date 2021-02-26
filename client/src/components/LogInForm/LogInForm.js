@@ -19,7 +19,6 @@ import PropTypes from "prop-types";
 import FormButtons from "../FormButtons/FormButtons";
 //initialize LogInForm component
 const LogInForm = (props) => {
-  // eslint-disable-next-line no-unused-vars
   const { handleInputChange, setPage, handleSubmit, loading, error } = props;
   //initialize state hooks
   const [values, setValues] = useState({
@@ -60,14 +59,15 @@ const LogInForm = (props) => {
         }}
       >
         {/* Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
-        {error && <Alert severity="error">{error}</Alert>}
+        {error ? <Alert severity="error">{error}</Alert> : ""}
+
         <div style={{ margin: "0px 5px" }}>
           {/* Material-Ui component that serves as a convenience wrapper */}
           <TextField
             style={{ width: "100%" }}
-            id="standard-password-input"
+            id="login-email-input"
             label="Email"
-            type="Email"
+            type="email"
             name="email"
             autoComplete="current-password"
             onChange={handleInputChange}
@@ -75,13 +75,9 @@ const LogInForm = (props) => {
         </div>
         {/* Material-Ui component that provides context such as filled/focused/error/required for form inputs. */}
         <FormControl className={""} style={{ margin: "0px 5px" }}>
-          {/* Material-Ui component that provides a label for fields inside a form. */}
-          <InputLabel htmlFor="standard-adornment-password">
-            Password
-          </InputLabel>
-          {/* Material-Ui component that allows users to type in a field */}
+          <InputLabel htmlFor="login-password">Password</InputLabel>
           <Input
-            id="standard-adornment-password"
+            id="login-password"
             type={values.showPassword ? "text" : "password"}
             value={values.password}
             name="password"

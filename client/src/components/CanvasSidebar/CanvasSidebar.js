@@ -11,16 +11,22 @@ import CanvasEraser from "../CanvasEraser/CanvasEraser";
 //import Material-UI Icons
 import HomeIcon from "@material-ui/icons/Home";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
+import CreateIcon from "@material-ui/icons/Create";
 //initialize CanvasSidebar component that takes in makeImg function, ACTIONS object, dispatch reducer, and existing canvasSettings object  
-const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
+const CanvasSidebar = ({
+  makeImg,
+  ACTIONS,
+  dispatch,
+  canvasSetting,
+  clickAway,
+}) => {
   //initialize state hook variables
   const [display, setDisplay] = useState("0");
   const [showSettings, setShowSettings] = useState("<- Hide");
   const [settingToChange, setSettingToChange] = useState("");
   const [storedLineWidth, setStoredLineWidth] = useState(4);
-  //this grabs the id from the URL
-  const { id } = useParams();
-  //this function allows the user to show the sideBar or not
+  const { bookId } = useParams();
+
   const showSidebar = () => {
     showSettings === "Show ->"
       ? setShowSettings("<- Hide")
@@ -69,16 +75,22 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
   //also displays the different menus for each canvas setting
   return (
     <div id="canvasSidebar" style={{ left: display }}>
-      <div className="link-home">
+      <div className="link-home" onClick={clickAway}>
         <Link to="/dashboard">
           <HomeIcon /> Dashboard
         </Link>
       </div>
-      <div className="link-book">
-        <Link to={`/books/${id}`}>
+      <div className="link-book" onClick={clickAway}>
+        <Link to={`/books/${bookId}`}>
           <MenuBookIcon /> Book
         </Link>
       </div>
+      <div className="link-book" onClick={clickAway}>
+        <Link to={`/books/${bookId}/doodlesIndex`}>
+          <CreateIcon /> Doodles
+        </Link>
+      </div>
+
       <ul id="canvasSettings">
         <li
           data-setting={ACTIONS.COLOR}
@@ -140,6 +152,7 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
 CanvasSidebar.propTypes = {
   changeSettings: PropTypes.func,
   makeImg: PropTypes.func,
+  clickAway: PropTypes.func,
   ACTIONS: PropTypes.object,
   dispatch: PropTypes.func,
   canvasSetting: PropTypes.object,

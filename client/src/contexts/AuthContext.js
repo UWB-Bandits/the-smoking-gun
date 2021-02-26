@@ -25,6 +25,17 @@ export const AuthProvider = ({ children }) => {
   const logIn = (email, password) => {
     return fire.auth().signInWithEmailAndPassword(email, password);
   };
+  
+  const passwordUpdate = (email) => {
+    return fire.auth().sendPasswordResetEmail(email)
+      .then(() => {
+        // Email sent
+        console.log("Email has been sent");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   //this grabs the user id from the database and sets the mongoId state to that value
   const getMongoID = (firebase_id) => {
     API.getUser(firebase_id).then((res) => {
@@ -60,6 +71,7 @@ export const AuthProvider = ({ children }) => {
     signUp,
     logIn,
     logout,
+    passwordUpdate,
     mongoID,
   };
   //this returns the different variables and functions when the Provider is used.

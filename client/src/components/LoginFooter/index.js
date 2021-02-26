@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     color:"white"
   },
   phantom: {
-    height: "50px",
+    height: "100px",
     display: "block",
     width: "100%",
   },

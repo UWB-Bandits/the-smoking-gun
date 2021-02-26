@@ -22,6 +22,8 @@ import PropTypes from "prop-types";
 //import components
 import FormButtons from "../FormButtons/FormButtons";
 //require in gravatar
+import Tooltip from "@material-ui/core/Tooltip";
+
 const useGravatar = require("gravatar");
 //initialize SignUpForm component that is handed down props
 const SignUpForm = (props) => {
@@ -32,7 +34,9 @@ const SignUpForm = (props) => {
     handleSubmit,
     loading,
     error,
+    checkEmail,
     formData,
+    checkPassword,
   } = props;
   //set state variable hooks
   const [values, setValues] = useState({
@@ -41,6 +45,8 @@ const SignUpForm = (props) => {
     password: "",
     showPassword: false,
   });
+
+  // __________________________GRAVATAR________________________________________
   const [gravatar, setGravatar] = useState({
     standard:
       "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
@@ -92,7 +98,7 @@ const SignUpForm = (props) => {
       identicon: identicon,
     });
   };
-  //this handles changes in the form
+  // __________________________INPUT/CLICK FUNCTIONS________________________________________
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
     getGravatar();
@@ -109,7 +115,10 @@ const SignUpForm = (props) => {
       showConfirmPassword: !values.showConfirmPassword,
     });
   };
-  //this returns a sign up form the user can use to create an account on the app
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     // Material-UI component that serves as a wrapper component for most of the CSS utility needs.
     <Box
@@ -126,72 +135,92 @@ const SignUpForm = (props) => {
       bgcolor="background.paper"
     >
       <h2>Sign Up</h2>
+
       <form
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          marginTop: "3rem",
         }}
       >
         {/*  Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
         {error && <Alert severity="error">{error}</Alert>}
+
         <div style={{ margin: "0px 5px" }}>
-          {/* Material-Ui component that serves as a convenience wrapper */}
-          <TextField
-            style={{ width: "100%" }}
-            id="email-input"
-            label="Email"
-            type="email"
-            name="email"
-            onChange={handleInputChange}
-          />
-          {/* Material-Ui component that provides context such as filled/focused/error/required for form inputs. */}
-          <FormControl style={{ width: "100%" }}>
-            {/* Material-Ui component that provides a label for fields inside a form. */}
-            <InputLabel htmlFor="password">Password</InputLabel>
-            {/* Material-Ui component that allows users to type in a field */}
-            <Input
-              id="password"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
-              name="password"
-              onChange={handleChange("password")}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
+          <Tooltip
+            placement="top"
+            title="Needs to be a valid email example: name@email.com"
+          >
+            {/* _______________________email______________________________________________ */}
+            <TextField
+              style={{ width: "100%" }}
+              id="email-input"
+              label="Email *"
+              type="email"
+              name="email"
+              onBlur={checkEmail}
+              onChange={handleInputChange}
             />
-          </FormControl>
-          <FormControl style={{ width: "100%" }}>
-            <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
-            <Input
-              id="confirmPassword"
-              type={values.showConfirmPassword ? "text" : "password"}
-              value={values.confirmPassword}
-              name="confirmPassword"
-              onChange={handleChange("confirmPassword")}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowConfirmPassword}
-                  >
-                    {values.showConfirmPassword ? (
-                      <Visibility />
-                    ) : (
-                      <VisibilityOff />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
+          </Tooltip>
+          {/* _______________________set password______________________________________________ */}
+          <Tooltip
+            placement="top"
+            title="Password needs to be 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter."
+          >
+            <FormControl style={{ width: "100%" }}>
+              <InputLabel htmlFor="password">Password *</InputLabel>
+              <Input
+                id="password"
+                type={values.showPassword ? "text" : "password"}
+                value={values.password}
+                name="password"
+                onChange={handleChange("password")}
+                onBlur={checkPassword}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </Tooltip>
+          {/* _______________________confirm password______________________________________________ */}
+          <Tooltip placement="top" title="Needs to match password field.">
+            <FormControl style={{ width: "100%" }}>
+              <InputLabel htmlFor="confirmPassword">
+                Confirm Password *
+              </InputLabel>
+              <Input
+                id="confirmPassword"
+                type={values.showConfirmPassword ? "text" : "password"}
+                value={values.confirmPassword}
+                name="confirmPassword"
+                onChange={handleChange("confirmPassword")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showConfirmPassword ? (
+                        <Visibility />
+                      ) : (
+                        <VisibilityOff />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </Tooltip>
         </div>
         {/* _______________________first name______________________________________________ */}
         <div style={{ margin: "0px 5px" }}>
@@ -201,7 +230,6 @@ const SignUpForm = (props) => {
             label="First Name"
             type="firstName"
             name="firstName"
-            // autoComplete="current-password"
             onChange={handleInputChange}
           />
         </div>
@@ -213,11 +241,10 @@ const SignUpForm = (props) => {
             label="Last Name"
             type="lastName"
             name="lastName"
-            // autoComplete="current-password"
             onChange={handleInputChange}
           />
         </div>
-        {/* ________________________ profile pic_____________________________________________ */}
+        {/* ________________________ gravatar _____________________________________________ */}
         <div style={{ margin: "10px 0px" }}>
           <FormControl component="fieldset">
             <FormLabel style={{ margin: "10px 0px" }} component="legend">
@@ -251,21 +278,18 @@ const SignUpForm = (props) => {
               <FormControlLabel
                 labelPlacement="top"
                 value={gravatar.wavatar}
-                // disabled
                 control={<Radio />}
                 label={<img src={gravatar.wavatar} alt="Wavatar" />}
               />
               <FormControlLabel
                 labelPlacement="top"
                 value={gravatar.monsterid}
-                // disabled
                 control={<Radio />}
                 label={<img src={gravatar.monsterid} alt="Monsterid" />}
               />
               <FormControlLabel
                 labelPlacement="top"
                 value={gravatar.identicon}
-                // disabled
                 control={<Radio />}
                 label={<img src={gravatar.identicon} alt="Identicon" />}
               />
@@ -291,6 +315,8 @@ SignUpForm.propTypes = {
   handleSubmit: PropTypes.func,
   error: PropTypes.string,
   formData: PropTypes.object,
+  checkEmail: PropTypes.func,
+  checkPassword: PropTypes.func,
 };
 //exports SignUpForm component
 export default SignUpForm;

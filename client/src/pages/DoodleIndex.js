@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import API from "../utils/API";
 import DoodleSlider from "../components/DoodleSlider/DoodleSlider";
+import { useAuth } from "../contexts/AuthContext";
 
 const classes = makeStyles((theme) => ({
   root: {
@@ -36,36 +37,33 @@ const classes = makeStyles((theme) => ({
 }));
 
 const DoodleIndex = () => {
+  const { currentUser } = useAuth();
   const [doodles, setDoodles] = useState([]);
   const [bookTitle, setBookTitle] = useState([]);
-  const { id } = useParams();
+  const { bookId } = useParams();
 
   useEffect(() => {
-    API.getBook(id).then((res) => {
+    API.getBook(bookId, currentUser.uid).then((res) => {
+      console.log(res.data);
       setBookTitle(res.data.title);
     });
     loadDoodles();
   }, []);
 
   const deleteDoodle = (e) => {
-    const doodle_id = e.target.id; // ? e.target.id : e.target.parentNode.id;
-    console.log(doodle_id);
+    const doodle_id = e.target.id;
     API.deleteDoodle(doodle_id)
-      .then((res) => {
-        console.log(res.data);
-        // setDoodles(res.data);
+      .then(() => {
         loadDoodles();
-        // doodles = res.data;
       })
       .catch((err) => console.log(err));
-    // console.log(e.target.id);
   };
   const loadDoodles = () => {
-    API.getDoodles(id)
+    API.getDoodles(bookId)
       .then((res) => {
         setDoodles(res.data);
         const listOfDoodles_id = res.data.map((item) => item._id);
-        API.updateBook(id, { doodles: listOfDoodles_id });
+        API.updateBook(bookId, { doodles: listOfDoodles_id });
       })
       .catch((err) => console.log(err));
   };
@@ -80,7 +78,11 @@ const DoodleIndex = () => {
           />
           <span style={{ fontSize: "12px", marginLeft: "2px" }}>Dashboard</span>
         </Link>
-        <Link color="inherit" href={"/books/" + id} className={classes.link}>
+        <Link
+          color="inherit"
+          href={"/books/" + bookId}
+          className={classes.link}
+        >
           <ImportContactsIcon
             style={{ verticalAlign: "middle" }}
             className={classes.icon}
@@ -101,13 +103,12 @@ const DoodleIndex = () => {
       </Breadcrumbs>
       <div style={{ margin: "2rem 0", textAlign: "center" }}>
         <h2>
-          <a href={"/doodle/" + id}>Make a New Doodle?</a>
+          <Link href={`/books/${bookId}/newDoodle`}>Make a New Doodle?</Link>
         </h2>
       </div>
       {/* _______________________________Previous Doodles_____________________________ */}
 
       <DoodleSlider deleteDoodle={deleteDoodle} doodles={doodles} />
-      {/* _______________________________Make a Doodle_____________________________ */}
     </div>
   );
 };

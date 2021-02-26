@@ -12,16 +12,15 @@ import { useParams } from "react-router-dom";
 const SaveImageModal = ({ setImgUrl, imgURl }) => {
   //initialize state hooks
   const [imgTitle, setImgTitle] = useState("Doodle");
-  //this grabs the id from the URL
-  const { id } = useParams();
-  //this handles input change within the Modal and sets the imgTitle state
+  const { bookId } = useParams();
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     setImgTitle(value);
   };
   //this handles the saving of the doodle to the database
   const saveImg = () => {
-    API.createDoodle({ title: imgTitle, url: imgURl, book: id })
+    API.createDoodle({ title: imgTitle, url: imgURl, book: bookId })
       .then(() => {
         setImgUrl();
       })

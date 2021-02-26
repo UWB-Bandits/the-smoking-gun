@@ -3,8 +3,9 @@ import React, { useRef, useEffect, useState, useReducer } from "react";
 import CanvasSidebar from "../components/CanvasSidebar/CanvasSidebar";
 import SaveImageModal from "../components/SaveImageModal/SaveImageModal";
 import "../components/CanvasSidebar/canvas.css";
+import PropTypes from "prop-types";
 
-const DoodlePage = () => {
+const DoodlePage = (props) => {
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -12,6 +13,10 @@ const DoodlePage = () => {
   const [canvasPainted, setCanvasPainted] = useState(false);
   let canvas;
   let ctx;
+
+  DoodlePage.propTypes = {
+    clickAway: PropTypes.func,
+  };
 
   const ACTIONS = {
     COLOR: "change color",
@@ -122,6 +127,7 @@ const DoodlePage = () => {
         ACTIONS={ACTIONS}
         dispatch={dispatch}
         makeImg={makeImg}
+        clickAway={props.clickAway}
       />
 
       {imgURl && <SaveImageModal setImgUrl={setImgUrl} imgURl={imgURl} />}

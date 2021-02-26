@@ -32,13 +32,12 @@ function App() {
   const usePathname = () => {
     const location = window.location.pathname;
     setPathname(location);
-    console.log(pathname);
     return location;
   };
 
   useEffect(() => {
     usePathname();
-    pathname.includes("/doodle/") === true
+    pathname.includes("/newDoodle") === true
       ? setDoodleRoute(true)
       : setDoodleRoute(false);
   }, []);
@@ -49,11 +48,15 @@ function App() {
       if (isLoggedIn && user) {
         setFirebaseID(user.uid);
       }
-      return user
-        ? setIsLoggedIn(true)
-        : (setIsLoggedIn(false), setFirebaseID(false));
+      return (
+        user ? setIsLoggedIn(true) : setIsLoggedIn(false), setFirebaseID(false)
+      );
     });
   }, [isLoggedIn]);
+
+  const clickAway = () => {
+    setDoodleRoute(false);
+  };
 
   useEffect(() => {
     let unsubscribe;
@@ -86,7 +89,7 @@ function App() {
       <AuthProvider>
         <div id="App">
           <Router>
-            {!mongoUser && !error ? (
+            {!mongoUser && !isLoggedIn && !error ? (
               <>
                 <Switch>
                   <Route exact path="/">
@@ -126,10 +129,10 @@ function App() {
                     <Route exact path="/books/:bookId/journal/:journalId">
                       <Journaling type="old" />
                     </Route>
-                    <Route exact path="/doodle/:id">
-                      <DoodlePage />
+                    <Route exact path="/books/:bookId/newDoodle">
+                      <DoodlePage clickAway={clickAway} />
                     </Route>
-                    <Route exact path="/doodleIndex/:id">
+                    <Route exact path="/books/:bookId/doodlesIndex">
                       <DoodleIndex />
                     </Route>
                     <Route>
