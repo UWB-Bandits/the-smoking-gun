@@ -53,7 +53,7 @@ function Calendars() {
       })
       .catch(err => console.log(err));
   };
-  //initialize the classes variable with our useStyles hook
+  //initialize the classes variable with our makeStyles hook
   const classes = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -78,30 +78,31 @@ function Calendars() {
       height: 20,
     },
   }));
-
+  //this returns a calendar that the user can use to store events
   return (
     <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+      {/*Material-UI Breadcrumb component allow users to make selections from a range of values. */}
       <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" href="/dashboard" className={classes.link}>
-            <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
-          </Link>
-          <Link
-            color="inherit"
-            href={"/books/" + calendar.bookId}
-            className={classes.link}
-          >
+        {/*Material-UI Link component allows you to easily customize anchor elements with your theme colors and typography styles. */}
+        <Link color="inherit" href="/dashboard" className={classes.link}>
+          {/* Material-UI Icon Component */}
+          <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
+          <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+        </Link>
+        <Link color="inherit" href={"/books/" + calendar.bookId} className={classes.link}>
             <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
             <span style={{fontSize: "12px", marginLeft: "2px"}}>{calendar.bookName}</span>
-          </Link>
-          <Typography color="textPrimary" className={classes.link}>
+        </Link>
+        {/* Material-UI Typography component is used to present your design and content as clearly and efficiently as possible.  */}
+        <Typography color="textPrimary" className={classes.link}>
             <DateRangeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>{calendar.name}</span>
-          </Typography>
-        </Breadcrumbs>
+        </Typography>
+      </Breadcrumbs>
+      {/* A custom component that renders a fullCalendar.io react calendar component */}
       <Calendar calendar={calendar}/>
     </div>
   );
 }
-
+//export Calendars page
 export default Calendars;
