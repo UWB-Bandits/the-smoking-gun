@@ -103,7 +103,7 @@ const DoodleIndex = () => {
       </Breadcrumbs>
       <div style={{ margin: "2rem 0", textAlign: "center" }}>
         <h2>
-          <Link href={`/doodle/${bookId}`}>Make a New Doodle?</Link>
+          <Link href={`/books/${bookId}/newDoodle`}>Make a New Doodle?</Link>
         </h2>
       </div>
       {/* _______________________________Previous Doodles_____________________________ */}
