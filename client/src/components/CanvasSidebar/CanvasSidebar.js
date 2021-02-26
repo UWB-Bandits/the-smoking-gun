@@ -7,13 +7,20 @@ import CanvasEraser from "../CanvasEraser/CanvasEraser";
 import { useParams } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
+import CreateIcon from "@material-ui/icons/Create";
 
-const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting, clickAway}) => {
+const CanvasSidebar = ({
+  makeImg,
+  ACTIONS,
+  dispatch,
+  canvasSetting,
+  clickAway,
+}) => {
   const [display, setDisplay] = useState("0");
   const [showSettings, setShowSettings] = useState("<- Hide");
   const [settingToChange, setSettingToChange] = useState("");
   const [storedLineWidth, setStoredLineWidth] = useState(4);
-  const { id } = useParams();
+  const { bookId } = useParams();
 
   const showSidebar = () => {
     showSettings === "Show ->"
@@ -31,7 +38,6 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting, clickAway}) 
         payload: { lineColor: "#f3f3f3" },
       });
     }
-    // changeSettings(settingToChange, "red");
   };
   const handleUpdate = (e) => {
     const payload = e.target.value;
@@ -66,8 +72,13 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting, clickAway}) 
         </Link>
       </div>
       <div className="link-book" onClick={clickAway}>
-        <Link to={`/books/${id}`}>
+        <Link to={`/books/${bookId}`}>
           <MenuBookIcon /> Book
+        </Link>
+      </div>
+      <div className="link-book">
+        <Link to={`/doodleIndex/${bookId}`}>
+          <CreateIcon /> Doodles
         </Link>
       </div>
 
