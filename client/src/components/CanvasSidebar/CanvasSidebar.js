@@ -1,14 +1,18 @@
+//import react and useState method
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+//import Link and useParams from react-router-dom
+import { Link, useParams } from "react-router-dom";
+//import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
+//import components
 import CanvasColors from "../CanvasColors/CanvasColors";
 import CanvasPenWidth from "../CanvasPenWidth/CanvasPenWidth";
 import CanvasEraser from "../CanvasEraser/CanvasEraser";
-import { useParams } from "react-router-dom";
+//import Material-UI Icons
 import HomeIcon from "@material-ui/icons/Home";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import CreateIcon from "@material-ui/icons/Create";
-
+//initialize CanvasSidebar component that takes in makeImg function, ACTIONS object, dispatch reducer, and existing canvasSettings object  
 const CanvasSidebar = ({
   makeImg,
   ACTIONS,
@@ -16,6 +20,7 @@ const CanvasSidebar = ({
   canvasSetting,
   clickAway,
 }) => {
+  //initialize state hook variables
   const [display, setDisplay] = useState("0");
   const [showSettings, setShowSettings] = useState("<- Hide");
   const [settingToChange, setSettingToChange] = useState("");
@@ -28,7 +33,8 @@ const CanvasSidebar = ({
       : setShowSettings("Show ->");
     display === "0" ? setDisplay("-200px") : setDisplay("0");
   };
-
+  //this function handles the settings clicks and changes the setSettingToChange state,
+  //if the event equals to ACTIONS.pen use the dispatch reducer to set the pen settings
   const handleSettingClick = (e) => {
     const setting = e.target.dataset.setting;
     setSettingToChange(setting);
@@ -39,9 +45,9 @@ const CanvasSidebar = ({
       });
     }
   };
+  //this function handles updates to the different menus, this checks the type of ACTIONS the use dispatch reducer
   const handleUpdate = (e) => {
     const payload = e.target.value;
-
     switch (settingToChange) {
       case ACTIONS.COLOR:
         dispatch({
@@ -64,6 +70,9 @@ const CanvasSidebar = ({
         break;
     }
   };
+  //this returns the canvas sidebar menu that allows users to return to the dashboard, or book
+  //displays the current settings with the color, width, and type of pen.
+  //also displays the different menus for each canvas setting
   return (
     <div id="canvasSidebar" style={{ left: display }}>
       <div className="link-home" onClick={clickAway}>
@@ -139,7 +148,7 @@ const CanvasSidebar = ({
     </div>
   );
 };
-
+//sets up prop types for the CanvasSidebar component
 CanvasSidebar.propTypes = {
   changeSettings: PropTypes.func,
   makeImg: PropTypes.func,
@@ -148,5 +157,5 @@ CanvasSidebar.propTypes = {
   dispatch: PropTypes.func,
   canvasSetting: PropTypes.object,
 };
-
+//exports CanvasSidebar component
 export default CanvasSidebar;

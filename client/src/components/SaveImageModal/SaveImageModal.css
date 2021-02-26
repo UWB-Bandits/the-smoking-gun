@@ -1,3 +1,4 @@
+/* background */
 .modal-bg {
   position: fixed;
   top: 0;
@@ -10,7 +11,7 @@
   justify-content: center;
   align-items: center;
 }
-
+/* modal */
 .modal {
   background-color: white;
   min-height: 400px;
@@ -35,7 +36,6 @@
   height: 50%;
   border-radius: 5px;
 }
-
 .modal-btn {
   padding: 10px 15px;
   background-color: #888787;
@@ -46,7 +46,7 @@
   box-shadow: 2px 2px 5px #4e4e4eb7;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-
+/* button */
 .close-btn {
   padding: 5px 10px;
   background-color: #e7410f;
@@ -60,7 +60,6 @@
   top: 0;
   right: 0;
 }
-
 .close-btn:hover {
   font-weight: bold;
 }
@@ -68,19 +67,18 @@
   font-weight: bold;
   background-color: rgb(190, 190, 190);
 }
-
+/* container */
 .save-options {
   width: 100%;
   display: flex;
   justify-content: space-around;
   margin-top: 2rem;
 }
-
 .inputContainer {
   margin: 1rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-
+/* media query */
 @media only screen and (max-width: 1250px) {
   .save-options {
     margin-top: 1rem;

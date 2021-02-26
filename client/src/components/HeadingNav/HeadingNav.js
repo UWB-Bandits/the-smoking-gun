@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+//import react, useState, and useEffect methods
+import React, { useState, useEffect } from "react";
+//import logo
 import logo from "../../utils/images/logo.png";
-// import Image from "react-image-resizer";
+//import context
 import { useAuth } from "../../contexts/AuthContext";
+//import Material-Ui components
 import Avatar from "@material-ui/core/Avatar";
+//import API routes
 import API from "../../utils/API";
-import { useEffect } from "react";
+//import Link from react-router-dom
 import { Link } from "react-router-dom";
-// import PropTypes from "prop-types";
-
+//initialize HeadingNav component
 function HeadingNav() {
+  //get context
   const { currentUser } = useAuth();
+  //initialize state hooks
   const [avatar, setAvatar] = useState("");
-
+  //this lets you perform side effects in function component
   useEffect(() => {
     let unsubscribe;
     if (currentUser) {
@@ -21,7 +26,7 @@ function HeadingNav() {
     }
     return unsubscribe;
   }, []);
-
+  //this returns a navbar with a logo that returns a user to the dashboard, and a picture of the users avatar that takes them to an account page
   return (
     <nav
       id="headingNav"
@@ -41,6 +46,7 @@ function HeadingNav() {
         />
       </Link>
       <Link to="/settings" style={{ textDecoration: "none", marginRight:"20px", marginTop:"10px" }}>
+        {/* Material-Ui component that is used to wrap avatars */}
         <Avatar
           style={{ width: "60px", height: "60px" }}
           alt="Avatar"
@@ -50,5 +56,5 @@ function HeadingNav() {
     </nav>
   );
 }
-
+//export HeadingNav component
 export default HeadingNav;
