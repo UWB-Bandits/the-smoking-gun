@@ -7,13 +7,20 @@ import CanvasEraser from "../CanvasEraser/CanvasEraser";
 import { useParams } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
+import CreateIcon from "@material-ui/icons/Create";
 
-const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
+const CanvasSidebar = ({
+  makeImg,
+  ACTIONS,
+  dispatch,
+  canvasSetting,
+  clickAway,
+}) => {
   const [display, setDisplay] = useState("0");
   const [showSettings, setShowSettings] = useState("<- Hide");
   const [settingToChange, setSettingToChange] = useState("");
   const [storedLineWidth, setStoredLineWidth] = useState(4);
-  const { id } = useParams();
+  const { bookId } = useParams();
 
   const showSidebar = () => {
     showSettings === "Show ->"
@@ -31,7 +38,6 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
         payload: { lineColor: "#f3f3f3" },
       });
     }
-    // changeSettings(settingToChange, "red");
   };
   const handleUpdate = (e) => {
     const payload = e.target.value;
@@ -60,14 +66,19 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
   };
   return (
     <div id="canvasSidebar" style={{ left: display }}>
-      <div className="link-home">
+      <div className="link-home" onClick={clickAway}>
         <Link to="/dashboard">
           <HomeIcon /> Dashboard
         </Link>
       </div>
-      <div className="link-book">
-        <Link to={`/books/${id}`}>
+      <div className="link-book" onClick={clickAway}>
+        <Link to={`/books/${bookId}`}>
           <MenuBookIcon /> Book
+        </Link>
+      </div>
+      <div className="link-book">
+        <Link to={`/doodleIndex/${bookId}`}>
+          <CreateIcon /> Doodles
         </Link>
       </div>
 
@@ -132,6 +143,7 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
 CanvasSidebar.propTypes = {
   changeSettings: PropTypes.func,
   makeImg: PropTypes.func,
+  clickAway: PropTypes.func,
   ACTIONS: PropTypes.object,
   dispatch: PropTypes.func,
   canvasSetting: PropTypes.object,

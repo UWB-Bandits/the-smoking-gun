@@ -16,12 +16,14 @@ function Dashboard() {
   const [user, setUser] = useState({});
   const [usersBooks, setUsersBooks] = useState([]);
   const { currentUser } = useAuth();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [weatherLoaded, setWeatherLoaded] = useState(false);
+  const [wordLoaded, setWordLoaded] = useState(false);
+  const [newsLoaded, setNewsLoaded] = useState(false);
   const [weather, setWeather] = useState({});
   const [news, setNews] = useState([]);
   const [randomWord, setRandomWord] = useState({});
-  const [bookSize, setBookSize]=useState({});
-  const [windowSize, setWindowSize]=useState("");
+  const [bookSize, setBookSize] = useState({});
+  const [windowSize, setWindowSize] = useState("");
 
   useEffect(() => {
     getUser();
@@ -41,19 +43,19 @@ function Dashboard() {
 
   function resizeBooks() {
     var width = window.innerWidth;
-    if (width>1100) {
+    if (width > 1100) {
       setBookSize({
         bookWidth: "350px",
         pushTop: "100px",
         textSize: "30px",
       });
-    } else if (width>550) {
+    } else if (width > 550) {
       setBookSize({
         bookWidth: "250px",
         pushTop: "50px",
         textSize: "25px",
       });
-    } else if (width>340) {
+    } else if (width > 340) {
       setBookSize({
         bookWidth: "150px",
         pushTop: "15px",
@@ -78,29 +80,27 @@ function Dashboard() {
   };
 
   const getUser = () => {
-    API.getUser(currentUser.uid)
-      .then(res => {
-        setUser(res.data);
-      });
+    API.getUser(currentUser.uid).then((res) => {
+      setUser(res.data);
+    });
   };
 
   const weatherSearch = () => {
     let options = {
       enableHighAccuracy: true,
       timeout: 5000,
-      maximumAge: 0
+      maximumAge: 0,
     };
 
     function success(pos) {
       let crd = pos.coords;
-  
-      API.postWeather({Latitude: crd.latitude,Longitude: crd.longitude})
-        .then(res => {
+
+      API.postWeather({ Latitude: crd.latitude, Longitude: crd.longitude })
+        .then((res) => {
           setWeather(res.data);
-          setIsLoaded(true);
+          setWeatherLoaded(true);
         })
-        .catch(err => {
-          setIsLoaded(true);
+        .catch((err) => {
           console.log(err);
         });
     }
@@ -110,42 +110,43 @@ function Dashboard() {
     }
 
     if (navigator.geolocation) {
-      navigator.permissions
-        .query({ name: "geolocation" })
-        .then((result) => {
-          if (result.state === "granted") {
-            // If granted then you can directly call your function here
-            navigator.geolocation.getCurrentPosition(success);
-          } else if (result.state === "prompt") {
-            navigator.geolocation.getCurrentPosition(success, errors, options);
-          } else if (result.state === "denied") {
-            // If denied you have to show instructions to enable location
-            console.log("enable location");
-          }
-          result.onchange = () => {
-            console.log(result.state);
-          };
-        });
-      } else {
+      navigator.permissions.query({ name: "geolocation" }).then((result) => {
+        if (result.state === "granted") {
+          // If granted then you can directly call your function here
+          navigator.geolocation.getCurrentPosition(success);
+        } else if (result.state === "prompt") {
+          navigator.geolocation.getCurrentPosition(success, errors, options);
+        } else if (result.state === "denied") {
+          // If denied you have to show instructions to enable location
+          console.log("enable location");
+        }
+        result.onchange = () => {
+          console.log(result.state);
+        };
+      });
+    } else {
       alert("Sorry not available!");
-      }
-    };
+    }
+  };
 
   const newsSearch = () => {
     API.getNews()
-      .then(res => {
+      .then((res) => {
         let topNews = res.data.slice(0, 10);
         setNews(topNews);
+        setNewsLoaded(true);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
+        setNewsLoaded(true);
       });
   };
 
   const wordSearch = () => {
     DashboardAPI.searchWord()
-      .then(res => {
+      .then((res) => {
         setRandomWord(res.data);
+        setWordLoaded(true);
       })
       .catch((err) => {
         console.log(err);
@@ -157,18 +158,30 @@ function Dashboard() {
       <Box>
         <Jumbotron userName={user.firstName} />
         <Grid container justify="center">
-          {isLoaded ?
+          {weatherLoaded ? (
             <WeatherWidget weather={weather} />
-             : <div>Loading Weather...<CircularProgress /></div> 
-          }
-          {isLoaded ?
+          ) : (
+            <div>
+              Loading Weather...
+              <CircularProgress />
+            </div>
+          )}
+          {wordLoaded ? (
             <RandomWordWidget randomWord={randomWord} />
-             : <div>Loading Word...<CircularProgress /></div> 
-          }
-          {isLoaded ? 
+          ) : (
+            <div>
+              Loading Word...
+              <CircularProgress />
+            </div>
+          )}
+          {newsLoaded ? (
             <NewsWidget news={[...news]} />
-             : <div>Loading Top Stories...<CircularProgress /></div> 
-          }
+          ) : (
+            <div>
+              Loading Top Stories...
+              <CircularProgress />
+            </div>
+          )}
         </Grid>
         <Grid container>
           <BookButton
@@ -179,7 +192,14 @@ function Dashboard() {
             bookSize={bookSize}
           />
           {usersBooks.map((item) => (
-            <BookButton key={item._id} bookSize={bookSize} edit={true} id={item._id} link={`/books/${item._id}`} {...item} />
+            <BookButton
+              key={item._id}
+              bookSize={bookSize}
+              edit={true}
+              id={item._id}
+              link={`/books/${item._id}`}
+              {...item}
+            />
           ))}
         </Grid>
       </Box>

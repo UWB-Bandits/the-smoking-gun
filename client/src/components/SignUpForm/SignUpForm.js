@@ -15,6 +15,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import Alert from "@material-ui/lab/Alert";
+import Tooltip from "@material-ui/core/Tooltip";
+
 const useGravatar = require("gravatar");
 const SignInForm = (props) => {
   const {
@@ -23,7 +25,9 @@ const SignInForm = (props) => {
     handleSubmit,
     loading,
     error,
+    checkEmail,
     formData,
+    checkPassword,
   } = props;
   const [values, setValues] = useState({
     confirmPassword: "",
@@ -31,6 +35,8 @@ const SignInForm = (props) => {
     password: "",
     showPassword: false,
   });
+
+  // __________________________GRAVATAR________________________________________
   const [gravatar, setGravatar] = useState({
     standard:
       "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
@@ -81,6 +87,7 @@ const SignInForm = (props) => {
       identicon: identicon,
     });
   };
+  // __________________________INPUT/CLICK FUNCTIONS________________________________________
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
     getGravatar();
@@ -96,10 +103,10 @@ const SignInForm = (props) => {
       showConfirmPassword: !values.showConfirmPassword,
     });
   };
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   return (
     <Box
       boxShadow={2}
@@ -115,71 +122,91 @@ const SignInForm = (props) => {
       bgcolor="background.paper"
     >
       <h2>Sign Up</h2>
+
       <form
-        // onSubmit={handleSubmit}
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          marginTop: "3rem",
         }}
       >
         {error && <Alert severity="error">{error}</Alert>}
+
         <div style={{ margin: "0px 5px" }}>
-          <TextField
-            style={{ width: "100%" }}
-            id="email-input"
-            label="Email"
-            type="email"
-            name="email"
-            // autoComplete="current-password"
-            onChange={handleInputChange}
-          />
-          <FormControl style={{ width: "100%" }}>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              id="password"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
-              name="password"
-              onChange={handleChange("password")}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
+          <Tooltip
+            placement="top"
+            title="Needs to be a valid email example: name@email.com"
+          >
+            {/* _______________________email______________________________________________ */}
+            <TextField
+              style={{ width: "100%" }}
+              id="email-input"
+              label="Email *"
+              type="email"
+              name="email"
+              onBlur={checkEmail}
+              onChange={handleInputChange}
             />
-          </FormControl>
-          <FormControl style={{ width: "100%" }}>
-            <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
-            <Input
-              id="confirmPassword"
-              type={values.showConfirmPassword ? "text" : "password"}
-              value={values.confirmPassword}
-              name="confirmPassword"
-              onChange={handleChange("confirmPassword")}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowConfirmPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {values.showConfirmPassword ? (
-                      <Visibility />
-                    ) : (
-                      <VisibilityOff />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
+          </Tooltip>
+          {/* _______________________set password______________________________________________ */}
+          <Tooltip
+            placement="top"
+            title="Password needs to be 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter."
+          >
+            <FormControl style={{ width: "100%" }}>
+              <InputLabel htmlFor="password">Password *</InputLabel>
+              <Input
+                id="password"
+                type={values.showPassword ? "text" : "password"}
+                value={values.password}
+                name="password"
+                onChange={handleChange("password")}
+                onBlur={checkPassword}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </Tooltip>
+          {/* _______________________confirm password______________________________________________ */}
+          <Tooltip placement="top" title="Needs to match password field.">
+            <FormControl style={{ width: "100%" }}>
+              <InputLabel htmlFor="confirmPassword">
+                Confirm Password *
+              </InputLabel>
+              <Input
+                id="confirmPassword"
+                type={values.showConfirmPassword ? "text" : "password"}
+                value={values.confirmPassword}
+                name="confirmPassword"
+                onChange={handleChange("confirmPassword")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showConfirmPassword ? (
+                        <Visibility />
+                      ) : (
+                        <VisibilityOff />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </Tooltip>
         </div>
         {/* _______________________first name______________________________________________ */}
         <div style={{ margin: "0px 5px" }}>
@@ -189,7 +216,6 @@ const SignInForm = (props) => {
             label="First Name"
             type="firstName"
             name="firstName"
-            // autoComplete="current-password"
             onChange={handleInputChange}
           />
         </div>
@@ -201,11 +227,10 @@ const SignInForm = (props) => {
             label="Last Name"
             type="lastName"
             name="lastName"
-            // autoComplete="current-password"
             onChange={handleInputChange}
           />
         </div>
-        {/* ________________________ profile pic_____________________________________________ */}
+        {/* ________________________ gravatar _____________________________________________ */}
         <div style={{ margin: "10px 0px" }}>
           <FormControl component="fieldset">
             <FormLabel style={{ margin: "10px 0px" }} component="legend">
@@ -240,21 +265,18 @@ const SignInForm = (props) => {
               <FormControlLabel
                 labelPlacement="top"
                 value={gravatar.wavatar}
-                // disabled
                 control={<Radio />}
                 label={<img src={gravatar.wavatar} alt="Wavatar" />}
               />
               <FormControlLabel
                 labelPlacement="top"
                 value={gravatar.monsterid}
-                // disabled
                 control={<Radio />}
                 label={<img src={gravatar.monsterid} alt="Monsterid" />}
               />
               <FormControlLabel
                 labelPlacement="top"
                 value={gravatar.identicon}
-                // disabled
                 control={<Radio />}
                 label={<img src={gravatar.identicon} alt="Identicon" />}
               />
@@ -280,6 +302,8 @@ SignInForm.propTypes = {
   handleSubmit: PropTypes.func,
   error: PropTypes.string,
   formData: PropTypes.object,
+  checkEmail: PropTypes.func,
+  checkPassword: PropTypes.func,
 };
 
 export default SignInForm;

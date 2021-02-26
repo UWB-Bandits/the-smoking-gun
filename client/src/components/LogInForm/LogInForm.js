@@ -13,7 +13,6 @@ import Box from "@material-ui/core/Box";
 import Alert from "@material-ui/lab/Alert";
 
 const LogInForm = (props) => {
-  // eslint-disable-next-line no-unused-vars
   const { handleInputChange, setPage, handleSubmit, loading, error } = props;
   const [values, setValues] = useState({
     password: "",
@@ -49,31 +48,29 @@ const LogInForm = (props) => {
     >
       <h2>Log In</h2>
       <form
-        // onSubmit={handleSubmit}
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
         }}
       >
-        {error && <Alert severity="error">{error}</Alert>}
+        {error ? <Alert severity="error">{error}</Alert> : ""}
+
         <div style={{ margin: "0px 5px" }}>
           <TextField
             style={{ width: "100%" }}
-            id="standard-password-input"
+            id="login-email-input"
             label="Email"
-            type="Email"
+            type="email"
             name="email"
             autoComplete="current-password"
             onChange={handleInputChange}
           />
         </div>
         <FormControl className={""} style={{ margin: "0px 5px" }}>
-          <InputLabel htmlFor="standard-adornment-password">
-            Password
-          </InputLabel>
+          <InputLabel htmlFor="login-password">Password</InputLabel>
           <Input
-            id="standard-adornment-password"
+            id="login-password"
             type={values.showPassword ? "text" : "password"}
             value={values.password}
             name="password"
