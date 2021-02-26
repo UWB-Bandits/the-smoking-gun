@@ -1,22 +1,31 @@
+//import react with useState method
 import React, { useState } from "react";
+//import Material-UI components
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import PropTypes from "prop-types";
-import FormButtons from "../FormButtons/FormButtons";
 import Box from "@material-ui/core/Box";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
+//import Material-UI icons
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+//import Material-UI lab
 import Alert from "@material-ui/lab/Alert";
+//import a dependency that keeps track of the prop types
+import PropTypes from "prop-types";
+//import components
+import FormButtons from "../FormButtons/FormButtons";
+//require in gravatar
 const useGravatar = require("gravatar");
-const SignInForm = (props) => {
+//initialize SignUpForm component that is handed down props
+const SignUpForm = (props) => {
+  //deconstruct variables from props
   const {
     handleInputChange,
     setPage,
@@ -25,6 +34,7 @@ const SignInForm = (props) => {
     error,
     formData,
   } = props;
+  //set state variable hooks
   const [values, setValues] = useState({
     confirmPassword: "",
     showConfirmPassword: false,
@@ -45,6 +55,7 @@ const SignInForm = (props) => {
     identicon:
       "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
   });
+  //this grabs new Gravatar url images to use as avatars
   const getGravatar = () => {
     let standard = useGravatar.url(formData.email, { s: "100" }, true);
     let retro = useGravatar.url(
@@ -81,26 +92,26 @@ const SignInForm = (props) => {
       identicon: identicon,
     });
   };
+  //this handles changes in the form
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
     getGravatar();
     handleInputChange(event);
   };
-
+  //this handles show/hide password  
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
+  //this handles confirmation of password
   const handleClickShowConfirmPassword = () => {
     setValues({
       ...values,
       showConfirmPassword: !values.showConfirmPassword,
     });
   };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  //this returns a sign up form the user can use to create an account on the app
   return (
+    // Material-UI component that serves as a wrapper component for most of the CSS utility needs.
     <Box
       boxShadow={2}
       p={2}
@@ -116,26 +127,29 @@ const SignInForm = (props) => {
     >
       <h2>Sign Up</h2>
       <form
-        // onSubmit={handleSubmit}
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
         }}
       >
+        {/*  Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
         {error && <Alert severity="error">{error}</Alert>}
         <div style={{ margin: "0px 5px" }}>
+          {/* Material-Ui component that serves as a convenience wrapper */}
           <TextField
             style={{ width: "100%" }}
             id="email-input"
             label="Email"
             type="email"
             name="email"
-            // autoComplete="current-password"
             onChange={handleInputChange}
           />
+          {/* Material-Ui component that provides context such as filled/focused/error/required for form inputs. */}
           <FormControl style={{ width: "100%" }}>
+            {/* Material-Ui component that provides a label for fields inside a form. */}
             <InputLabel htmlFor="password">Password</InputLabel>
+            {/* Material-Ui component that allows users to type in a field */}
             <Input
               id="password"
               type={values.showPassword ? "text" : "password"}
@@ -147,7 +161,6 @@ const SignInForm = (props) => {
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
                   >
                     {values.showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
@@ -168,7 +181,6 @@ const SignInForm = (props) => {
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowConfirmPassword}
-                    onMouseDown={handleMouseDownPassword}
                   >
                     {values.showConfirmPassword ? (
                       <Visibility />
@@ -216,7 +228,6 @@ const SignInForm = (props) => {
               defaultValue="image one"
               aria-label="profile-pic"
               name="profilePic"
-              // value={FormData.avatar}
               onChange={handleInputChange}
             >
               <FormControlLabel
@@ -272,8 +283,8 @@ const SignInForm = (props) => {
     </Box>
   );
 };
-
-SignInForm.propTypes = {
+//sets up prop types for the SignUpForm component
+SignUpForm.propTypes = {
   setPage: PropTypes.func,
   handleInputChange: PropTypes.func,
   loading: PropTypes.bool,
@@ -281,5 +292,5 @@ SignInForm.propTypes = {
   error: PropTypes.string,
   formData: PropTypes.object,
 };
-
-export default SignInForm;
+//exports SignUpForm component
+export default SignUpForm;
