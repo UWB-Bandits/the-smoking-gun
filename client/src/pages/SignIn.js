@@ -4,8 +4,14 @@ import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 import { useAuth } from "../contexts/AuthContext";
 import API from "../utils/API";
 import Logo from "../utils/images/logo.png";
-import {Grid, Box} from "@material-ui/core/";
+import {Grid, Box, Accordion, AccordionSummary, AccordionDetails, Typography, } from "@material-ui/core/";
 import LoginFooter from "../components/LoginFooter";
+import Screenshot from "../components/Screenshot";
+import Screenshots from "../utils/images/screenshots/screenshots";
+import BanditPhotos from "../components/BanditPhotos";
+import Bandits from "../utils/images/bandits/bandits";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { makeStyles } from "@material-ui/core/styles";
 
 // import { useHistory } from "react-router-dom";
 const SignIn = () => {
@@ -69,12 +75,24 @@ const SignIn = () => {
     }
   };
 
+  const classes = makeStyles((theme) => ({
+    accordion: {
+      width: "70%",
+      marginLeft: "10px",
+      marginRight: "10px",
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+  }));
+
 
 
   return (
     <Grid container style={{minHeight:"80vh"}}>
       <Grid item xs={12}>
-        <img style={{width: "100%", maxWidth:"300px",display:"block", marginTop:"10px", marginLeft:"auto", marginRight:"auto"}} src={Logo} alt="The Smoking Gun logo"></img>
+        <img style={{width: "100%", maxWidth:"300px", display:"block", marginTop:"10px", marginLeft:"auto", marginRight:"auto"}} src={Logo} alt="The Smoking Gun logo"></img>
       </Grid>
 
 
@@ -124,6 +142,29 @@ const SignIn = () => {
           />
         )}
       </Grid>
+      <h1 style={{marginLeft:"auto", marginRight:"auto"}}>Who are The Bandits?</h1>
+      <Grid style={{margin:"20px"}} spacing={2} container>
+        {Bandits.map(entry => <BanditPhotos key={entry.name} name={entry.name} image={entry.image} link={entry.link}/>)}
+      </Grid>
+      <Grid style={{margin:"20px"}} spacing={2} container>
+        <Accordion >
+          <AccordionSummary
+            className={classes.accordion}
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>How does it work?</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid style={{margin:"20px"}} spacing={2} container>
+              {Screenshots.map(entry => <Screenshot key={entry.title} title={entry.title} description={entry.description} image={entry.image} />)}
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      </Grid>
+
+      <div >. </div>
       <LoginFooter/>
     </Grid>
   );
