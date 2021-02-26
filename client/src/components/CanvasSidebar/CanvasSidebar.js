@@ -76,8 +76,8 @@ const CanvasSidebar = ({
           <MenuBookIcon /> Book
         </Link>
       </div>
-      <div className="link-book">
-        <Link to={`/doodleIndex/${bookId}`}>
+      <div className="link-book" onClick={clickAway}>
+        <Link to={`/books/${bookId}/doodlesIndex`}>
           <CreateIcon /> Doodles
         </Link>
       </div>
