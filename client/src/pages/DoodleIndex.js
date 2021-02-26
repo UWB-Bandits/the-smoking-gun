@@ -126,7 +126,11 @@ const DoodleIndex = () => {
         </Button>
       </div>
       {/* _______________________________Previous Doodles_____________________________ */}
-      <DoodleSlider deleteDoodle={deleteDoodle} doodles={doodles} />
+      <DoodleSlider
+        colorScheme={colorScheme}
+        deleteDoodle={deleteDoodle}
+        doodles={doodles}
+      />
     </div>
   );
 };
