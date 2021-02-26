@@ -17,14 +17,28 @@ export const AuthProvider = ({ children }) => {
   const signUp = (email, password) => {
     return fire.auth().createUserWithEmailAndPassword(email, password);
   };
+
   const logIn = (email, password) => {
     return fire.auth().signInWithEmailAndPassword(email, password);
   };
+
+  const passwordUpdate = (email) => {
+    return fire.auth().sendPasswordResetEmail(email)
+      .then(() => {
+        // Email sent
+        console.log("Email has been sent");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const getMongoID = (firebase_id) => {
     API.getUser(firebase_id).then((res) => {
       setMongoId(res.data._id);
     });
   };
+
   const logout = () => {
     fire.auth().signOut();
   };
@@ -53,6 +67,7 @@ export const AuthProvider = ({ children }) => {
     signUp,
     logIn,
     logout,
+    passwordUpdate,
     mongoID,
   };
   return (
