@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     color:"white"
   },
   phantom: {
-    height: "50px",
+    height: "100px",
     display: "block",
     width: "100%",
   },
@@ -25,7 +25,7 @@ export default function LoginFooter() {
   return (
     <div>
       <div className={classes.phantom} />
-      <div className={classes.root}>Designed By: The Bandits &#169; 2020</div>
+      <div className={classes.root}>Designed By: The Bandits &#169; 2021</div>
     </div>
   );
 }
