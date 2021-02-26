@@ -37,7 +37,7 @@ function App() {
 
   useEffect(() => {
     usePathname();
-    pathname.includes("/doodle/") === true
+    pathname.includes("/newDoodle") === true
       ? setDoodleRoute(true)
       : setDoodleRoute(false);
   }, []);
@@ -129,10 +129,10 @@ function App() {
                     <Route exact path="/books/:bookId/journal/:journalId">
                       <Journaling type="old" />
                     </Route>
-                    <Route exact path="/doodle/:bookId">
+                    <Route exact path="/books/:bookId/newDoodle">
                       <DoodlePage clickAway={clickAway} />
                     </Route>
-                    <Route exact path="/doodleIndex/:bookId">
+                    <Route exact path="/books/:bookId/doodlesIndex">
                       <DoodleIndex />
                     </Route>
                     <Route>

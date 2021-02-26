@@ -193,7 +193,10 @@ function IndexPage() {
             </span>
           </Typography>
         </Breadcrumbs>
-        <Accordion expanded={expanded === "panel1"} onChange={handleAccordionChange("panel1")}>
+        <Accordion
+          expanded={expanded === "panel1"}
+          onChange={handleAccordionChange("panel1")}
+        >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
@@ -250,7 +253,10 @@ function IndexPage() {
             </List>
           </AccordionDetails>
         </Accordion>
-        <Accordion expanded={expanded === "panel2"} onChange={handleAccordionChange("panel2")}>
+        <Accordion
+          expanded={expanded === "panel2"}
+          onChange={handleAccordionChange("panel2")}
+        >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
@@ -313,7 +319,10 @@ function IndexPage() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={expanded === "panel3"} onChange={handleAccordionChange("panel3")}>
+        <Accordion
+          expanded={expanded === "panel3"}
+          onChange={handleAccordionChange("panel3")}
+        >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
@@ -330,7 +339,7 @@ function IndexPage() {
               aria-label="mailbox folders"
             >
               <div style={{ width: "100%" }}>
-                <ListItemLink href={`/books/${bookId}/doodleIndex/${bookId}`}>
+                <ListItemLink href={`/books/${bookId}/doodlesIndex`}>
                   <ListItemAvatar>
                     <Avatar className={"list-icon"}>
                       <PlaylistAddCheckIcon />
@@ -344,7 +353,10 @@ function IndexPage() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={expanded === "panel4"} onChange={handleAccordionChange("panel4")}>
+        <Accordion
+          expanded={expanded === "panel4"}
+          onChange={handleAccordionChange("panel4")}
+        >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
@@ -374,7 +386,10 @@ function IndexPage() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={expanded === "panel5"} onChange={handleAccordionChange("panel5")}>
+        <Accordion
+          expanded={expanded === "panel5"}
+          onChange={handleAccordionChange("panel5")}
+        >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
