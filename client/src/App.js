@@ -48,7 +48,9 @@ function App() {
       if (isLoggedIn && user) {
         setFirebaseID(user.uid);
       }
-      return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+      return (
+        user ? setIsLoggedIn(true) : setIsLoggedIn(false), setFirebaseID(false)
+      );
     });
   }, [isLoggedIn]);
 
@@ -87,7 +89,7 @@ function App() {
       <AuthProvider>
         <div id="App">
           <Router>
-            {!mongoUser && !error ? (
+            {!mongoUser && !isLoggedIn && !error ? (
               <>
                 <Switch>
                   <Route exact path="/">
@@ -97,7 +99,7 @@ function App() {
               </>
             ) : (
               <div>
-                {doodleRoute && <HeadingNav />}
+                {!doodleRoute && <HeadingNav />}
                 <Container className={doodleRoute === true ? "no-spacing" : ""}>
                   <Switch>
                     <Route exact path={["/", "/dashboard"]}>
