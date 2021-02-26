@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 
-const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
+const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting, clickAway}) => {
   const [display, setDisplay] = useState("0");
   const [showSettings, setShowSettings] = useState("<- Hide");
   const [settingToChange, setSettingToChange] = useState("");
@@ -60,12 +60,12 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
   };
   return (
     <div id="canvasSidebar" style={{ left: display }}>
-      <div className="link-home">
+      <div className="link-home" onClick={clickAway}>
         <Link to="/dashboard">
           <HomeIcon /> Dashboard
         </Link>
       </div>
-      <div className="link-book">
+      <div className="link-book" onClick={clickAway}>
         <Link to={`/books/${id}`}>
           <MenuBookIcon /> Book
         </Link>
@@ -132,6 +132,7 @@ const CanvasSidebar = ({ makeImg, ACTIONS, dispatch, canvasSetting }) => {
 CanvasSidebar.propTypes = {
   changeSettings: PropTypes.func,
   makeImg: PropTypes.func,
+  clickAway: PropTypes.func,
   ACTIONS: PropTypes.object,
   dispatch: PropTypes.func,
   canvasSetting: PropTypes.object,

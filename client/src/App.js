@@ -55,6 +55,10 @@ function App() {
     });
   }, [isLoggedIn]);
 
+  const clickAway = () => {
+    setDoodleRoute(false);
+  };
+
   useEffect(() => {
     let unsubscribe;
 
@@ -127,7 +131,7 @@ function App() {
                       <Journaling type="old" />
                     </Route>
                     <Route exact path="/doodle/:id">
-                      <DoodlePage />
+                      <DoodlePage clickAway={clickAway}/>
                     </Route>
                     <Route exact path="/doodleIndex/:id">
                       <DoodleIndex />
