@@ -1,24 +1,33 @@
+//import react with useState method
 import React, { useState } from "react";
+//import Material-UI components
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import PropTypes from "prop-types";
-import FormButtons from "../FormButtons/FormButtons";
 import Box from "@material-ui/core/Box";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
+//import Material-UI icons
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+//import Material-UI lab
 import Alert from "@material-ui/lab/Alert";
+//import a dependency that keeps track of the prop types
+import PropTypes from "prop-types";
+//import components
+import FormButtons from "../FormButtons/FormButtons";
+//require in gravatar
 import Tooltip from "@material-ui/core/Tooltip";
 
 const useGravatar = require("gravatar");
-const SignInForm = (props) => {
+//initialize SignUpForm component that is handed down props
+const SignUpForm = (props) => {
+  //deconstruct variables from props
   const {
     handleInputChange,
     setPage,
@@ -29,6 +38,7 @@ const SignInForm = (props) => {
     formData,
     checkPassword,
   } = props;
+  //set state variable hooks
   const [values, setValues] = useState({
     confirmPassword: "",
     showConfirmPassword: false,
@@ -51,6 +61,7 @@ const SignInForm = (props) => {
     identicon:
       "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
   });
+  //this grabs new Gravatar url images to use as avatars
   const getGravatar = () => {
     let standard = useGravatar.url(formData.email, { s: "100" }, true);
     let retro = useGravatar.url(
@@ -93,10 +104,11 @@ const SignInForm = (props) => {
     getGravatar();
     handleInputChange(event);
   };
-
+  //this handles show/hide password  
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
+  //this handles confirmation of password
   const handleClickShowConfirmPassword = () => {
     setValues({
       ...values,
@@ -108,6 +120,7 @@ const SignInForm = (props) => {
   };
 
   return (
+    // Material-UI component that serves as a wrapper component for most of the CSS utility needs.
     <Box
       boxShadow={2}
       p={2}
@@ -131,6 +144,7 @@ const SignInForm = (props) => {
           marginTop: "3rem",
         }}
       >
+        {/*  Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
         {error && <Alert severity="error">{error}</Alert>}
 
         <div style={{ margin: "0px 5px" }}>
@@ -241,7 +255,6 @@ const SignInForm = (props) => {
               defaultValue="image one"
               aria-label="profile-pic"
               name="profilePic"
-              // value={FormData.avatar}
               onChange={handleInputChange}
             >
               <FormControlLabel
@@ -294,8 +307,8 @@ const SignInForm = (props) => {
     </Box>
   );
 };
-
-SignInForm.propTypes = {
+//sets up prop types for the SignUpForm component
+SignUpForm.propTypes = {
   setPage: PropTypes.func,
   handleInputChange: PropTypes.func,
   loading: PropTypes.bool,
@@ -305,5 +318,5 @@ SignInForm.propTypes = {
   checkEmail: PropTypes.func,
   checkPassword: PropTypes.func,
 };
-
-export default SignInForm;
+//exports SignUpForm component
+export default SignUpForm;

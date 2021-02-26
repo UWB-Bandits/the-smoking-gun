@@ -1,27 +1,31 @@
+//import react and react hooks
 import React, { useContext, useState, useEffect } from "react";
+//import api routes
 import API from "../utils/API";
+//import firebase
 import fire from "../utils/firebase";
-
+//create context
 const AuthContext = React.createContext();
-
+//export context
 export const useAuth = () => {
   return useContext(AuthContext);
 };
-
+// initialize and export AuthProvider
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
+  //set state hooks
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [mongoID, setMongoId] = useState();
-
+  //this creates user on firebase
   const signUp = (email, password) => {
     return fire.auth().createUserWithEmailAndPassword(email, password);
   };
-
+  //this logsIn the user on firebase
   const logIn = (email, password) => {
     return fire.auth().signInWithEmailAndPassword(email, password);
   };
-
+  
   const passwordUpdate = (email) => {
     return fire.auth().sendPasswordResetEmail(email)
       .then(() => {
@@ -32,17 +36,17 @@ export const AuthProvider = ({ children }) => {
         console.log(err);
       });
   };
-
+  //this grabs the user id from the database and sets the mongoId state to that value
   const getMongoID = (firebase_id) => {
     API.getUser(firebase_id).then((res) => {
       setMongoId(res.data._id);
     });
   };
-
+  //logs the user out of firebase
   const logout = () => {
     fire.auth().signOut();
   };
-
+  //this side effect unsubscribes the user from firebase
   useEffect(() => {
     const unsubscribe = fire.auth().onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -51,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     });
     return unsubscribe;
   }, []);
-
+  //this side effect grabs the user id from the data base
   useEffect(() => {
     let unsubscribe;
     if (currentUser && !loading) {
@@ -61,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     }
     return unsubscribe;
   }, [currentUser]);
-
+  //this is what sends through the Provider
   const value = {
     currentUser,
     signUp,
@@ -70,11 +74,10 @@ export const AuthProvider = ({ children }) => {
     passwordUpdate,
     mongoID,
   };
+  //this returns the different variables and functions when the Provider is used.
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}
     </AuthContext.Provider>
   );
 };
-
-//default AuthContext

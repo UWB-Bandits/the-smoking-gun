@@ -1,24 +1,19 @@
+//import react and the useState method
 import React, { useState } from "react";
+//import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
+//import this components css file
 import "./canvas-colors.css";
-
-const CanvasControls = ({ handleUpdate }) => {
-  //   let data = [];
-  // const [message, setMessage] = useState("");
-  // const [data, setData] = useState([]);
-  // const [loading, setLoading] = useState(true);
+//initialize CanvasColors component which takes in an object
+const CanvasColors = ({ handleUpdate }) => {
+  //initialize state hooks
   const [customColor, setCustomColor] = useState("#e7f4a8");
-
-  // useEffect(() => {
-
-  //   setLoading(false);
-  // }, [loading]);
-
+  //this function handles the color change and sets customColor state
   const handleColorChange = (e) => {
     setCustomColor(e.target.value);
     handleUpdate(e);
   };
-
+  //this returns a menu component that allows users to select a color on the doodle page
   return (
     <div
       style={{
@@ -30,6 +25,7 @@ const CanvasControls = ({ handleUpdate }) => {
     >
       <h4>Change Pen Color</h4>
       <div>
+        {/* Blue Color */}
         <button
           className="colorOption"
           style={{
@@ -40,6 +36,7 @@ const CanvasControls = ({ handleUpdate }) => {
         ></button>
       </div>
       <div>
+        {/* Red Color */}
         <button
           className="colorOption"
           style={{
@@ -50,6 +47,7 @@ const CanvasControls = ({ handleUpdate }) => {
         ></button>
       </div>
       <div>
+        {/* Green Color */}
         <button
           className="colorOption"
           style={{
@@ -66,6 +64,7 @@ const CanvasControls = ({ handleUpdate }) => {
           marginTop: "15px",
         }}
       >
+        {/* Custom Color */}
         <input
           style={{
             padding: "0",
@@ -94,10 +93,11 @@ const CanvasControls = ({ handleUpdate }) => {
     </div>
   );
 };
-CanvasControls.propTypes = {
+//sets up prop types for the CanvasColors component
+CanvasColors.propTypes = {
   handleUpdate: PropTypes.func,
   settingToChange: PropTypes.string,
   ACTIONS: PropTypes.object,
 };
-
-export default CanvasControls;
+//exports CanvasColors component
+export default CanvasColors;
