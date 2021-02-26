@@ -180,6 +180,7 @@ export default function Calendar(props) {
     if(currentEvents){
       return (
         <div>
+            {/* This will open a drawer on the left with info on how to use the calendar and events */}
             <TemporaryDrawer renderInfoDrawerEvent={renderInfoDrawerEvent}  weekends={weekendsVisible} toggle={handleWeekendsToggle} currentEvents={currentEvents}/>
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -208,6 +209,7 @@ export default function Calendar(props) {
               eventChange={addEvent}
               eventRemove={addEvent}
             />
+            {/* Material-UI's Grid component sets up a responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts. */}
             <Grid container justify="center" >
               <PromptModal 
                 prompt="Please enter a new title for your event"
