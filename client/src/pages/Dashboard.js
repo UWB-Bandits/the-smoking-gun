@@ -16,7 +16,9 @@ function Dashboard() {
   const [user, setUser] = useState({});
   const [usersBooks, setUsersBooks] = useState([]);
   const { currentUser } = useAuth();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [weatherLoaded, setWeatherLoaded] = useState(false);
+  const [wordLoaded, setWordLoaded] = useState(false);
+  const [newsLoaded, setNewsLoaded] = useState(false);
   const [weather, setWeather] = useState({});
   const [news, setNews] = useState([]);
   const [randomWord, setRandomWord] = useState({});
@@ -97,10 +99,9 @@ function Dashboard() {
       API.postWeather({Latitude: crd.latitude,Longitude: crd.longitude})
         .then(res => {
           setWeather(res.data);
-          setIsLoaded(true);
+          setWeatherLoaded(true);
         })
         .catch(err => {
-          setIsLoaded(true);
           console.log(err);
         });
     }
@@ -136,9 +137,11 @@ function Dashboard() {
       .then(res => {
         let topNews = res.data.slice(0, 10);
         setNews(topNews);
+        setNewsLoaded(true);
       })
       .catch(err => {
         console.log(err);
+        setNewsLoaded(true);
       });
   };
 
@@ -146,6 +149,7 @@ function Dashboard() {
     DashboardAPI.searchWord()
       .then(res => {
         setRandomWord(res.data);
+        setWordLoaded(true);
       })
       .catch((err) => {
         console.log(err);
@@ -157,15 +161,15 @@ function Dashboard() {
       <Box>
         <Jumbotron userName={user.firstName} />
         <Grid container justify="center">
-          {isLoaded ?
+          {weatherLoaded ?
             <WeatherWidget weather={weather} />
              : <div>Loading Weather...<CircularProgress /></div> 
           }
-          {isLoaded ?
+          {wordLoaded ?
             <RandomWordWidget randomWord={randomWord} />
              : <div>Loading Word...<CircularProgress /></div> 
           }
-          {isLoaded ? 
+          {newsLoaded ? 
             <NewsWidget news={[...news]} />
              : <div>Loading Top Stories...<CircularProgress /></div> 
           }
