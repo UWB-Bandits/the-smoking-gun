@@ -1,7 +1,5 @@
 //import react and react hooks
 import React, { useContext, useState, useEffect } from "react";
-//import a dependency that keeps track of the prop types
-import PropTypes from "prop-types";
 //import api routes
 import API from "../utils/API";
 //import firebase
@@ -13,10 +11,8 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 // initialize and export AuthProvider
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
-  AuthProvider.propTypes = {
-    children: PropTypes.object
-  };
   //set state hooks
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
