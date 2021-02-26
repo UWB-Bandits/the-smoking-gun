@@ -1,10 +1,9 @@
 /* Doodle Slider CSS */
 /* image */
 .doodleItem img {
-  min-width: 150px;
-  width: 80%;
-  max-width: 300px;
-  min-height: 150px;
+  width: 300px;
+  height: 300px;
+  background-color: #f3f3f3;
 }
 /* Slider  */
 .horizontalSlider {
@@ -50,7 +49,6 @@ button.deleteDoodle > * {
   pointer-events: none;
 }
 /* Media Query's */
-
 @media only screen and (max-width: 1073px) {
   .sliderContainer {
     justify-content: flex-start;
@@ -64,7 +62,6 @@ button.deleteDoodle > * {
   .doodleItem {
     margin: 1rem auto;
     box-shadow: 2px 3px 7px #4e4e4e67;
-    /* min-width: 40%; */
   }
 }
 

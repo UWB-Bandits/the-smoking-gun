@@ -10,6 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import API from "../utils/API";
 import DoodleSlider from "../components/DoodleSlider/DoodleSlider";
 import { useAuth } from "../contexts/AuthContext";
+import TitleItem from "../components/TitleItem";
+import { Button } from "@material-ui/core";
 
 const classes = makeStyles((theme) => ({
   root: {
@@ -40,11 +42,13 @@ const DoodleIndex = () => {
   const { currentUser } = useAuth();
   const [doodles, setDoodles] = useState([]);
   const [bookTitle, setBookTitle] = useState([]);
+  const [colorScheme, setColorScheme] = useState("");
   const { bookId } = useParams();
 
   useEffect(() => {
     API.getBook(bookId, currentUser.uid).then((res) => {
-      console.log(res.data);
+      console.log(res.data.colorScheme);
+      setColorScheme(res.data.colorScheme);
       setBookTitle(res.data.title);
     });
     loadDoodles();
@@ -69,7 +73,11 @@ const DoodleIndex = () => {
   };
 
   return (
-    <div>
+    <div
+      className={colorScheme}
+      style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
+    >
+      <TitleItem title="View or Make doodles" />
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/dashboard" className={classes.link}>
           <HomeIcon
@@ -102,12 +110,22 @@ const DoodleIndex = () => {
         </Typography>
       </Breadcrumbs>
       <div style={{ margin: "2rem 0", textAlign: "center" }}>
-        <h2>
-          <Link href={`/books/${bookId}/newDoodle`}>Make a New Doodle?</Link>
-        </h2>
+        <Button className={`${colorScheme} styled-button`}>
+          {/* <h2> */}
+          <Link
+            style={{
+              color: "white",
+              textDecoration: "none",
+              fontSize: "1.3rem",
+            }}
+            href={`/books/${bookId}/newDoodle`}
+          >
+            Make a New Doodle?
+          </Link>
+          {/* </h2> */}
+        </Button>
       </div>
       {/* _______________________________Previous Doodles_____________________________ */}
-
       <DoodleSlider deleteDoodle={deleteDoodle} doodles={doodles} />
     </div>
   );
