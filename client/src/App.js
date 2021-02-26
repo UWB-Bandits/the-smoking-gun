@@ -32,7 +32,6 @@ function App() {
   const usePathname = () => {
     const location = window.location.pathname;
     setPathname(location);
-    console.log(pathname);
     return location;
   };
 
@@ -49,9 +48,7 @@ function App() {
       if (isLoggedIn && user) {
         setFirebaseID(user.uid);
       }
-      return user
-        ? setIsLoggedIn(true)
-        : (setIsLoggedIn(false), setFirebaseID(false));
+      return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
     });
   }, [isLoggedIn]);
 
@@ -96,7 +93,7 @@ function App() {
               </>
             ) : (
               <div>
-                {!doodleRoute && <HeadingNav />}
+                {doodleRoute && <HeadingNav />}
                 <Container className={doodleRoute === true ? "no-spacing" : ""}>
                   <Switch>
                     <Route exact path={["/", "/dashboard"]}>
@@ -126,10 +123,10 @@ function App() {
                     <Route exact path="/books/:bookId/journal/:journalId">
                       <Journaling type="old" />
                     </Route>
-                    <Route exact path="/doodle/:id">
+                    <Route exact path="/doodle/:bookId">
                       <DoodlePage />
                     </Route>
-                    <Route exact path="/doodleIndex/:id">
+                    <Route exact path="/doodleIndex/:bookId">
                       <DoodleIndex />
                     </Route>
                     <Route>
