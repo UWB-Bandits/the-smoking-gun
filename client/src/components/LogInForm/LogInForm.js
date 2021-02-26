@@ -35,10 +35,6 @@ const LogInForm = (props) => {
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
-  //this keeps track of mouse down clicks 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
   //this returns aform that allows users to login
   return (
     //Material-UI component that serves as a wrapper component for most of the CSS utility needs.
@@ -95,7 +91,6 @@ const LogInForm = (props) => {
                 <IconButton
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
                 >
                   {values.showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
