@@ -6,14 +6,14 @@ import { useParams } from "react-router-dom";
 
 const SaveImageModal = ({ setImgUrl, imgURl }) => {
   const [imgTitle, setImgTitle] = useState("Doodle");
-  const { id } = useParams();
+  const { bookId } = useParams();
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setImgTitle(value);
   };
   const saveImg = () => {
-    API.createDoodle({ title: imgTitle, url: imgURl, book: id })
+    API.createDoodle({ title: imgTitle, url: imgURl, book: bookId })
       .then(() => {
         setImgUrl();
       })
