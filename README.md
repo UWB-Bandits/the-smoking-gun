@@ -6,6 +6,8 @@
 
 The Smoking Gun Bullet Journals shot up what normally is a stationary activity and brought bullet journaling to the web. This app is a task manager, sketchbook, journal, idea catcher, and much more!
 
+- [View the Live Page](https://the-smoking-gun.herokuapp.com/)
+
 ![Homepage](./client/demo/homepage.png)
 
 ![Dashboard](./client/demo/dashboard.png)
