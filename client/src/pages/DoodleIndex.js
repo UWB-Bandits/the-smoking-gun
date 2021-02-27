@@ -1,18 +1,27 @@
+//import react and react hooks
 import React, { useEffect, useState } from "react";
+//import Material UI components
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import { useParams } from "react-router-dom";
 import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
+//import Material UI icons
 import HomeIcon from "@material-ui/icons/Home";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+//import Material UI function
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+//import useParams to grab URL parameters
+import { useParams } from "react-router-dom";
+//import routes
 import API from "../utils/API";
+//import components
 import DoodleSlider from "../components/DoodleSlider/DoodleSlider";
+//import context
 import { useAuth } from "../contexts/AuthContext";
 import TitleItem from "../components/TitleItem";
 import { Button } from "@material-ui/core";
 
+//initialize the classes variable with our makeStyles hook
 const classes = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -37,14 +46,17 @@ const classes = makeStyles((theme) => ({
     height: 20,
   },
 }));
-
+//initialize DoodleIndex page
 const DoodleIndex = () => {
+  //grab current user info from context
   const { currentUser } = useAuth();
+  //set state hooks
   const [doodles, setDoodles] = useState([]);
   const [bookTitle, setBookTitle] = useState([]);
   const [colorScheme, setColorScheme] = useState("");
+  //grab the bookId from the URL
   const { bookId } = useParams();
-
+  //this hook runs side effects and runs the functions setting bookTitle state and loadDoodles function
   useEffect(() => {
     API.getBook(bookId, currentUser.uid).then((res) => {
       console.log(res.data.colorScheme);
@@ -53,7 +65,7 @@ const DoodleIndex = () => {
     });
     loadDoodles();
   }, []);
-
+  //this deletes the doodle of the event target from the database
   const deleteDoodle = (e) => {
     const doodle_id = e.target.id;
     API.deleteDoodle(doodle_id)
@@ -62,6 +74,7 @@ const DoodleIndex = () => {
       })
       .catch((err) => console.log(err));
   };
+  //this loads the doodles that are stored in the current book
   const loadDoodles = () => {
     API.getDoodles(bookId)
       .then((res) => {
@@ -71,15 +84,18 @@ const DoodleIndex = () => {
       })
       .catch((err) => console.log(err));
   };
-
+  //this returns a doodle index page that displays a history of doodles to view or delete
   return (
     <div
       className={colorScheme}
       style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
     >
       <TitleItem title="View or Make doodles" />
+      {/* Material-UI Breadcrumb component allow users to make selections from a range of values. */}
       <Breadcrumbs aria-label="breadcrumb">
+        {/* Material-UI Link component allows you to easily customize anchor elements with your theme colors and typography styles. */}
         <Link color="inherit" href="/dashboard" className={classes.link}>
+          {/*  Material-UI Icon Component  */}
           <HomeIcon
             style={{ verticalAlign: "middle" }}
             className={classes.icon}
@@ -99,6 +115,7 @@ const DoodleIndex = () => {
             {bookTitle}
           </span>
         </Link>
+        {/* Material-UI Typography component is used to present your design and content as clearly and efficiently as possible. */}
         <Typography color="textPrimary" className={classes.link}>
           <DateRangeIcon
             style={{ verticalAlign: "middle" }}
@@ -134,5 +151,5 @@ const DoodleIndex = () => {
     </div>
   );
 };
-
+//exports DoodleIndex page
 export default DoodleIndex;

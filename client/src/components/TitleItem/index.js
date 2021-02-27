@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 export default function TitleItem(props) {
   //initialize the classes variable with our useStyles hook
   const classes = useStyles();
-  //this returns a card with the title and discription of the book
+  //this returns a card with the title and description of the book
   return (
     // Material-UI's Card component contain content and actions about a single subject 
     <Card className={`${classes.root} background`} variant="outlined">

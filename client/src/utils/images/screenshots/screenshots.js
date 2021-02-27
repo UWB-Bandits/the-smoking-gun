@@ -1,3 +1,4 @@
+//imports all of the screenshot photos
 import dashboard from "./dashboard.png";
 import index from "./index.png";
 import lists from "./lists.png";
@@ -6,6 +7,7 @@ import habits from "./habits.png";
 import doodles from "./doodles.png";
 import journals from "./journals.png";
 
+//This file creates an array of screenshots/page descriptions for each page. This allows the Screenshot compnent to iterate over these, rather than needing to pass each as individual props
 
 const screenshots = [
     {
