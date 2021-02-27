@@ -1,9 +1,21 @@
+//import react and react hooks
 import React, { useState } from "react";
+//import components
 import LoginForm from "../components/LogInForm/LogInForm.js";
+import LoginFooter from "../components/LoginFooter";
+import BanditPhotos from "../components/BanditPhotos";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
+import Screenshot from "../components/Screenshot";
+//import context
 import { useAuth } from "../contexts/AuthContext";
+//import route
 import API from "../utils/API";
+//import images
 import Logo from "../utils/images/logo.png";
+import Screenshots from "../utils/images/screenshots/screenshots";
+import Bandits from "../utils/images/bandits/bandits";
+
+//import Material UI components
 import {
   Grid,
   Box,
@@ -12,15 +24,13 @@ import {
   AccordionDetails,
   Typography,
 } from "@material-ui/core/";
-import LoginFooter from "../components/LoginFooter";
-import Screenshot from "../components/Screenshot";
-import Screenshots from "../utils/images/screenshots/screenshots";
-import BanditPhotos from "../components/BanditPhotos";
-import Bandits from "../utils/images/bandits/bandits";
+//import Material UI icons
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+//import Material UI hook
 import { makeStyles } from "@material-ui/core/styles";
-
+//initialize SignIn page
 const SignIn = () => {
+  //set state hooks
   const [formDisplay, setFormDisplay] = useState("Log In");
   const [formData, setFormData] = useState({
     email: "",
@@ -64,17 +74,18 @@ const SignIn = () => {
       }
     }
   };
+  //confirms that passwords match on signup
   const passwordsMatch = (name, value) => {
     if (name === "confirmPassword") {
       const password = formData.password;
       const check = password === value ? true : false;
-      check === true ? setError("") : setError("password don't match");
+      check === true ? setError("") : setError("Passwords don't match");
       return check;
     }
   };
-
+  //grab the signup/login info from context
   const { signUp, logIn } = useAuth();
-
+  //updates state as user updates form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -84,7 +95,7 @@ const SignIn = () => {
     setFormData({ ...formData, [name]: value });
     passwordsMatch(name, value);
   };
-
+  //evaluates wheter to show login or signup pages
   const setPage = (e) => {
     e.preventDefault();
     setError("");
@@ -93,20 +104,24 @@ const SignIn = () => {
     setFormDisplay(value);
     setFormData({});
   };
-
+  //on submit, logs in or signs up user (dependent on form being used)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formDisplay === "Log In" && !error) {
       try {
+        //tries to login
         await logIn(formData.email.trim(), formData.password);
       } catch {
+        //presents error if cannot login
         setError("Incorrect email or password");
       }
     } else if (formDisplay === "Sign Up" && !error) {
       if (
+        //confirms password rules
         passwordsMatch("confirmPassword", formData.confirmPassword) &&
         checkPassword(null, formData.password)
       ) {
+        //signs up user and stores info in database and firebase
         signUp(formData.email, formData.password)
           .then((res) => {
             setLoading(true);
@@ -127,7 +142,7 @@ const SignIn = () => {
       }
     }
   };
-
+  //initialize the classes variable with our makeStyles hook
   const classes = makeStyles((theme) => ({
     accordion: {
       width: "70%",
@@ -139,9 +154,10 @@ const SignIn = () => {
       fontWeight: theme.typography.fontWeightRegular,
     },
   }));
-
+  //this returns the landing page where a user can login, sign up, or learn about the app
   return (
     <Grid container style={{ minHeight: "80vh" }}>
+      {/* The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts. */}
       <Grid item xs={12}>
         <img
           style={{
@@ -158,6 +174,7 @@ const SignIn = () => {
       </Grid>
 
       <Grid item xs={12} md={6}>
+        {/* Material-UI Box component serves as a wrapper component for most of the CSS utility needs. */}
         <Box
           boxShadow={2}
           p={2}
@@ -189,7 +206,9 @@ const SignIn = () => {
         style={{ marginTop: "10px" }}
       >
         {formDisplay === "Log In" ? (
+          //Evaluates if needed to show login or sign up forms
           <div>
+            {/* custom form element allowing the user to log in */}
             <LoginForm
               handleInputChange={handleInputChange}
               setPage={setPage}
@@ -200,6 +219,7 @@ const SignIn = () => {
             />
           </div>
         ) : (
+          /* custom form element allowing the user to sign up */
           <SignUpForm
             handleInputChange={handleInputChange}
             setPage={setPage}
@@ -217,6 +237,7 @@ const SignIn = () => {
       </h1>
       <Grid style={{ margin: "20px" }} spacing={2} container>
         {Bandits.map((entry) => (
+          //maps over the bandits and all of their info to display on the page
           <BanditPhotos
             key={entry.name}
             name={entry.name}
@@ -226,7 +247,9 @@ const SignIn = () => {
         ))}
       </Grid>
       <Grid style={{ margin: "20px" }} spacing={2} container>
+        {/* Material UI Accordion component contain creation flows and allow lightweight editing of an element. */}
         <Accordion>
+          {/* Material UI AccordionSummary is a wrapper that act as a header/description of and Accordion component  */}
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
@@ -237,9 +260,11 @@ const SignIn = () => {
               How does it work?
             </Typography>
           </AccordionSummary>
+          {/* Material UI AccordionDetails is what is expanded when an Accordion component is clicked */}
           <AccordionDetails>
             <Grid style={{ margin: "20px" }} spacing={2} container>
               {Screenshots.map((entry) => (
+                //maps over the screenshots/descriptions of each page of the application to display
                 <Screenshot
                   key={entry.title}
                   title={entry.title}
@@ -251,8 +276,9 @@ const SignIn = () => {
           </AccordionDetails>
         </Accordion>
       </Grid>
-
+      {/*This div pushes the footer element so it does not overlap other content*/}
       <div>. </div>
+      {/* Custom footer element without navigation for the landing page */}
       <LoginFooter />
     </Grid>
   );

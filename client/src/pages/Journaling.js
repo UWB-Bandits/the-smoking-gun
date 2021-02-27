@@ -1,53 +1,64 @@
+//import react and react hooks
 import React, { useState, useEffect } from "react";
+//import Material UI components
 import {
   Box,
   Snackbar,
-  IconButton
+  IconButton,
+  Typography,
+  Breadcrumbs,
+  Link
 } from "@material-ui/core";
+//import components
 import TitleItem from "../components/TitleItem";
+import EntryForm from "../components/EntryForm";
+//import Material UI hook
 import { makeStyles } from "@material-ui/core/styles";
+//import useParams to grab URL parameters
 import { useParams } from "react-router-dom";
+//import route
 import API from "../utils/API";
-import Typography from "@material-ui/core/Typography";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
+//import Material UI icons
 import HomeIcon from "@material-ui/icons/Home";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
-import PropTypes from "prop-types";
-import EntryForm from "../components/EntryForm";
 import CloseIcon from "@material-ui/icons/Close";
+//import a dependency that keeps track of the prop types
+import PropTypes from "prop-types";
+//import context
 import { useAuth } from "../contexts/AuthContext";
 
 function Journaling(props) {
+  //set state hooks
   const [formData, setFormData] = useState({ title: "", body: "" });
   const [entry, setEntry] = useState({});
   const [book, setBook] = useState({});
   const [open, setOpen] = React.useState(false);
   const { currentUser } = useAuth();
-
+  //grab the bookId and journalID from the URL
   const {bookId, journalId} = useParams();
-  
+  //sets up prop types for the Journaling component
   Journaling.propTypes = {
     type: PropTypes.string,
   };
-
+  //closes the snackbar if the user clicks away
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
-
+  //determines if loading an old entry or starting a new one
   useEffect(() => {
     if (props.type === "old") {
+      //if loading old entry, loads entry info
       loadEntry();
     } else {
+      //if starting new entry, loads book info
       loadBook();
     }
   },[]);
-
+  //gets entry info from database and updates state
   const loadEntry = () =>{
     API.getEntry(journalId)
     .then(res => {
@@ -58,13 +69,13 @@ function Journaling(props) {
     })
     .catch(err => console.log(err));
   };
-
+  //gets book data from database and updates state
   const loadBook = () => {
     API.getBook(bookId, currentUser.uid)
     .then(res => setBook(res.data))
     .catch(err => console.log(err));
   };
-
+  //updates state when user fills out the form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (props.type === "new") {
@@ -73,42 +84,49 @@ function Journaling(props) {
       setFormData({title: entry.title, body: value});
     }
   };
-
+  //saves entry to the database when the user hits save
   const onSave = () => {
     if (props.type === "new") {
+      //if new entry, saves the new entry to the database
       API.saveEntry({
         title: formData.title,
         body: formData.body,
         book: bookId
       })
       .then(res => {
+        //pushes the new entry to the book and updates the book document in the database
         let bookEntries = book.entries;
         bookEntries.push(res.data._id);
         API.updateBook(book._id, {...book, entries: bookEntries})
+        //opens snackbar to indicate entry was saved
         .then(setOpen(true))
         .catch(err => console.log(err));
+        //directs to the page for the new book entry, and treats the entry as "old" now
         window.location.href = "/books/" + bookId + "/journal/" + res.data._id;
       })
       .catch(err => console.log(err));      
     } else {
+      //if old entry, updates the old document in the database
       API.updateEntry(entry._id, {
         ...entry,
         body: formData.body,
       })
+      //opens snackbar to indicate entry was saved
       .then(setOpen(true))
       .catch(err => console.log(err));
     }
   };
-
+  //deletes the entry from the database
   const onDelete = () => {
     API.deleteEntry(entry._id)
     .then(res => {
       console.log(res);
+      //directs to the book index
       window.location.href = "/books/" + book._id;
     })
     .catch(err => console.log(err));
   };
-
+  //initialize the classes variable with our makeStyles hook
   const classes = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -133,13 +151,18 @@ function Journaling(props) {
       height: 20,
     },
   }));
-
+  //this returns a journal entry page that a user create new journal entries, or update old ones
   return (
     <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+      {/* Material-UI Box component serves as a wrapper component for most of the CSS utility needs. */}
       <Box>
+        {/* custom component that displays a title nicely */}
         <TitleItem title={props.type==="old" ? entry.title : "New Journal Entry"} />
+        {/* Material-UI Breadcrumb component allow users to make selections from a range of values. */}
         <Breadcrumbs aria-label="breadcrumb">
+          {/* Material-UI Link component allows you to easily customize anchor elements with your theme colors and typography styles. */}
           <Link color="inherit" href="/dashboard" className={classes.link}>
+            {/* Material-UI Icon Component */}
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
           </Link>
@@ -151,13 +174,16 @@ function Journaling(props) {
             <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
             <span style={{fontSize: "12px", marginLeft: "2px"}}>{book.title}</span>
           </Link>
+          {/* Material-UI Typography component is used to present your design and content as clearly and efficiently as possible. */}
           <Typography color="textPrimary" className={classes.link}>
             <PlaylistAddCheckIcon style={{verticalAlign: "middle"}} className={classes.icon} />
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>{props.type==="old" ? entry.title : "New Entry"}</span>
           </Typography>
         </Breadcrumbs>
+        {/* Custom component which sets up the layout of the journal entry form */}
         <EntryForm  type={props.type} onSave={onSave} onDelete={onDelete} formData={formData} handleInputChange={handleInputChange} {...entry}/>
       </Box>
+      {/* Material-UI Snackbar component displays a message to users on set events */}
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",
