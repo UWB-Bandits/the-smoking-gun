@@ -1,5 +1,6 @@
+//import react
 import React from "react";
-
+//creates page which displays when the path is not found
 function NoMatch() {
   return (
     <div >
@@ -12,5 +13,5 @@ function NoMatch() {
     </div>
   );
 }
-
+//exports the no match page
 export default NoMatch;
