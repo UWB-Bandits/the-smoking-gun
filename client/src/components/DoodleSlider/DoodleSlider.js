@@ -10,8 +10,8 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 //import Material Ui components
 import { Button } from "@material-ui/core";
 //initialize DoodleSlider component, takes in doodles array and deleteDoodle function
-const DoodleSlider = ({ doodles, deleteDoodle }) => {
-  //this returns a slider full of doodles 
+const DoodleSlider = ({ doodles, deleteDoodle, colorScheme }) => {
+  //this returns a slider full of doodles
   return (
     <div className="horizontalSlider">
       {doodles !== [] && (
@@ -22,17 +22,27 @@ const DoodleSlider = ({ doodles, deleteDoodle }) => {
               <img src={item.url} alt={`Doodle for ${item.title}`} />
               <div className="iconContainer">
                 <a href={item.url} download={item.title}>
-                  {/* Material Ui Icon component */}
-                  <GetAppIcon fontSize="large" color="primary" />
+                  <Button
+                    className={`doodle-icon-btn ${colorScheme} styled-button`}
+                  >
+                    {/* Material Ui Icon component */}
+                    <GetAppIcon fontSize="large" style={{ color: "white" }} />
+                  </Button>
                 </a>
+
                 {/* Material-Ui component that allow users to take actions, and make choices, with a single tap.*/}
                 <Button
-                  className="deleteDoodle"
+                  className={"deleteDoodle doodle-icon-btn"}
+                  style={{ backgroundColor: "darkgray" }}
                   id={item._id}
                   onClick={deleteDoodle}
-                > 
+                >
                   {/* Material Ui Icon component */}
-                  <DeleteIcon fontSize="large" color="error" />
+                  <DeleteIcon
+                    fontSize="large"
+                    color="secondary"
+                    // style={{ color: "white" }}
+                  />
                 </Button>
               </div>
             </div>
@@ -46,6 +56,7 @@ const DoodleSlider = ({ doodles, deleteDoodle }) => {
 DoodleSlider.propTypes = {
   doodles: PropTypes.array,
   deleteDoodle: PropTypes.func,
+  colorScheme: PropTypes.string,
 };
 //exports DoodleSlider component
 export default DoodleSlider;
