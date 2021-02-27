@@ -14,7 +14,7 @@ export default function HabitDoughnut(props) {
     let date = new Date();
     //the sets the date to how many days is set
     date.setDate(date.getDate() - days);
-    //intialize a new variable to store a parsed date
+    //initialize a new variable to store a parsed date
     let parsedDate = date;
     //initialize a variable and assign a filtered tracking day array to find completed days
     let completed = tracking.filter(entry => {
@@ -23,7 +23,7 @@ export default function HabitDoughnut(props) {
             return entry;
         }
         });
-    //initialize a variable to the amount of incompleted days
+    //initialize a variable to the amount of uncompleted days
     let incomplete = days-completed.length;
     //initialize a variable object that stores the data that is passed into the doughnut chart
     const data = {
@@ -49,7 +49,7 @@ export default function HabitDoughnut(props) {
         date: PropTypes.string,
         days: PropTypes.number,
     };
-    //this returns a Dougnut chart representing the habit complete and incomplete days
+    //this returns a Doughnut chart representing the habit complete and incomplete days
     return (
         <Grid style={{marginBottom:"20px"}} item xs={12} md={6}>
             <Doughnut 

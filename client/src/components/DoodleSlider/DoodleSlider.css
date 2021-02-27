@@ -1,10 +1,9 @@
 /* Doodle Slider CSS */
 /* image */
 .doodleItem img {
-  min-width: 150px;
-  width: 80%;
-  max-width: 300px;
-  min-height: 150px;
+  width: 300px;
+  height: 300px;
+  background-color: #f3f3f3;
 }
 /* Slider  */
 .horizontalSlider {
@@ -17,6 +16,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  margin-bottom: 3rem;
 }
 /* item */
 .doodleItem {
@@ -32,6 +32,7 @@
   background-color: rgb(221 221 221);
   padding-left: 5px;
   padding-right: 5px;
+  box-sizing: border-box;
 }
 /* icon */
 .iconContainer {
@@ -49,17 +50,22 @@ button.deleteDoodle > * {
   pointer-events: none;
 }
 /* Media Query's */
-@media only screen and (max-width: 729px) {
+@media only screen and (max-width: 1073px) {
+  .sliderContainer {
+    justify-content: flex-start;
+  }
+  .doodleItem {
+    min-width: 40%;
+    margin: 1rem 5%;
+  }
+}
+@media only screen and (max-width: 830px) {
   .doodleItem {
     margin: 1rem auto;
     box-shadow: 2px 3px 7px #4e4e4e67;
   }
 }
-@media only screen and (max-width: 729px) {
-  .doodleItem {
-    min-width: 40%;
-  }
-}
+
 @media only screen and (max-width: 600px) {
   .horizontalSlider {
     display: block;
@@ -78,6 +84,9 @@ button.deleteDoodle > * {
     padding: 10px 0;
     width: 100%;
     margin: 0;
+  }
+  button.doodle-icon-btn {
+    padding: 5px 0px;
   }
   .doodleItem {
     display: inline-block;
