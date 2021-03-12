@@ -23,7 +23,7 @@ const screenshots = [
     {
         image: lists,
         title: "Lists",
-        description: "This is your dashboard. Here you can see all of your current journals, or start a new one. Your dashboard also has buttons to view the current weather in your location, the word of the day, and today's top news stories.",
+        description: "Keep track of any running lists you have. You have the ability to cross off or delete any list items as needed.",
     },
     {
         image: calendars,

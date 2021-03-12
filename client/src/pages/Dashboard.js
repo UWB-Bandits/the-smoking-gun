@@ -49,26 +49,22 @@ function Dashboard() {
     var width = window.innerWidth;
     if (width > 1100) {
       setBookSize({
-        bookWidth: "350px",
-        pushTop: "100px",
+        bookWidth: "250px",
         textSize: "30px",
       });
     } else if (width > 550) {
       setBookSize({
-        bookWidth: "250px",
-        pushTop: "50px",
+        bookWidth: "150px",
         textSize: "25px",
       });
     } else if (width > 340) {
       setBookSize({
-        bookWidth: "150px",
-        pushTop: "15px",
+        bookWidth: "100px",
         textSize: "15px",
       });
     } else {
       setBookSize({
-        bookWidth: "120px",
-        pushTop: "10px",
+        bookWidth: "80px",
         textSize: "12px",
       });
     }
