@@ -74,7 +74,7 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 //export and initialize the Weather component that takes in weather object
-export default function Weather({ weather }) {
+export default function Weather({ weather, buttonSize }) {
   //initialize the classes variable with our useStyles hook
   const classes = useStyles();
   //sets the state variable hooks
@@ -109,10 +109,10 @@ export default function Weather({ weather }) {
   return (
     <div style={{marginRight: "10px", marginLeft: "10px", marginBottom: "10px"}}>
       {/* Material-UI's floating action button appears in front of all screen content, typically as a circular shape with an icon in its center.  */}
-      <Fab color="primary" aria-label="current weather" variant="extended" onClick={handleClickOpen}>
+      <Fab style={{backgroundColor:"#474747", color:"white"}} aria-label="current weather" variant="extended" onClick={handleClickOpen}>
         {/* Material-UI's icon component */}
-        <WbSunnyIcon className={classes.extendedIcon} />
-        Current Weather
+        <WbSunnyIcon className={buttonSize==="large" ? classes.extendedIcon : ""} />
+        {buttonSize==="large" ? "Current Weather": ""}
       </Fab>
       {/* Material-UI component that inform users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
       <Dialog style={{backgroundColor: "#CACACC"}} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -165,5 +165,6 @@ Weather.propTypes = {
     gust_mph: PropTypes.string,
     wind_mph: PropTypes.string,
     humidity: PropTypes.string,
-    updated: PropTypes.string
+    updated: PropTypes.string,
+    buttonSize: PropTypes.string
 };

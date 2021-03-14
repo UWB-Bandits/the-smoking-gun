@@ -18,26 +18,29 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginBottom: "10px",
     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-    width:"80%"
+    width:"40%",
+    
   },
   red: {
-    backgroundColor: "#F07C5F",
+    backgroundColor: "#ca4541",
   },
   blue: {
-    backgroundColor: "#48C1F0"
+    backgroundColor: "#0a8cbf"
   },
   green: {
-    backgroundColor: "#78F07D"
+    backgroundColor: "#477754"
   },
   yellow: {
-    backgroundColor: "#F0B16C"
+    backgroundColor: "#E88821"
   },
   text: {
     textAlign: "center",
     fontWeight: "bold",
+    fontFamily: "'Rock Salt', cursive",
+    color: "black",
   },
   grid: {
-    backgroundColor: "rgb(221 221 221)",
+    backgroundColor: "#DDDDDD",
     margin: theme.spacing(2),
     borderRadius:"10px",
     marginBottom:"30px",

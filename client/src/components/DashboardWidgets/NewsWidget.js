@@ -84,7 +84,7 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 //export and initialize the News component that takes in news object
-export default function News({ news }) {
+export default function News({ news, buttonSize }) {
   //initialize the classes variable with our useStyles hook
   const classes = useStyles();
   //sets the state variable hooks
@@ -101,10 +101,10 @@ export default function News({ news }) {
     return (
       <div style={{marginRight: "10px", marginLeft: "10px", marginBottom: "10px"}}>
         {/* Material-UI's floating action button appears in front of all screen content, typically as a circular shape with an icon in its center.  */}
-        <Fab color="primary" aria-label="top news stories" variant="extended" onClick={handleClickOpen}>
+        <Fab style={{backgroundColor:"#474747", color:"white"}} aria-label="top news stories" variant="extended" onClick={handleClickOpen}>
           {/* Material-UI's icon component */}
-          <AnnouncementIcon className={classes.extendedIcon} />
-          Top News Stories
+          <AnnouncementIcon className={buttonSize==="large" ? classes.extendedIcon : ""} />
+          {buttonSize==="large" ? "Top News Stories" : ""}
         </Fab>
         {/* Material-UI component that inform users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
         <Dialog style={{backgroundColor: "#CACACC"}} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -146,4 +146,5 @@ export default function News({ news }) {
   //sets up prop types for the News component
   News.propTypes = {
     news: PropTypes.array,
+    buttonSize: PropTypes.string
 };
