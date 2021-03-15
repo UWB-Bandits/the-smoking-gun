@@ -23,6 +23,8 @@ import PropTypes from "prop-types";
 import FormButtons from "../FormButtons/FormButtons";
 //require in gravatar
 import Tooltip from "@material-ui/core/Tooltip";
+import { uiConfig, auth } from "../../utils/firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 const useGravatar = require("gravatar");
 //initialize SignUpForm component that is handed down props
@@ -45,6 +47,8 @@ const SignUpForm = (props) => {
     password: "",
     showPassword: false,
   });
+  // FirebaseUI
+
 
   // __________________________GRAVATAR________________________________________
   const [gravatar, setGravatar] = useState({
@@ -304,6 +308,10 @@ const SignUpForm = (props) => {
           handleSubmit={handleSubmit}
         />
       </form>
+      <div>
+            <p>Or sign-in through:</p>
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} /> 
+        </div>
     </Box>
   );
 };
