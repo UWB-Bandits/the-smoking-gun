@@ -1,7 +1,8 @@
 //import react
 import React from "react";
 //import Material-Ui component
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
+import Box from "@material-ui/core/Box";
 //import Material-Ui icon
 import DeleteIcon from "@material-ui/icons/Delete";
 //import a dependency that keeps track of the prop types
@@ -86,25 +87,35 @@ const DeleteBookForm = (props) => {
   //this returns a form to the delete modal with correlating deletion information
   return (
     <div style={{ display: "flex", justifyContent: "center", margin: "3rem" }}>
-      <div>
-        <h2>{buttonText}{": "}{props.title}{props.name}</h2>
-        <p style={{ display: "inline-block", margin: "1rem" }}>
+      <Box
+        boxShadow={2}
+        p={2}
+        style={{
+          width: "80%",
+          margin: "10px auto",
+          minWidth: "300px",
+          borderRadius: "5px",
+          backgroundColor: "#DDDDDD",
+        }}
+      >
+        <h2 style={{ fontFamily: "'Rock Salt', cursive", }}>{buttonText}{": "}{props.title}{props.name}</h2>
+        <p style={{ display: "inline-block", margin: "1rem", fontFamily: "'Raleway', sans-serif", }}>
           Are you sure you want to {buttonText}?
         </p>
         {/* Material-Ui component that allow users to take actions, and make choices, with a single tap.*/}
-        <Button 
+        <Fab 
           variant="contained" 
-          color="secondary"
-          startIcon={<DeleteIcon />} //Material-Ui Icon
           style={{
               margin: "25px 10px 25px auto",
               display: "block",
+              backgroundColor:"#474747",
+              color: "white"
             }}
           onClick={handle}
         >
-          {buttonText}
-        </Button>
-      </div>
+          <DeleteIcon style={{marginRight: "5px", verticalAlign:"sub"}} /> {buttonText}
+        </Fab>
+      </Box>
     </div>
   );
 };

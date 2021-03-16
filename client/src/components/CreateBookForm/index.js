@@ -28,7 +28,7 @@ const SignInForm = (props) => {
         backgroundColor:"#DDDDDD"
       }}
     >
-      <h2>Create a New Book</h2>
+      <h2 style={{ fontFamily: "'Rock Salt', cursive", }}>Create a New Book</h2>
       <form
         style={{
           minWidth: "300px",

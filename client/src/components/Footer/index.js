@@ -17,7 +17,11 @@ const useStyles = makeStyles({
     left: "0",
     bottom: "0",
     width: "100%",
-    backgroundColor: "#cacacc",
+    backgroundColor: "#DDDDDD",
+    borderTopColor: "#474747",
+    borderTopWidth: "1px",
+    borderTopStyle: "solid",
+    color: "#474747"
   },
   phantom: {
     height: "50px",

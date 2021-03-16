@@ -96,16 +96,16 @@ export default function WordCard({ randomWord, buttonSize }) {
         {buttonSize==="large" ? "Word of the Day" : ""}
       </Fab>
       {/* Material-UI component that inform users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
-      <Dialog style={{backgroundColor: "#CACACC"}} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            {randomWord[0].word}
+      <Dialog  onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+          <DialogTitle style={{backgroundColor: "#474747", color:"white",  }} id="customized-dialog-title" onClose={handleClose}>
+            <span style={{ fontFamily: "'Rock Salt', cursive", }}>{randomWord[0].word}</span>
           </DialogTitle>
-          <DialogContent dividers>
-            <Typography gutterBottom>
+          <DialogContent style={{backgroundColor: "#DDDDDD",}} dividers>
+            <Typography style={{ fontFamily: "'Raleway', sans-serif", }} gutterBottom>
               {randomWord[0].definition}
             </Typography>
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{backgroundColor: "#474747", color:"white", fontFamily: "'Raleway', sans-serif",}}>
             Pronunciation: {randomWord[0].pronunciation}
           </DialogActions>
         </Dialog>

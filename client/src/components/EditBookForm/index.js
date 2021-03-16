@@ -4,7 +4,7 @@ import React, {useState, useEffect} from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import Box from "@material-ui/core/Box";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -36,7 +36,7 @@ const EditBookForm = (props) => {
     description: PropTypes.string.isRequired,
     colorScheme: PropTypes.string,
     id: PropTypes.string
-  };
+  };  
   //This changes the formData.colorScheme state to the event target
   const handleThemeChange = (event) => {
     setFormData({ ...formData, colorScheme: event.target.value });
@@ -66,10 +66,10 @@ const EditBookForm = (props) => {
         margin: "10px auto",
         minWidth: "300px",
         borderRadius: "5px",
+        backgroundColor: "#DDDDDD",
       }}
-      bgcolor="background.paper"
     >
-      <h2>Edit {"'"}{props.title}{"'"} Book</h2>
+      <h2 style={{  fontFamily: "'Rock Salt', cursive", }}>Edit {"'"}{props.title}{"'"} Book</h2>
       <form
         style={{
           minWidth: "300px",
@@ -81,7 +81,7 @@ const EditBookForm = (props) => {
         <div style={{ margin: "0px 5px" }}>
           {/*Material-Ui component that serves as a convenience wrapper */}
           <TextField
-            style={{ width: "100%" }}
+            style={{ width: "100%", }}
             id="newBookTitle"
             label="Title"
             type="text"
@@ -114,18 +114,18 @@ const EditBookForm = (props) => {
           </FormControl>
         </div>
         {/*Material-Ui component allow users to take actions, and make choices, with a single tap. */}
-        <Button
+        <Fab
           style={{
             margin: "25px 10px 25px auto",
             display: "block",
+            backgroundColor:"#474747",
+            color: "white"
           }}
           variant="contained"
-          color="primary"
-          startIcon={<SaveIcon />} //Material-Ui Icon component
           onClick={handleSubmit}
         >
-          Save Changes
-        </Button>
+         <SaveIcon style={{marginRight: "5px", verticalAlign:"sub"}}/> Save Changes
+        </Fab>
       </form>
     </Box>
   );

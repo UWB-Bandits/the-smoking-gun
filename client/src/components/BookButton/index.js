@@ -22,20 +22,19 @@ const useStyles = makeStyles((theme) => ({
     
   },
   red: {
-    backgroundColor: "#ca4541",
+    backgroundColor: "#FA4925",
   },
   blue: {
-    backgroundColor: "#0a8cbf"
+    backgroundColor: "#3287FA"
   },
   green: {
-    backgroundColor: "#477754"
+    backgroundColor: "#62A321"
   },
   yellow: {
-    backgroundColor: "#E88821"
+    backgroundColor: "#FAB228"
   },
   text: {
     textAlign: "center",
-    fontWeight: "bold",
     fontFamily: "'Rock Salt', cursive",
     color: "black",
   },
@@ -70,11 +69,11 @@ export default function BookButton(props) {
         {/*Material-UI's Link component allows you to easily customize anchor elements with your theme colors and typography styles.*/}
         <Link href={props.link} >
           {/*Material-UI's Typography component allows you to present your design and content as clearly and efficiently as possible.*/}
-          <Typography className={classes.text} style={{marginTop:bookSize.pushTop, fontSize:bookSize.textSize}} gutterBottom variant="h5" component="h2">
+          <Typography className={classes.text} style={{marginTop:bookSize.pushTop, fontSize:bookSize.textSize, fontWeight:"bold"}} gutterBottom variant="h5" component="h2">
             {/* displays the title of the book */}
             {props.title}
           </Typography>
-          <Typography className={classes.text} style={{fontSize:bookSize.textSize}} variant="body2" color="textSecondary" component="p">
+          <Typography className={classes.text} style={{fontSize:bookSize.smallText}} variant="body2" color="textSecondary" component="p">
             {/* displays the description of the book */}
             {props.description}
           </Typography>

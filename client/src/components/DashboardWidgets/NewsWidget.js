@@ -107,25 +107,25 @@ export default function News({ news, buttonSize }) {
           {buttonSize==="large" ? "Top News Stories" : ""}
         </Fab>
         {/* Material-UI component that inform users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
-        <Dialog style={{backgroundColor: "#CACACC"}} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Top Stories
+        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+          <DialogTitle style={{backgroundColor: "#474747", color:"white"}}  id="customized-dialog-title" onClose={handleClose}>
+            <span style={{ fontFamily: "'Rock Salt', cursive", }}>Top Stories</span>
           </DialogTitle>
-          <DialogContent dividers>
+          <DialogContent style={{backgroundColor: "#DDDDDD", }} dividers>
             {news.map((item) => (
               <div key={item.published_date}>
                 <Typography gutterBottom>
-                  <a href={item.short_url} target="_blank" rel="noopener noreferrer" className={classes.newsLink}>
+                  <a style={{ fontFamily: "'Raleway', sans-serif", }} href={item.short_url} target="_blank" rel="noopener noreferrer" className={classes.newsLink}>
                     {item.title}
                   </a>
                 </Typography>
-                <Typography className={classes.title} gutterBottom>
+                <Typography style={{ fontFamily: "'Raleway', sans-serif", }} className={classes.title} gutterBottom>
                   {item.abstract}
                 </Typography>
-                <Typography className={classes.date} gutterBottom>
+                <Typography style={{ fontFamily: "'Raleway', sans-serif", }} className={classes.date} gutterBottom>
                   {item.byline}
                 </Typography>
-                <Typography className={classes.date} gutterBottom>
+                <Typography style={{ fontFamily: "'Raleway', sans-serif", }} className={classes.date} gutterBottom>
                   Published: {new Date(item.published_date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "short",
@@ -136,8 +136,8 @@ export default function News({ news, buttonSize }) {
               </div>
             ))}
           </DialogContent>
-          <DialogActions>
-            <a href="https://www.nytimes.com/" title="New York Times">New York Times</a>
+          <DialogActions style={{backgroundColor: "#474747", }} >
+            <a style={{ fontFamily: "'Raleway', sans-serif", color:"white"}} href="https://www.nytimes.com/" title="New York Times">New York Times</a>
           </DialogActions>
         </Dialog>
       </div>

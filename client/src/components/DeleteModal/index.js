@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     width: 400,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#DDDDDD",
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -65,7 +65,7 @@ export default function DeleteModal(props) {
   return (
     <div>
       {/* Material-UI component that allows users to take actions, and make choices, with a single tap that wraps an Icon */}
-      <IconButton color="secondary" aria-label="Delete Book" component="span" onClick={handleOpen}>
+      <IconButton style={{color:"#474747"}} aria-label="Delete Book" component="span" onClick={handleOpen}>
         {/* Material-UI Icon component */}
         <DeleteIcon />
       </IconButton>

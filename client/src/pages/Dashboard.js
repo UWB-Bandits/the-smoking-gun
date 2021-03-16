@@ -52,21 +52,25 @@ function Dashboard() {
       setBookSize({
         bookWidth: "250px",
         textSize: "30px",
+        smallText: "20px"
       });
     } else if (width > 550) {
       setBookSize({
         bookWidth: "150px",
         textSize: "25px",
+        smallText: "15px"
       });
     } else if (width > 340) {
       setBookSize({
         bookWidth: "100px",
         textSize: "15px",
+        smallText: "12px"
       });
     } else {
       setBookSize({
         bookWidth: "80px",
         textSize: "12px",
+        smallText: "12px"
       });
     }
 

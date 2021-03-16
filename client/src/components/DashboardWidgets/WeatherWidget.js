@@ -115,36 +115,36 @@ export default function Weather({ weather, buttonSize }) {
         {buttonSize==="large" ? "Current Weather": ""}
       </Fab>
       {/* Material-UI component that inform users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
-      <Dialog style={{backgroundColor: "#CACACC"}} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          <img src={weatherIcon} /> 
-          {cityName} 
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle style={{backgroundColor: "#474747", color:"white",  }} id="customized-dialog-title" onClose={handleClose}>
+          <img style={{ verticalAlign:"top"}} src={weatherIcon} /> 
+          <span style={{ fontFamily: "'Rock Salt', cursive", verticalAlign:"top",}}>{cityName}</span> 
         </DialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }} gutterBottom>
             {weatherText}
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {temperature} &deg;F
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {feelsLike} &deg;F
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {wind}
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {gusts}
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {humidity}
           </Typography>
         </DialogContent>
         <DialogActions>
-        {updated}
+          <span style={{ fontFamily: "'Raleway', sans-serif", }}>{updated}</span>
         </DialogActions>
-        <DialogActions>
-          Powered by <a href="https://www.weatherapi.com/" title="Weather API"> WeatherAPI.com</a>
+        <DialogActions style={{backgroundColor: "#474747", color:"white", fontFamily: "'Raleway', sans-serif", }}>
+          Powered by <a href="https://www.weatherapi.com/" title="Weather API" style={{marginLeft:"10px"}}> WeatherAPI.com</a>
         </DialogActions>
       </Dialog>
     </div>
