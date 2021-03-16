@@ -300,6 +300,7 @@ const SignUpForm = (props) => {
             </RadioGroup>
           </FormControl>
         </div>
+        
         <FormButtons
           button1="Sign Up"
           button2={["Have an account? ", "Log In"]}
@@ -309,9 +310,9 @@ const SignUpForm = (props) => {
         />
       </form>
       <div>
-            <p>Or sign-in through:</p>
-            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} /> 
-        </div>
+          <h2>Or sign in with:</h2>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} /> 
+      </div>
     </Box>
   );
 };
