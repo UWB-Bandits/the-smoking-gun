@@ -10,7 +10,7 @@ import TemporaryDrawer from "../TemporaryDrawer";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
 //import Material-Ui components
-import {CircularProgress, Grid} from "@material-ui/core/";
+import { CircularProgress, Grid } from "@material-ui/core/";
 //import API route handler
 import API from "../../utils/API";
 //import useParams to grab the URL parameter used to identify the book id
@@ -57,6 +57,7 @@ export default function Calendar(props) {
     //closes the modal
     const handleClose = () => {
       setTitleOpen(false);
+      setDeleteOpen(false);
     };
     // this function makes a database query to get the book information the calendar is contained in
     // in order to access the colorScheme
@@ -166,7 +167,7 @@ export default function Calendar(props) {
       //filters out the deleted event
       let leftEvents = currentEvents.filter(event => event._instance !== clickInfo.event._instance);
       //updates state
-      setCurrentEvents (leftEvents);
+      setCurrentEvents(leftEvents);
       //removes event from Full Calendar
       clickInfo.event.remove();
       //removes event from database
@@ -212,7 +213,7 @@ export default function Calendar(props) {
             {/* Material-UI's Grid component sets up a responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts. */}
             <Grid container justify="center" >
               <PromptModal 
-                prompt="Please enter a new title for your event"
+                prompt="Please enter the title of your event:"
                 handleSubmit = {onTitleSubmit}
                 handleInputChange = {handleInputChange}
                 handleClose = {handleClose}
@@ -220,25 +221,24 @@ export default function Calendar(props) {
                 open = {titleOpen}
               />
               <ConfirmModal 
-                prompt={`Are you sure you want to delete the event "${clickInfo.event ? clickInfo.event.title : ""}"`}
+                prompt={`Are you sure you want to delete "${clickInfo.event ? clickInfo.event.title : ""}"?`}
                 handleSubmit = {onDeleteSubmit}
                 handleClose = {handleClose}
                 buttonLabel ="Delete Event"
                 open = {deleteOpen}
               />
             </Grid>
-    
         </div>
       ); 
     //If currentEvents does not have data render this
     } else {
-    return (
-      //this is Material-Ui loading spinner
-      <div>Loading Calendar...<CircularProgress /></div>
-    );
+      return (
+        //this is Material-Ui loading spinner
+        <div>Loading Calendar...<CircularProgress /></div>
+      );
     }
 }
 //sets up prop types for the Calendar component
 Calendar.propTypes = {
-    calendar: PropTypes.object
-  };
+  calendar: PropTypes.object
+};
