@@ -1,19 +1,67 @@
 //import react, and useState and useEffect methods
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+//import withStyles function from Material-UI
+import { withStyles } from "@material-ui/core/styles";
+// import Material-UI components for Dialog Modal
+import Button from "@material-ui/core/Button";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import MuiDialogContent from "@material-ui/core/DialogContent";
+import MuiDialogActions from "@material-ui/core/DialogActions";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 //import Material-Ui components
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 //import Material-Ui icon
+import CloseIcon from "@material-ui/icons/Close";
 import SaveIcon from "@material-ui/icons/Save";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
 //import API route handler
 import API from "../../utils/API";
+// sets styles variable for the title box of the dialog
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+// sets up the title box of the dialog
+const DialogTitle = withStyles(styles)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h5">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+// sets up the content box of the dialog
+const DialogContent = withStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3),
+  },
+}))(MuiDialogContent);
+// sets up the footer box of the dialog
+const DialogActions = withStyles((theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(1),
+  },
+}))(MuiDialogActions);
 //initialize the EditBookForm component that receives props
 const EditBookForm = (props) => {
   //sets the state variable hooks
@@ -30,13 +78,6 @@ const EditBookForm = (props) => {
           colorScheme: props.colorScheme
       });
   }, []);
-  //sets up prop types for the EditBOokForm component
-  EditBookForm.propTypes = {
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    colorScheme: PropTypes.string,
-    id: PropTypes.string
-  };
   //This changes the formData.colorScheme state to the event target
   const handleThemeChange = (event) => {
     setFormData({ ...formData, colorScheme: event.target.value });
@@ -57,35 +98,20 @@ const EditBookForm = (props) => {
   };
   //This returns a form that the user can use to update the current book title, description, and colorScheme 
   return (
-    //Material-UI component that serves as a wrapper component for most of the CSS utility needs. 
-    <Box
-      boxShadow={2}
-      p={2}
-      style={{
-        width: "80%",
-        margin: "10px auto",
-        minWidth: "300px",
-        borderRadius: "5px",
-      }}
-      bgcolor="background.paper"
-    >
-      <h2>Edit {"'"}{props.title}{"'"} Book</h2>
-      <form
-        style={{
-          minWidth: "300px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ margin: "0px 5px" }}>
-          {/*Material-Ui component that serves as a convenience wrapper */}
-          <TextField
+    <div>
+      {/* Material-UI component that informs users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
+      <DialogTitle id="form-dialog-title" onClose={props.handleClose} style={{textTransform: "capitalize"}}>
+        Edit {"'"}{props.title}{"'"}
+      </DialogTitle>
+      <DialogContent dividers>
+        {/*Material-Ui component that serves as a convenience wrapper */}
+        <TextField
             style={{ width: "100%" }}
             id="newBookTitle"
             label="Title"
             type="text"
             name="title"
+            value={formData.title}
             onChange={handleInputChange}
           />
           <TextField
@@ -93,6 +119,7 @@ const EditBookForm = (props) => {
             id="newBookDescription"
             label="Description"
             name="description"
+            value={formData.description}
             onChange={handleInputChange}
             multiline
           />
@@ -105,6 +132,7 @@ const EditBookForm = (props) => {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               onChange={handleThemeChange}
+              value={formData.colorScheme}
             >
               {/* Material-Ui component is a wrapper around ListItem with some additional styles. */}
               <MenuItem value={"red"}>Red</MenuItem>
@@ -112,23 +140,35 @@ const EditBookForm = (props) => {
               <MenuItem value={"green"}>Green</MenuItem>
             </Select>
           </FormControl>
-        </div>
-        {/*Material-Ui component allow users to take actions, and make choices, with a single tap. */}
-        <Button
-          style={{
-            margin: "25px 10px 25px auto",
-            display: "block",
-          }}
-          variant="contained"
-          color="primary"
-          startIcon={<SaveIcon />} //Material-Ui Icon component
-          onClick={handleSubmit}
-        >
-          Save Changes
-        </Button>
-      </form>
-    </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button 
+            variant="outlined" 
+            onClick={props.handleClose} 
+            color="primary"
+          >
+            Cancel
+          </Button>
+        <Button 
+            variant="contained" 
+            autoFocus 
+            onClick={handleSubmit} 
+            color="primary" 
+            startIcon={<SaveIcon />}
+          >
+            Save Book
+          </Button>
+      </DialogActions>
+    </div>
   );
+};
+//sets up prop types for the EditBOokForm component
+EditBookForm.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  colorScheme: PropTypes.string,
+  id: PropTypes.string,
+  handleClose: PropTypes.func
 };
 //export the EditBookForm component
 export default EditBookForm;
