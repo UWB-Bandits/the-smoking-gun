@@ -144,7 +144,7 @@ const SignUpForm = (props) => {
           marginTop: "3rem",
         }}
       >
-        {/*  Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
+        {/*  Material UI Alert component displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
         {error && <Alert severity="error">{error}</Alert>}
 
         <div style={{ margin: "0px 5px" }}>
