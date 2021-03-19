@@ -77,11 +77,11 @@ const EditBookForm = (props) => {
   const [error, setError] = useState("");
   //this lets you perform side effects in function component
   useEffect(() => {
-      setFormData({
-          title: props.title,
-          description: props.description,
-          colorScheme: props.colorScheme
-      });
+    setFormData({
+      title: props.title,
+      description: props.description,
+      colorScheme: props.colorScheme
+    });
   }, []);
   //This changes the formData.colorScheme state to the event target
   const handleThemeChange = (event) => {
@@ -183,8 +183,8 @@ const EditBookForm = (props) => {
 };
 //sets up prop types for the EditBOokForm component
 EditBookForm.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  description: PropTypes.string,
   colorScheme: PropTypes.string,
   id: PropTypes.string,
   handleClose: PropTypes.func
