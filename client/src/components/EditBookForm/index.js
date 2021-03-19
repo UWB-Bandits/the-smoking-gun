@@ -15,6 +15,8 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+//import Material-UI lab
+import Alert from "@material-ui/lab/Alert";
 //import Material-Ui icon
 import CloseIcon from "@material-ui/icons/Close";
 import SaveIcon from "@material-ui/icons/Save";
@@ -22,6 +24,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import PropTypes from "prop-types";
 //import API route handler
 import API from "../../utils/API";
+
 // sets styles variable for the title box of the dialog
 const styles = (theme) => ({
   root: {
@@ -62,14 +65,16 @@ const DialogActions = withStyles((theme) => ({
     padding: theme.spacing(1),
   },
 }))(MuiDialogActions);
+
 //initialize the EditBookForm component that receives props
 const EditBookForm = (props) => {
   //sets the state variable hooks
   const [formData, setFormData] = useState({
-      title: "",
-      description: "",
-      colorScheme: "",
-    });
+    title: "",
+    description: "",
+    colorScheme: "",
+  });
+  const [error, setError] = useState("");
   //this lets you perform side effects in function component
   useEffect(() => {
       setFormData({
@@ -86,15 +91,28 @@ const EditBookForm = (props) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    };
+  };
   //this handles the submit by sending it to the API call to the database
-  const handleSubmit = () => {
-    API.updateBook(props.id, formData)
-    .then( res => {
-      res;
-      window.location.reload(true);
-    })
-    .catch(err => console.log(err));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.title === "") {
+      setError("Please enter a title.");
+    } else if (formData.description === "") {
+      setError("Please enter a description.");
+    } else if (formData.colorScheme === "") {
+      setError("Please choose a color theme.");
+    } else {
+      setError("");
+      API.updateBook(props.id, formData)
+      .then(res => {
+        res;
+        window.location.reload(true);
+      })
+      .catch(err => {
+        console.log(err);
+        setError(err.message);
+      });
+    }
   };
   //This returns a form that the user can use to update the current book title, description, and colorScheme 
   return (
@@ -105,6 +123,7 @@ const EditBookForm = (props) => {
       </DialogTitle>
       <DialogContent dividers>
         {/*Material-Ui component that serves as a convenience wrapper */}
+        {error && <Alert severity="error">{error}</Alert>}
         <TextField
             style={{ width: "100%" }}
             id="newBookTitle"
