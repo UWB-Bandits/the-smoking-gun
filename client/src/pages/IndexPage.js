@@ -35,6 +35,8 @@ import NewListForm from "../components/NewItemForm";
 import NewCalendarForm from "../components/NewCalendarForm";
 import EditModal from "../components/EditModal";
 import DeleteModal from "../components/DeleteModal";
+//import Material-UI lab
+import Alert from "@material-ui/lab/Alert";
 //import routes
 import API from "../utils/API";
 //import context
@@ -49,6 +51,8 @@ function IndexPage() {
   const [lists, setLists] = useState([]);
   const [entries, setEntries] = useState([]);
   const [calendars, setCalendars] = useState([]);
+  const [error, setError] = useState("");
+  const [calError, setCalError] = useState("");
   //get current user info from context
   const { currentUser } = useAuth();
   //get bookId from URL
@@ -80,11 +84,15 @@ function IndexPage() {
   };
   //this adds lists to the book and directs the user to the lists page
   const addList = () => {
-    API.saveList({
-      name: formData.newList,
-      items: [],
-      book: book._id,
-    })
+    if (formData.newList === "") {
+      setError("Please enter a title for your new list.");
+    } else {
+      setError("");
+      API.saveList({
+        name: formData.newList,
+        items: [],
+        book: book._id,
+      })
       .then((res) => {
         let newBookLists = lists.map((list) => list._id);
         newBookLists.push(res.data._id);
@@ -96,36 +104,18 @@ function IndexPage() {
           .catch((err) => console.log(err));
         window.location.href = "/books/" + bookId + "/lists/" + res.data._id;
       })
-      .then((res) => {
-        let newBookLists = lists.map((list) => list._id);
-        newBookLists.push(res.data._id);
-        API.updateBook(bookId, {
-          ...book,
-          lists: newBookLists,
-        })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
-        window.location.href = "/lists/" + res.data._id;
-      })
       .catch((err) => console.log(err));
+      }
   };
   //this adds calendars to the book and directs the user to the calendar page
   const addCalendar = () => {
-    API.saveCalendar({
-      name: calendarFormData.newCalendar,
-      book: book._id,
-    })
-      .then((res) => {
-        let newBookCalendars = calendars.map((calendar) => calendar._id);
-        newBookCalendars.push(res.data._id);
-        API.updateBook(bookId, {
-          ...book,
-          calendars: newBookCalendars,
-        })
-          .then((res) => res)
-          .catch((err) => console.log(err));
-        window.location.href =
-          "/books/" + bookId + "/calendars/" + res.data._id;
+    if (calendarFormData.newCalendar === "") {
+      setCalError("Please enter a title for your new calendar.");
+    } else {
+      setCalError("");
+      API.saveCalendar({
+        name: calendarFormData.newCalendar,
+        book: book._id,
       })
       .then((res) => {
         let newBookCalendars = calendars.map((calendar) => calendar._id);
@@ -134,11 +124,12 @@ function IndexPage() {
           ...book,
           calendars: newBookCalendars,
         })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
-        window.location.href = "/calendars/" + res.data._id;
+        .then((res) => res)
+        .catch((err) => console.log(err));
+        window.location.href = "/books/" + bookId + "/calendars/" + res.data._id;
       })
       .catch((err) => console.log(err));
+    }
   };
   //this returns the clickable item that contains props
   function ListItemLink(props) {
@@ -231,6 +222,9 @@ function IndexPage() {
           >
             <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Lists</Typography>
           </AccordionSummary>
+          <AccordionDetails>
+            {error && <Alert severity="error">{error}</Alert>}
+          </AccordionDetails>
           {/* Material UI AccordionDetails is what is expanded when an Accordion component is clicked */}
           <AccordionDetails>
             {/* Material-UI Link component allows you to easily customize anchor elements with your theme colors and typography styles. */}
@@ -289,6 +283,9 @@ function IndexPage() {
           >
             <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Calendars</Typography>
           </AccordionSummary>
+          <AccordionDetails>
+            {calError && <Alert severity="error">{calError}</Alert>}
+          </AccordionDetails>
           <AccordionDetails>
             <List
               style={{ width: "100%" }}

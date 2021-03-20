@@ -21,16 +21,23 @@ const UpdateProfile = () => {
   //this handles the submit on update profile
   const handleSubmit = (e) => {
     e.preventDefault();
-    API.updateUser(mongoID, formData)
-      .then(() => {
-        setMessage(
-          "Update Complete go back to the dashboard to view the change"
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-        setError("Failed to update user");
-      });
+    if (formData.firstName === "") {
+      setError("Please enter your first name.");
+    } else if (formData.lastName === "") {
+      setError("Please enter your last name.");
+    } else {
+      setError("");
+      API.updateUser(mongoID, formData)
+        .then(() => {
+          setMessage(
+            "Your name has been updated. Go back to the dashboard to view the change"
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+          setError("Failed to update user");
+        });
+    }
   };
   //this handles changes to the form
   const handleInputChange = (e) => {
@@ -61,12 +68,7 @@ const UpdateProfile = () => {
           {message}— <Link href="/dashboard">check it out!</Link>
         </Alert>
       )}
-      {error && (
-        <Alert severity="error">
-          <AlertTitle>Error</AlertTitle>
-          {error}— <strong>check your connection!</strong>
-        </Alert>
-      )}
+      {error && <Alert severity="error">{error}</Alert>}
       <h2>Update Profile</h2>
       <form
         onSubmit={handleSubmit}
@@ -86,6 +88,7 @@ const UpdateProfile = () => {
             label="First Name"
             type="firstName"
             name="firstName"
+            value={formData.firstName}
             onChange={handleInputChange}
           />
         </div>
@@ -97,6 +100,7 @@ const UpdateProfile = () => {
             label="Last Name"
             type="lastName"
             name="lastName"
+            value={formData.lastName}
             onChange={handleInputChange}
           />
         </div>
