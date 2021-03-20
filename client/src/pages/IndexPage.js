@@ -219,7 +219,7 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel1"}
           onChange={handleAccordionChange("panel1")} 
-          
+          style={{backgroundColor: "#DDDDDD"}}
         >
           {/* Material UI AccordionSummary is a wrapper that act as a header/description of and Accordion component  */}
           <AccordionSummary
@@ -227,6 +227,7 @@ function IndexPage() {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
             <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Lists</Typography>
           </AccordionSummary>
@@ -277,12 +278,14 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel2"}
           onChange={handleAccordionChange("panel2")}
+          style={{backgroundColor: "#DDDDDD"}}
         >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
             <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Calendars</Typography>
           </AccordionSummary>
@@ -332,12 +335,14 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel3"}
           onChange={handleAccordionChange("panel3")}
+          style={{backgroundColor: "#DDDDDD"}}
         >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
             <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Doodles</Typography>
           </AccordionSummary>
@@ -365,16 +370,18 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel4"}
           onChange={handleAccordionChange("panel4")}
+          
         >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
             <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Habits</Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails style={{backgroundColor:"#DDDDDD"}}>
             <List
               style={{ width: "100%" }}
               className={classes.root}
@@ -398,13 +405,14 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel5"}
           onChange={handleAccordionChange("panel5")}
-          style={{marginBottom:"20px"}}
+          style={{marginBottom:"20px", backgroundColor:"#DDDDDD"}}
         >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
             <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Journal Entries</Typography>
           </AccordionSummary>
@@ -445,6 +453,7 @@ function IndexPage() {
                 href={`/books/${bookId}/new-entry/${bookId}`}
                 variant="contained"
                 color="primary"
+                style={{marginTop:"5px"}}
               >
                 Add a new journal entry
               </Fab>

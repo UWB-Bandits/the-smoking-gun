@@ -44,16 +44,19 @@ export default function SimpleBottomNavigation() {
           href="/dashboard"
           label="Dashboard"
           icon={<HomeIcon />}//Material-UI's Icon
+          style={{color:"#474747"}}
         />
         <BottomNavigationAction
           href="/create-book"
           label="Create New Book"
           icon={<ImportContactsIcon />}//Material-UI's Icon
+          style={{color:"#474747"}}
         />
         <BottomNavigationAction
           href="/settings"
           label="Settings"
           icon={<SettingsIcon />}//Material-UI's Icon
+          style={{color:"#474747"}}
         />
       </BottomNavigation>
     </div>
