@@ -23,6 +23,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import CloseIcon from "@material-ui/icons/Close";
+//import Material-UI lab
+import Alert from "@material-ui/lab/Alert";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
 //import context
@@ -34,6 +36,7 @@ function Journaling(props) {
   const [entry, setEntry] = useState({});
   const [book, setBook] = useState({});
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = useState("");
   const { currentUser } = useAuth();
   //grab the bookId and journalID from the URL
   const {bookId, journalId} = useParams();
@@ -86,7 +89,12 @@ function Journaling(props) {
   };
   //saves entry to the database when the user hits save
   const onSave = () => {
-    if (props.type === "new") {
+    if (formData.title === "") {
+      setError("Please enter the title of your journal entry.");
+    } else if (formData.body === "") {
+      setError("Please enter some text into the body of your journal entry.");
+    } else if (props.type === "new") {
+      setError("");
       //if new entry, saves the new entry to the database
       API.saveEntry({
         title: formData.title,
@@ -106,6 +114,7 @@ function Journaling(props) {
       })
       .catch(err => console.log(err));      
     } else {
+      setError("");
       //if old entry, updates the old document in the database
       API.updateEntry(entry._id, {
         ...entry,
@@ -180,6 +189,7 @@ function Journaling(props) {
             <span style={{fontSize: "12px",  marginLeft: "2px"}}>{props.type==="old" ? entry.title : "New Entry"}</span>
           </Typography>
         </Breadcrumbs>
+        {error && <Alert severity="error">{error}</Alert>}
         {/* Custom component which sets up the layout of the journal entry form */}
         <EntryForm  type={props.type} onSave={onSave} onDelete={onDelete} formData={formData} handleInputChange={handleInputChange} {...entry}/>
       </Box>
