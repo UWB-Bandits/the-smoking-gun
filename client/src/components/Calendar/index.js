@@ -43,6 +43,7 @@ export default function Calendar(props) {
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [clickInfo, SetClickInfo] = useState({});
     const [book, setBook] = useState({});
+    const [error, setError] = useState("");
     // initialize the id variable for the bookId and calendarId (calId) that grabs the URL parameters
     const {bookId, calId} = useParams();
     //this lets you perform side effects in function component
@@ -137,25 +138,30 @@ export default function Calendar(props) {
         setSelectInfo(selectedInfo);        
     }
     //This function runs after a title is saved using the modal
-    const onTitleSubmit = () =>{
-      //closes the modal
-      setTitleOpen(false);
-      //checks for form data and updates state if there is data
-      if (formData) {
-        let newEvent = {
-          id: createEventId(),
-          title: formData,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay
-        };
-        //sends event to Full Calendar
-        calendarApi.addEvent(newEvent);
-        let newEvents = currentEvents;
-        newEvents.push(newEvent);
-        setCurrentEvents(newEvents);
-        //sends new event to the database
-        addEvent();
+    const onTitleSubmit = () => {
+      if (formData === "") {
+        setError("Please enter the title of your event.");
+      } else {
+        setError("");
+        //closes the modal
+        setTitleOpen(false);
+        //checks for form data and updates state if there is data
+        if (formData) {
+          let newEvent = {
+            id: createEventId(),
+            title: formData,
+            start: selectInfo.startStr,
+            end: selectInfo.endStr,
+            allDay: selectInfo.allDay
+          };
+          //sends event to Full Calendar
+          calendarApi.addEvent(newEvent);
+          let newEvents = currentEvents;
+          newEvents.push(newEvent);
+          setCurrentEvents(newEvents);
+          //sends new event to the database
+          addEvent();        
+        }
       }
       //resets the modal form
       setFormData("");
@@ -219,6 +225,7 @@ export default function Calendar(props) {
                 handleClose = {handleClose}
                 buttonLabel ="Save event"
                 open = {titleOpen}
+                error = {error}
               />
               <ConfirmModal 
                 prompt={`Are you sure you want to delete "${clickInfo.event ? clickInfo.event.title : ""}"?`}

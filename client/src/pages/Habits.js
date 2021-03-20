@@ -27,6 +27,8 @@ import NewItemForm from "../components/NewItemForm";
 import HabitDoughnut from "../components/HabitDoughnut";
 import DaysMenu from "../components/DaysMenu";
 import DeleteModal from "../components/DeleteModal";
+//import Material-UI lab
+import Alert from "@material-ui/lab/Alert";
 //import useParams to grab URL parameters
 import { useParams } from "react-router-dom";
 //import route
@@ -41,10 +43,11 @@ function Habits() {
   const [book, setBook] = useState({});
   const [completedToday, setCompletedToday] = useState([]);
   const [resultsDays, setResultsDays] = useState(7);
+  const [error, setError] = useState("");
   //grab the current user info from context
   const { currentUser } = useAuth();
   //grab the bookId and habitIt from the URL
-  const {bookId, habitId} = useParams();
+  const { bookId, habitId } = useParams();
   //initialize date variables
   let date = new Date();
   let dateString = date.toDateString();
@@ -97,7 +100,10 @@ function Habits() {
   };
   //this adds a habit to the habit tracker
   const addHabit = () => {
-    if (formData.newItem){
+    if (formData.newItem === "") {
+      setError("Please enter a new habit.");
+    } else if (formData.newItem) {
+      setError("");
       API.createHabit({ 
         name: formData.newItem, 
         tracking: [], 
@@ -190,6 +196,10 @@ function Habits() {
         {/* Material UI List component are continuous, vertical indexes of text or images. */}
         <List className={classes.root}>
           <h2>Which habits have you completed today?</h2>
+          {/*Material-Ui component that serves as a convenience wrapper */}
+          <ListItem>
+            {error && <Alert severity="error">{error}</Alert>}
+          </ListItem>
           { habits  ? habits.map((value) => {
             const labelId = `checkbox-list-label-${value.name}`;
             //this returns a list of habits and the option to add more habits

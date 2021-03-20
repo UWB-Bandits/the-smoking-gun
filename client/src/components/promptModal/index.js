@@ -14,6 +14,8 @@ import Typography from "@material-ui/core/Typography";
 //import Material UI icon
 import CloseIcon from "@material-ui/icons/Close";
 import SaveIcon from "@material-ui/icons/Save";
+//import Material-UI lab
+import Alert from "@material-ui/lab/Alert";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
 // sets styles variable for the title box of the dialog
@@ -59,7 +61,7 @@ const DialogActions = withStyles((theme) => ({
 // exports and initializes the PromptModal component that is handed down props
 export default function PromptModal(props) {
   //deconstruct variables from props
-  const { handleSubmit, handleInputChange, prompt, open, handleClose, buttonLabel } = props;
+  const { handleSubmit, handleInputChange, prompt, open, handleClose, buttonLabel, error } = props;
   // returns a Dialog Modal that is dismissable and displays a prompt to the user and a delete and cancel buttons
   return (
     <div>
@@ -69,6 +71,8 @@ export default function PromptModal(props) {
           Add Event
         </DialogTitle>
         <DialogContent dividers>
+          {/*Material-Ui component that serves as a convenience wrapper */}
+          {error && <Alert severity="error">{error}</Alert>}
           <Typography>
             {prompt}
           </Typography>
@@ -115,4 +119,5 @@ PromptModal.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func,
   buttonLabel: PropTypes.string,
+  error: PropTypes.string
 };
