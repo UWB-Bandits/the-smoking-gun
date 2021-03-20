@@ -15,7 +15,7 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemSecondaryAction,
-  Button,
+  Fab,
 } from "@material-ui/core";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
@@ -199,7 +199,7 @@ function IndexPage() {
               style={{ verticalAlign: "middle" }}
               className={classes.icon}
             />
-            <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+            <span style={{ fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>
               Dashboard
             </span>
           </Link>
@@ -209,7 +209,7 @@ function IndexPage() {
               style={{ verticalAlign: "middle" }}
               className={classes.icon}
             />
-            <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+            <span style={{ fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif", }}>
               {book.title}
             </span>
           </Typography>
@@ -218,7 +218,8 @@ function IndexPage() {
         {/* Material UI Accordion component contain creation flows and allow lightweight editing of an element. */}
         <Accordion
           expanded={expanded === "panel1"}
-          onChange={handleAccordionChange("panel1")}
+          onChange={handleAccordionChange("panel1")} 
+          
         >
           {/* Material UI AccordionSummary is a wrapper that act as a header/description of and Accordion component  */}
           <AccordionSummary
@@ -227,7 +228,7 @@ function IndexPage() {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography className={classes.heading}>Lists</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Lists</Typography>
           </AccordionSummary>
           {/* Material UI AccordionDetails is what is expanded when an Accordion component is clicked */}
           <AccordionDetails>
@@ -247,7 +248,7 @@ function IndexPage() {
                           <PlaylistAddCheckIcon />
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={item.name} />
+                      <ListItemText><span style={{fontFamily: "'Raleway', sans-serif",}}>{item.name}</span></ListItemText>
                       <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete">
                           <DeleteModal
@@ -283,7 +284,7 @@ function IndexPage() {
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
-            <Typography className={classes.heading}>Calendars</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Calendars</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <List
@@ -302,7 +303,7 @@ function IndexPage() {
                           <PlaylistAddCheckIcon />
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={item.name} />
+                      <ListItemText ><span style={{fontFamily: "'Raleway', sans-serif",}}>{item.name}</span></ListItemText>
                       <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete">
                           <DeleteModal
@@ -338,7 +339,7 @@ function IndexPage() {
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
-            <Typography className={classes.heading}>Doodles</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Doodles</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <List
@@ -353,7 +354,7 @@ function IndexPage() {
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={"View or Make a Doodle"} />
+                  <ListItemText> <span style={{fontFamily: "'Raleway', sans-serif",}}>View or Make a Doodle</span></ListItemText>
                 </ListItemLink>
                 <Divider />
               </div>
@@ -371,7 +372,7 @@ function IndexPage() {
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
-            <Typography className={classes.heading}>Habits</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Habits</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <List
@@ -386,7 +387,7 @@ function IndexPage() {
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={"Track your daily habits!"} />
+                  <ListItemText ><span style={{fontFamily: "'Raleway', sans-serif",}}>Track your daily habits!</span></ListItemText>
                 </ListItemLink>
                 <Divider />
               </div>
@@ -397,6 +398,7 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel5"}
           onChange={handleAccordionChange("panel5")}
+          style={{marginBottom:"20px"}}
         >
           <AccordionSummary
             className={classes.accordion}
@@ -404,7 +406,7 @@ function IndexPage() {
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
-            <Typography className={classes.heading}>Journal Entries</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Journal Entries</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <List
@@ -421,7 +423,7 @@ function IndexPage() {
                           <PlaylistAddCheckIcon />
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={item.title} />
+                      <ListItemText > <span style={{fontFamily: "'Raleway', sans-serif",}}>{item.title} </span> </ListItemText>
                       <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete">
                           <DeleteModal
@@ -438,19 +440,14 @@ function IndexPage() {
               ) : (
                 <ListItem>Add a new journal entry to get started</ListItem>
               )}
-              <Button
+              <Fab
                 className={"styled-button"}
-                style={{
-                  margin: "10px",
-                  display: "block",
-                  textAlign: "center",
-                }}
                 href={`/books/${bookId}/new-entry/${bookId}`}
                 variant="contained"
                 color="primary"
               >
                 Add a new journal entry
-              </Button>
+              </Fab>
             </List>
           </AccordionDetails>
         </Accordion>

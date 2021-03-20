@@ -1,52 +1,58 @@
 /* Green color scheme */
 .green .background {
-  background-color: #477754;
+  background-color: #62A321;
   background-image: url("https://images.pexels.com/photos/732548/pexels-photo-732548.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .green .styled-button {
-  background-color: #477754;
+  background-color: #62A321;
 }
 
+
+
 .green .list-icon {
-  background-color: #477754;
+  background-color: #62A321;
 }
 
 /* Red color scheme */
 .red .background {
-  background-color: #ca4541;
+  background-color: #FA4925;
   background-image: url("https://images.pexels.com/photos/751373/pexels-photo-751373.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .red .styled-button {
-  background-color: #ca4541;
+  background-color: #FA4925;
 }
 
 .red .list-icon {
-  background-color: #ca4541;
+  background-color: #FA4925;
 }
 
 /* Blue color scheme */
 .blue .background {
-  background-color: #0a8cbf;
+  background-color: #3287FA;
   background-image: url("https://images.pexels.com/photos/1934846/pexels-photo-1934846.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .blue .styled-button {
-  background-color: #0a8cbf;
+  background-color: #3287FA;
 }
 
 .blue .list-icon {
-  background-color: #0a8cbf;
+  background-color: #3287FA;
 }
 
 .no-spacing {
   margin: 0 !important;
   padding: 0 !important;
+}
+
+.styled-button:hover {
+  background-color: #474747 !important; 
 }
