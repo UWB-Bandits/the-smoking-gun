@@ -53,7 +53,7 @@ export default function DaysMenu(props) {
           ))}
         </Select>
       </FormControl>
-      <p>Days shown</p>
+      <p style={{fontFamily:"Raleway, sans-serif"}}>Days shown</p>
     </div>
   );
 }

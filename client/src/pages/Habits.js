@@ -164,7 +164,7 @@ function Habits() {
   }));
   //this returns a habit tracker page that a user can enter in new habits and mark them off daily as completed
   return (
-    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(221, 221, 221, 0.5)"}}>
       {/* Material-UI Box component serves as a wrapper component for most of the CSS utility needs. */}
       <Box>
         {/* custom component that displays a title nicely */}
@@ -175,7 +175,7 @@ function Habits() {
           <Link color="inherit" href="/dashboard" className={classes.link}>
             {/* Material-UI Icon Component */}
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+            <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>Dashboard</span>
           </Link>
           <Link
             color="inherit"
@@ -183,19 +183,19 @@ function Habits() {
             className={classes.link}
           >
             <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px", marginLeft: "2px"}}>{book.title}</span>
+            <span style={{fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>{book.title}</span>
           </Link>
           {/* Material-UI Typography component is used to present your design and content as clearly and efficiently as possible. */}
           <Typography color="textPrimary" className={classes.link}>
             <TrackChangesIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Habit Tracker</span>
+            <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>Habit Tracker</span>
           </Typography>
         </Breadcrumbs>
         <Typography color="textPrimary" className={classes.heading}>
         </Typography>
         {/* Material UI List component are continuous, vertical indexes of text or images. */}
         <List className={classes.root}>
-          <h2>Which habits have you completed today?</h2>
+          <h2 style={{fontFamily:"'Rock Salt', cursive"}}>Which habits have you completed today?</h2>
           {/*Material-Ui component that serves as a convenience wrapper */}
           <ListItem>
             {error && <Alert severity="error">{error}</Alert>}
@@ -210,7 +210,6 @@ function Habits() {
                 dense
                 button
                 onClick={handleToggle(value)}
-                style={{backgroundColor:"rgba(255, 255, 255, 0.75)"}}
               >
                 {/* Material UI ListItemIcon component is used as wrapper for an icon used within a list  */}
                 <ListItemIcon>
@@ -223,7 +222,7 @@ function Habits() {
                     inputProps={{ "aria-labelledby": labelId }}
                   />
                 </ListItemIcon>
-                <ListItemText id={labelId} primary={value.name} />
+                <ListItemText id={labelId}  ><span style={{fontFamily:"Raleway, sans-serif"}}>{value.name}</span></ListItemText>
                 {/* Material UI ListItemSecondaryAction allows a secondary action within a list item  */}
                 <ListItemSecondaryAction>
                 {/* Material UI IconButton component is clickable icon wrapper */}
@@ -245,7 +244,7 @@ function Habits() {
           addItem={addHabit}
           type="habit"
         />
-        <h2>See your progress:</h2>
+        <h2 style={{fontFamily:"'Rock Salt', cursive"}}>See your progress:</h2>
         {/* custom component that returns an option to change the number of days tracked on the habit tracker */}
         <DaysMenu style={{display:"inline"}} handleChange={handleDaysChange} resultsDays={resultsDays}/>
         {/* The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts. */}

@@ -49,7 +49,7 @@ const Settings = () => {
   };
   //this returns the settings page where a user can update their information or log out
   return (
-    <div style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+    <div style={{backgroundColor:"rgba(221, 221, 221, 0.5)"}}>
       {/* The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts. */}
       <Grid container>
         {/* custom component that returns the navigation through the various settings */}

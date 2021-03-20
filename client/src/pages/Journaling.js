@@ -162,7 +162,7 @@ function Journaling(props) {
   }));
   //this returns a journal entry page that a user create new journal entries, or update old ones
   return (
-    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(221, 221, 221, 0.5)"}}>
       {/* Material-UI Box component serves as a wrapper component for most of the CSS utility needs. */}
       <Box>
         {/* custom component that displays a title nicely */}
@@ -173,7 +173,7 @@ function Journaling(props) {
           <Link color="inherit" href="/dashboard" className={classes.link}>
             {/* Material-UI Icon Component */}
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+            <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>Dashboard</span>
           </Link>
           <Link
             color="inherit"
@@ -181,12 +181,12 @@ function Journaling(props) {
             className={classes.link}
           >
             <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px", marginLeft: "2px"}}>{book.title}</span>
+            <span style={{fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>{book.title}</span>
           </Link>
           {/* Material-UI Typography component is used to present your design and content as clearly and efficiently as possible. */}
           <Typography color="textPrimary" className={classes.link}>
             <PlaylistAddCheckIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>{props.type==="old" ? entry.title : "New Entry"}</span>
+            <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>{props.type==="old" ? entry.title : "New Entry"}</span>
           </Typography>
         </Breadcrumbs>
         {error && <Alert severity="error">{error}</Alert>}
