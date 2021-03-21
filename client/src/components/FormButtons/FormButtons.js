@@ -3,7 +3,7 @@ import React from "react";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
 //import Material-Ui component 
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 //initialize FormButton component and various props
 const FormButtons = ({ button1, button2, setPage, loading, handleSubmit }) => {
   //this returns buttons designed for the Login and SignUp form
@@ -11,19 +11,19 @@ const FormButtons = ({ button1, button2, setPage, loading, handleSubmit }) => {
     <div>
       <div>
         {/*Material-UI component that allows users to take actions, and make choices, with a single tap. */}
-        <Button
+        <Fab
           style={{
             margin: "25px 10px 25px auto",
             display: "block",
+            backgroundColor: "#FAB228"
           }}
           disabled={loading}
           variant="contained"
-          color="primary"
           type="submit"
           onClick={handleSubmit}
         >
           {button1}
-        </Button>
+        </Fab>
       </div>
       <p
         style={{
@@ -32,17 +32,18 @@ const FormButtons = ({ button1, button2, setPage, loading, handleSubmit }) => {
         }}
       >
         {button2[0]}
-        <Button
+        <Fab
           style={{
             margin: "10px 5px",
-            padding: "3px 8px ",
+            backgroundColor:"#474747",
+            color:"white"
           }}
           variant="contained"
           value={button2[1]}
           onClick={setPage}
         >
           {button2[1]}
-        </Button>
+        </Fab>
       </p>
     </div>
   );

@@ -47,8 +47,8 @@ const LogInForm = (props) => {
         marginLeft: "auto",
         marginBottom: "75px",
         borderRadius: "5px",
+        backgroundColor:"#DDDDDD"
       }}
-      bgcolor="background.paper"
     >
       <h2>Log In</h2>
       <form

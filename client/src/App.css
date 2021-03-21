@@ -65,10 +65,15 @@ p {
   font-family: "Raleway", sans-serif;
 }
 
-.MuiFormLabel-root {
+.MuiTypography-body1 {
+  font-family: "Raleway", sans-serif;
+}
+
+.MuiFab-root, .MuiFormLabel-root {
   font-family: "Raleway", sans-serif !important;
 }
 
-.MuiFab-root {
+.fc-button{
   font-family: "Raleway", sans-serif !important;
+  background-color: #474747 !important;
 }

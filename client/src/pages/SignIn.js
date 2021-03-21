@@ -185,17 +185,17 @@ const SignIn = () => {
             fontSize: "20px",
             fontFamily: "'La Belle Aurore', cursive",
             verticalAlign: "center",
+            backgroundColor:"#FAB228"
           }}
-          bgcolor="background.paper"
         >
-          <p>Welcome!</p>
-          <p>
+          <p style={{fontFamily:"'La Belle Aurore', cursive"}}>Welcome!</p>
+          <p style={{fontFamily:"'La Belle Aurore', cursive"}}>
             The Smoking Gun is your own digital bullet journal. Stay organized
             by keeping everything you need in one place. Keep as many journals
             as you need, each with the option to store lists, track habits, keep
             a calendar, write journal entries, or save digital drawings.
           </p>
-          <p>--- The Bandits</p>
+          <p style={{fontFamily:"'La Belle Aurore', cursive"}}>--- The Bandits</p>
         </Box>
       </Grid>
       <Grid
@@ -255,13 +255,14 @@ const SignIn = () => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
+            style={{backgroundColor:"#474747", color:"white"}}
           >
             <Typography className={classes.heading}>
-              How does it work?
+              <span style={{fontFamily:"Raleway, sans-serif"}}>How does it work?</span>
             </Typography>
           </AccordionSummary>
           {/* Material UI AccordionDetails is what is expanded when an Accordion component is clicked */}
-          <AccordionDetails>
+          <AccordionDetails style={{backgroundColor:"#DDDDDD"}}>
             <Grid style={{ margin: "20px" }} spacing={2} container>
               {Screenshots.map((entry) => (
                 //maps over the screenshots/descriptions of each page of the application to display
