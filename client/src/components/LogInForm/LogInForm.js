@@ -17,6 +17,8 @@ import Alert from "@material-ui/lab/Alert";
 import PropTypes from "prop-types";
 //import components
 import FormButtons from "../FormButtons/FormButtons";
+// import ForgotPassword component
+import ForgotPassword from "../ChangePassword/ForgotPassword";
 //initialize LogInForm component
 const LogInForm = (props) => {
   const { handleInputChange, setPage, handleSubmit, loading, error } = props;
@@ -102,6 +104,7 @@ const LogInForm = (props) => {
           loading={loading}
           handleSubmit={handleSubmit}
         />
+        <ForgotPassword />
       </form>
     </Box>
   );
