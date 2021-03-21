@@ -56,3 +56,19 @@
 .styled-button:hover {
   background-color: #474747 !important; 
 }
+
+h2, h1 {
+  font-family: "Rock Salt", cursive;
+}
+
+p {
+  font-family: "Raleway", sans-serif;
+}
+
+.MuiFormLabel-root {
+  font-family: "Raleway", sans-serif !important;
+}
+
+.MuiFab-root {
+  font-family: "Raleway", sans-serif !important;
+}
