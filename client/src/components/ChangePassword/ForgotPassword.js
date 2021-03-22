@@ -1,4 +1,6 @@
+// import react
 import React, { useState } from "react";
+// import Material-Ui components
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/Textfield";
@@ -11,6 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 //import Material-Ui Lab
 import Alert from "@material-ui/lab/Alert";
+// import auth context 
 import { useAuth } from "../../contexts/AuthContext";
 
 const styles = (theme) => ({
@@ -60,6 +63,7 @@ export default function ForgotPassword() {
   });
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const { passwordUpdate } = useAuth();
 
   const handleClickOpen = () => {
@@ -68,8 +72,9 @@ export default function ForgotPassword() {
   const handleClose = () => {
     setOpen(false);
     setError("");
+    setSuccess("");
   };
-  
+  // this checks the email for valid email format
   const checkEmail = (email) => {
     // Regex for valid email
     const verifyEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -78,20 +83,21 @@ export default function ForgotPassword() {
       ? setError("")
       : setError("Please enter a valid email address.");
   };
-
   //this handles input changes by changing the name of the event to the value of the target
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({...formData, [name]: value});
     console.log(formData);
   };
-  //this handles the submit by sending it to the API call to the database
+  //this handles the submit by checking if the form is blank, if not then checking if it's in email format and then prompting the passwordUpdate from the AuthContext
   const handleSubmit = () => {
     if (formData.email === "") {
       setError("Please enter a valid email address.");
     } else if (formData.email) {
       checkEmail(formData.email);
       passwordUpdate(formData.email);
+      setSuccess("Email sent! Please be sure to check your spam folder if you don't see it in your inbox in the next few minutes.");
+      setFormData({email: ""});
     }
   };
   // this returns a modal that allows users to reset their password 
@@ -107,6 +113,7 @@ export default function ForgotPassword() {
         <DialogContent dividers>
           {/* Material UI Alert component displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
           {error ? <Alert severity="error">{error}</Alert> : ""}
+          {success ? <Alert severity="success">{success}</Alert> : ""}
           <Typography gutterBottom>
             Please enter your email address used for your account to receive an email link to reset your password.
           </Typography>
