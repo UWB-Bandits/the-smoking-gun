@@ -19,6 +19,9 @@ import PropTypes from "prop-types";
 import FormButtons from "../FormButtons/FormButtons";
 // import ForgotPassword component
 import ForgotPassword from "../ChangePassword/ForgotPassword";
+//import firebase
+import { uiConfig, auth } from "../../utils/firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 //initialize LogInForm component
 const LogInForm = (props) => {
   const { handleInputChange, setPage, handleSubmit, loading, error } = props;
@@ -97,6 +100,10 @@ const LogInForm = (props) => {
           />
         </FormControl>
         {/* This is custom made component to provide buttons as needed */}
+        <div>
+          <h2>Or sign in with:</h2>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} /> 
+        </div>
         <FormButtons
           button1="Log In"
           button2={["Don't have an account? ", "Sign Up"]}
