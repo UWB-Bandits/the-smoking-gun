@@ -21,4 +21,16 @@ try {
   }
 }
 const fire = firebase;
+export const uiConfig = {
+  signInFlow: "popup",
+  signInSuccessUrl: "/",
+  signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID
+  ]
+};
+
+export const auth = fire.auth();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+
 export default fire;
