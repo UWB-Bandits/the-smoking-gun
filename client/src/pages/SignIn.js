@@ -116,7 +116,9 @@ const SignIn = () => {
         setError("Incorrect email or password");
       }
     } else if (formDisplay === "Sign Up" && !error) {
-      if (
+      if (!formData.email && !formData.password && !formData.avatar) {
+        setError("Please complete sign up form.");
+      } else if (
         //confirms password rules
         passwordsMatch("confirmPassword", formData.confirmPassword) &&
         checkPassword(null, formData.password)
