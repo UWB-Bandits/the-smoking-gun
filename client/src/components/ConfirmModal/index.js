@@ -84,8 +84,6 @@ export default function ConfirmModal(props) {
             variant="contained" 
             autoFocus 
             onClick={handleSubmit} 
-            color="primary" 
-            startIcon={<DeleteIcon />}
             style={{
               backgroundColor:"#474747", 
               color:"white",
@@ -94,6 +92,7 @@ export default function ConfirmModal(props) {
               borderStyle:"solid"
             }} 
           >
+            <DeleteIcon style={{marginRight:"5px"}}/>
             {buttonLabel}
           </Fab>
         </DialogActions>

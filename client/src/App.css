@@ -10,6 +10,9 @@
   background-color: #62A321;
 }
 
+.green .reverse-button {
+  color: #62A321;
+}
 
 
 .green .list-icon {
@@ -28,6 +31,10 @@
   background-color: #FA4925;
 }
 
+.red .reverse-button {
+  color: #FA4925 !important;
+}
+
 .red .list-icon {
   background-color: #FA4925;
 }
@@ -42,6 +49,10 @@
 
 .blue .styled-button {
   background-color: #3287FA;
+}
+
+.blue .reverse-button {
+  color: #3287FA;
 }
 
 .blue .list-icon {
