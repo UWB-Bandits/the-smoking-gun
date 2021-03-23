@@ -35,7 +35,7 @@ const ChangePassword = () => {
     <div style={{ textAlign: "center" }}>
       <h1>To reset your password, please</h1>
       <Fab
-        variant="contained"
+        variant="extended"
         style={{  
           color: "white",
           backgroundColor: "#474747",

@@ -42,7 +42,7 @@ const NewCalendarForm = (props) => {
             display: "block",
             maxWidth:"100px",
           }}
-          variant="contained"
+          variant="extended"
           color="primary"
           onClick={addCalendar}
         >Add

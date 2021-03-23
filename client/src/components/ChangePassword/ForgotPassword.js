@@ -136,7 +136,7 @@ export default function ForgotPassword() {
             Cancel
           </Button>
           <Button
-            variant="contained" 
+            variant="extended" 
             autoFocus 
             onClick={handleSubmit} 
             color="primary"

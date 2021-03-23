@@ -98,7 +98,7 @@ export default function PromptModal(props) {
           </Fab>
           <Fab 
             className={"styled-button"}
-            variant="contained" 
+            variant="extended" 
             autoFocus 
             onClick={handleSubmit}             
             style={{

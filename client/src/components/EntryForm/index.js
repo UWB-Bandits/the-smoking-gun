@@ -79,7 +79,7 @@ const EntryForm = (props) => {
                   width:"50%",
                   fontFamily: "Raleway, sans-serif"
               }}
-              variant="contained"
+              variant="extended"
               color="primary"
               onClick={onSave}
               >Save Entry
@@ -95,7 +95,7 @@ const EntryForm = (props) => {
                     width:"50%",
                     fontFamily: "Raleway, sans-serif"
                 }}
-                variant="contained"
+                variant="extended"
                 onClick={onSave}
                 >Save Entry
               </Fab>
@@ -110,7 +110,7 @@ const EntryForm = (props) => {
                     borderWidth:"2px",
                     borderStyle:"solid"
                 }}
-                variant="contained"
+                variant="extended"
                 onClick={onDelete}
                 >Delete Entry
               </Fab>

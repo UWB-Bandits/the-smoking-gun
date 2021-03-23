@@ -37,7 +37,7 @@ const NewListForm = (props) => {
         {/* Material-UI component that allows users to take actions, and make choices, with a single tap. */}
         <Fab
           className={"styled-button"}
-          variant="contained"
+          variant="extended"
           color="primary"
           onClick={addItem}
           style={{marginTop:"5px", maxWidth:"100px"}}

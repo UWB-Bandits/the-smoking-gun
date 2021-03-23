@@ -448,7 +448,7 @@ function IndexPage() {
               <Fab
                 className={"styled-button"}
                 href={`/books/${bookId}/new-entry/${bookId}`}
-                variant="contained"
+                variant="extended"
                 color="primary"
                 style={{marginTop:"5px"}}
               >

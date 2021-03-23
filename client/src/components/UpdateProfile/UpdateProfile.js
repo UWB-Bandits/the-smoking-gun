@@ -106,7 +106,7 @@ const UpdateProfile = () => {
         </div>
         {/* Material-UI component that allows users to take actions, and make choices, with a single tap. */}
         <Fab
-          variant="contained"
+          variant="extended"
           onClick={handleSubmit}
           style={{ 
             margin: "1rem .5rem", 

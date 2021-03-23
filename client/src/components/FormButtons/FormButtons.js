@@ -18,7 +18,7 @@ const FormButtons = ({ button1, button2, setPage, loading, handleSubmit }) => {
             backgroundColor: "#FAB228"
           }}
           disabled={loading}
-          variant="contained"
+          variant="extended"
           type="submit"
           onClick={handleSubmit}
         >
@@ -38,7 +38,7 @@ const FormButtons = ({ button1, button2, setPage, loading, handleSubmit }) => {
             backgroundColor:"#474747",
             color:"white"
           }}
-          variant="contained"
+          variant="extended"
           value={button2[1]}
           onClick={setPage}
         >

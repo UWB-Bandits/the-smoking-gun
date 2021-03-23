@@ -2,7 +2,7 @@
 .link-book {
   text-align: center;
   margin: 10px 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Raleway, sans-serif;
 }
 
 .link-home a {
@@ -24,7 +24,7 @@
   top: 0;
   height: 100%;
   width: 200px;
-  background-color: #859488;
+  background-color: #DDDDDD;
 }
 
 #showSettings {
@@ -32,13 +32,14 @@
   top: 15px;
   right: -90px;
   padding: 5px 10px;
-  background-color: #888787;
+  background-color: #474747;
+  color: white !important;
   border: none;
   cursor: pointer;
   font-size: large;
   border-radius: 5px;
   box-shadow: 2px 2px 5px #4e4e4eb7;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Raleway, sans-serif;
 }
 #showSettings:focus {
   outline: none;
@@ -55,7 +56,7 @@
   color: #212121;
   list-style: none;
   margin: 0.2rem 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Raleway, sans-serif;
 }
 
 #canvasSettings li.active {
@@ -69,13 +70,17 @@
 }
 .save-btn {
   padding: 10px 15px;
-  background-color: #888787;
+  background-color: #DDDDDD;
   border: none;
   cursor: pointer;
   font-size: large;
   border-radius: 5px;
   box-shadow: 2px 2px 5px #4e4e4eb7;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  display: inline-block;
-  margin: 0 25.5px;
+  font-family: Raleway, sans-serif;  
+  margin-right: auto;
+  margin-left: auto;
+}
+#saveDiv{
+  width: 100%;
+  text-align: center;
 }

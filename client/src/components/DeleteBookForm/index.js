@@ -149,7 +149,7 @@ const DeleteBookForm = (props) => {
             Cancel
           </Fab>
         <Fab 
-            variant="contained" 
+            variant="extended" 
             autoFocus 
             onClick={handle} 
             color="primary" 

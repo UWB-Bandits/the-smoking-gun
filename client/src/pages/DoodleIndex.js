@@ -129,7 +129,7 @@ const DoodleIndex = () => {
       </Breadcrumbs>
       <div style={{ margin: "2rem 0", textAlign: "center" }}>
         <Fab
-          variant="contained"
+          variant="extended"
           className={`${colorScheme} styled-button`}>
           {/* <h2> */}
           <Link
