@@ -182,10 +182,11 @@ const SignIn = () => {
             width: "80%",
             margin: "20px auto",
             borderRadius: "5px",
-            fontSize: "20px",
+            fontSize: "24px",
             fontFamily: "'La Belle Aurore', cursive",
             verticalAlign: "center",
-            backgroundColor:"#FAB228"
+            backgroundColor:"#474747",
+            color:"white"
           }}
         >
           <p style={{fontFamily:"'La Belle Aurore', cursive"}}>Welcome!</p>

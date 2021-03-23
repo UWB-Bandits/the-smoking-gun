@@ -19,7 +19,8 @@ import DoodleSlider from "../components/DoodleSlider/DoodleSlider";
 //import context
 import { useAuth } from "../contexts/AuthContext";
 import TitleItem from "../components/TitleItem";
-import { Button } from "@material-ui/core";
+import { Fab
+ } from "@material-ui/core";
 
 //initialize the classes variable with our makeStyles hook
 const classes = makeStyles((theme) => ({
@@ -127,7 +128,9 @@ const DoodleIndex = () => {
         </Typography>
       </Breadcrumbs>
       <div style={{ margin: "2rem 0", textAlign: "center" }}>
-        <Button className={`${colorScheme} styled-button`}>
+        <Fab
+          variant="contained"
+          className={`${colorScheme} styled-button`}>
           {/* <h2> */}
           <Link
             style={{
@@ -140,7 +143,8 @@ const DoodleIndex = () => {
             Make a New Doodle?
           </Link>
           {/* </h2> */}
-        </Button>
+        </Fab
+        >
       </div>
       {/* _______________________________Previous Doodles_____________________________ */}
       <DoodleSlider

@@ -33,15 +33,14 @@ const DoodleSlider = ({ doodles, deleteDoodle, colorScheme }) => {
                 {/* Material-Ui component that allow users to take actions, and make choices, with a single tap.*/}
                 <Button
                   className={"deleteDoodle doodle-icon-btn"}
-                  style={{ backgroundColor: "darkgray" }}
+                  style={{ backgroundColor: "#474747" }}
                   id={item._id}
                   onClick={deleteDoodle}
                 >
                   {/* Material Ui Icon component */}
                   <DeleteIcon
                     fontSize="large"
-                    color="secondary"
-                    // style={{ color: "white" }}
+                    style={{ color: "white" }}
                   />
                 </Button>
               </div>
