@@ -98,12 +98,10 @@ const LogInForm = (props) => {
               </InputAdornment>
             }
           />
+          <ForgotPassword />
         </FormControl>
         {/* This is custom made component to provide buttons as needed */}
-        <div>
-          <h2>Or sign in with:</h2>
-          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} /> 
-        </div>
+
         <FormButtons
           button1="Log In"
           button2={["Don't have an account? ", "Sign Up"]}
@@ -111,7 +109,11 @@ const LogInForm = (props) => {
           loading={loading}
           handleSubmit={handleSubmit}
         />
-        <ForgotPassword />
+        
+        <div>
+          <h2>Or sign in with:</h2>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} /> 
+        </div>
       </form>
     </Box>
   );
