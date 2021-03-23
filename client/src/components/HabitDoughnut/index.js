@@ -58,7 +58,8 @@ export default function HabitDoughnut(props) {
                     title:{
                     display:true,
                     text: props.name,
-                    fontSize:20
+                    fontSize:20,
+                    fontFamily:"'Rock Salt', cursive"
                     },
                     legend:{
                     display:false,

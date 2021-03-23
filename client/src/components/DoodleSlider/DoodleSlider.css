@@ -3,7 +3,7 @@
 .doodleItem img {
   width: 300px;
   height: 300px;
-  background-color: #f3f3f3;
+  background-color: #DDDDDD;
 }
 /* Slider  */
 .horizontalSlider {
@@ -23,27 +23,23 @@
   margin: 1rem;
   text-align: center;
   min-width: 30%;
-  box-shadow: 4px 3px 7px #4e4e4e6b;
+  box-shadow: 4px 3px 7px #474747;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  background-color: rgb(221 221 221);
+  background-color: #DDDDDD;
   padding-left: 5px;
   padding-right: 5px;
   box-sizing: border-box;
 }
 /* icon */
 .iconContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   padding: 10px;
   max-width: 300px;
   width: 80%;
-  margin: 10px auto;
+  margin: auto;
 }
 /* button */
 button.deleteDoodle > * {

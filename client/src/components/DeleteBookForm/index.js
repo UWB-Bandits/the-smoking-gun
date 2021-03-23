@@ -3,7 +3,7 @@ import React from "react";
 //import withStyles function from Material-UI
 import { withStyles } from "@material-ui/core/styles";
 // import Material-UI components for Dialog Modal
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
@@ -126,33 +126,44 @@ const DeleteBookForm = (props) => {
   }
   //this returns a form to the delete modal with correlating deletion information
   return (
-    <div>
+    <div style={{backgroundColor: "#DDDDDD"}}>
       {/* Material-UI component that informs users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
-      <DialogTitle id="form-dialog-title" onClose={props.handleClose} style={{textTransform: "capitalize"}}>
-        {buttonText}
+      <DialogTitle style={{color:"white",   backgroundColor:"#474747"}} id="form-dialog-title" onClose={props.handleClose} >
+      <span style={{ fontFamily: "'Rock Salt', cursive"}}>{buttonText} </span>
       </DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>
-          Are you sure you want to {buttonText}{": "}{props.title}{props.name}?
+          <span style={{ fontFamily: "'Raleway', sans-serif"}}>Are you sure you want to {buttonText}{": "}{props.title}{props.name}</span>?
         </Typography>
       </DialogContent>
-      <DialogActions>
-        <Button 
+      <DialogActions style={{backgroundColor:"#474747"}}>
+        <Fab 
+            style={{
+              color:"#474747",
+              fontWeight:"bold",
+
+            }}
             variant="outlined" 
             onClick={props.handleClose} 
-            color="primary"
           >
             Cancel
-          </Button>
-        <Button 
+          </Fab>
+        <Fab 
             variant="contained" 
             autoFocus 
             onClick={handle} 
             color="primary" 
-            startIcon={<DeleteIcon />}
+            style={{
+              backgroundColor:"#474747", 
+              color:"white",
+              borderColor:"white",
+              borderWidth:"1px",
+              borderStyle:"solid"
+            }}
           >
+            <DeleteIcon style={{marginRight:"5px"}}/>
             {buttonText}
-          </Button>
+          </Fab>
       </DialogActions>
     </div>
   );

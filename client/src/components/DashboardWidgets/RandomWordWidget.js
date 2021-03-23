@@ -73,7 +73,7 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 //export and initialize the WordCard component that takes in randomWord object
-export default function WordCard({ randomWord }) {
+export default function WordCard({ randomWord, buttonSize }) {
   //initialize the classes variable with our useStyles hook
   const classes = useStyles();
   //sets the state variable hooks
@@ -90,22 +90,22 @@ export default function WordCard({ randomWord }) {
   return (
     <div style={{marginRight: "10px", marginLeft: "10px", marginBottom: "10px"}}>
       {/* Material-UI's floating action button appears in front of all screen content, typically as a circular shape with an icon in its center.  */}
-      <Fab color="secondary" aria-label="word of the day" variant="extended" onClick={handleClickOpen}>
+      <Fab style={{backgroundColor:"#474747", color:"white"}} aria-label="word of the day" variant="extended" onClick={handleClickOpen}>
         {/* Material-UI's icon component */}
-        <LocalLibraryIcon className={classes.extendedIcon} />
-        Word of the Day
+        <LocalLibraryIcon className={buttonSize==="large" ? classes.extendedIcon: ""} />
+        {buttonSize==="large" ? "Word of the Day" : ""}
       </Fab>
       {/* Material-UI component that inform users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
-      <Dialog style={{backgroundColor: "#CACACC"}} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            {randomWord[0].word}
+      <Dialog  onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+          <DialogTitle style={{backgroundColor: "#474747", color:"white",  }} id="customized-dialog-title" onClose={handleClose}>
+            <span style={{ fontFamily: "'Rock Salt', cursive", }}>{randomWord[0].word}</span>
           </DialogTitle>
-          <DialogContent dividers>
-            <Typography gutterBottom>
+          <DialogContent style={{backgroundColor: "#DDDDDD",}} dividers>
+            <Typography style={{ fontFamily: "'Raleway', sans-serif", }} gutterBottom>
               {randomWord[0].definition}
             </Typography>
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{backgroundColor: "#474747", color:"white", fontFamily: "'Raleway', sans-serif",}}>
             Pronunciation: {randomWord[0].pronunciation}
           </DialogActions>
         </Dialog>
@@ -117,5 +117,6 @@ WordCard.propTypes = {
   randomWord: PropTypes.array,
   word: PropTypes.string,
   definition: PropTypes.string,
-  pronunciation: PropTypes.string
+  pronunciation: PropTypes.string,
+  buttonSize: PropTypes.string
 };

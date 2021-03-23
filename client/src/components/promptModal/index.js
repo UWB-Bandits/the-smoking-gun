@@ -3,7 +3,7 @@ import React from "react";
 // import withStyles function from Material-UI
 import { withStyles } from "@material-ui/core/styles";
 // import Material-UI components for Dialog Modal
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
@@ -67,14 +67,14 @@ export default function PromptModal(props) {
     <div>
       {/* Material-UI component that informs users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
       <Dialog onClose={handleClose} aria-labelledby="form-dialog-title" open={open}>
-        <DialogTitle id="form-dialog-title" onClose={handleClose}>
-          Add Event
+        <DialogTitle id="form-dialog-title" onClose={handleClose} style={{backgroundColor:"#474747", color:"white"}}>
+          <h2>Add Event</h2>
         </DialogTitle>
-        <DialogContent dividers>
+        <DialogContent dividers style={{backgroundColor:"#DDDDDD"}}>
           {/*Material-Ui component that serves as a convenience wrapper */}
           {error && <Alert severity="error">{error}</Alert>}
           <Typography>
-            {prompt}
+            <p>{prompt}</p>
           </Typography>
           {/* Material-Ui component that serves as a convenience wrapper */}
           <TextField
@@ -87,24 +87,31 @@ export default function PromptModal(props) {
             onChange={handleInputChange}
           />
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{backgroundColor:"#474747"}}>
           {/* Material-UI component that allows users to take actions, and make choices, with a single tap. */}
-          <Button 
+          <Fab 
             variant="outlined" 
             onClick={handleClose} 
-            color="primary"
+
           >
             Cancel
-          </Button>
-          <Button 
+          </Fab>
+          <Fab 
+            className={"styled-button"}
             variant="contained" 
             autoFocus 
-            onClick={handleSubmit} 
-            color="primary" 
-            startIcon={<SaveIcon />}
-          >
+            onClick={handleSubmit}             
+            style={{
+              backgroundColor:"#474747", 
+              color:"white",
+              borderColor:"white",
+              borderWidth:"1px",
+              borderStyle:"solid"
+            }} 
+            >
+            <SaveIcon style={{marginRight:"5px"}}/>
             {buttonLabel}
-          </Button>
+          </Fab>
         </DialogActions>
       </Dialog>
     </div>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 //import withStyles function from Material-UI
 import { withStyles } from "@material-ui/core/styles";
 // import Material-UI components for Dialog Modal
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
@@ -83,6 +83,13 @@ const EditBookForm = (props) => {
       colorScheme: props.colorScheme
     });
   }, []);
+  //sets up prop types for the EditBOokForm component
+  EditBookForm.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    colorScheme: PropTypes.string,
+    id: PropTypes.string
+  };  
   //This changes the formData.colorScheme state to the event target
   const handleThemeChange = (event) => {
     setFormData({ ...formData, colorScheme: event.target.value });
@@ -116,16 +123,16 @@ const EditBookForm = (props) => {
   };
   //This returns a form that the user can use to update the current book title, description, and colorScheme 
   return (
-    <div>
+    <div style={{backgroundColor: "#DDDDDD"}}>
       {/* Material-UI component that informs users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
-      <DialogTitle id="form-dialog-title" onClose={props.handleClose} style={{textTransform: "capitalize"}}>
-        Edit {"'"}{props.title}{"'"}
+      <DialogTitle id="form-dialog-title" onClose={props.handleClose} style={{color:"white",   backgroundColor:"#474747"}}>
+        <span style={{fontFamily: "'Rock Salt', cursive",}}>Edit {"'"}{props.title}{"'"}</span>
       </DialogTitle>
       <DialogContent dividers>
         {/*Material-Ui component that serves as a convenience wrapper */}
         {error && <Alert severity="error">{error}</Alert>}
         <TextField
-            style={{ width: "100%" }}
+            style={{ width: "100%", }}
             id="newBookTitle"
             label="Title"
             type="text"
@@ -160,23 +167,33 @@ const EditBookForm = (props) => {
             </Select>
           </FormControl>
       </DialogContent>
-      <DialogActions>
-        <Button 
-            variant="outlined" 
+      <DialogActions style={{backgroundColor:"#474747"}}>
+        <Fab 
+            style={{
+              color:"#474747",
+              fontWeight:"bold",
+
+            }}
+            variant="contained" 
             onClick={props.handleClose} 
-            color="primary"
           >
             Cancel
-          </Button>
-        <Button 
+          </Fab>
+        <Fab 
             variant="contained" 
             autoFocus 
             onClick={handleSubmit} 
-            color="primary" 
-            startIcon={<SaveIcon />}
+            style={{
+              backgroundColor:"#474747", 
+              color:"white",
+              borderColor:"white",
+              borderWidth:"1px",
+              borderStyle:"solid"
+            }}
           >
+            <SaveIcon style={{marginRight:"5px"}}/>
             Save Book
-          </Button>
+          </Fab>
       </DialogActions>
     </div>
   );

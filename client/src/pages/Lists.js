@@ -150,7 +150,7 @@ function Lists() {
   }));
   //this returns a List page that holds stores items and their completion status
   return (
-    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(221, 221, 221, 0.5)"}}>
       {/* Material-UI Box component serves as a wrapper component for most of the CSS utility needs. */}
       <Box>
         {/* custom component that displays the title of the book */}
@@ -161,7 +161,7 @@ function Lists() {
           <Link color="inherit" href="/dashboard" className={classes.link}>
             {/* Material-UI Icon Component */}
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+            <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>Dashboard</span>
           </Link>
           <Link
             color="inherit"
@@ -169,12 +169,12 @@ function Lists() {
             className={classes.link}
           >
             <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px", marginLeft: "2px"}}>{list.bookName}</span>
+            <span style={{fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>{list.bookName}</span>
           </Link>
           {/* Material-UI Typography component is used to present your design and content as clearly and efficiently as possible. */}
           <Typography color="textPrimary" className={classes.link}>
             <PlaylistAddCheckIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>{list.name}</span>
+            <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>{list.name}</span>
           </Typography>
         </Breadcrumbs>
         {/* Material UI List component are continuous, vertical indexes of text or images. */}
@@ -205,7 +205,7 @@ function Lists() {
                     inputProps={{ "aria-labelledby": labelId }}
                   />
                 </ListItemIcon>
-                <ListItemText id={labelId} primary={value.name} />
+                <ListItemText id={labelId} ><span style={{fontFamily: "'Raleway', sans-serif",}}>{value.name}</span> </ListItemText>
                 {/* Material UI ListItemSecondaryAction allows a secondary action within a list item  */}
                 <ListItemSecondaryAction>
                   {/* Material UI IconButton component is clickable icon wrapper */}

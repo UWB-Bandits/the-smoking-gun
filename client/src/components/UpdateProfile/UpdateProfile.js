@@ -3,7 +3,7 @@ import React, { useState } from "react";
 //import Material-UI components
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
-import { Button, Link } from "@material-ui/core";
+import { Fab, Link } from "@material-ui/core";
 //import Material-UI labs
 import { Alert, AlertTitle } from "@material-ui/lab";
 //import API routes
@@ -105,14 +105,18 @@ const UpdateProfile = () => {
           />
         </div>
         {/* Material-UI component that allows users to take actions, and make choices, with a single tap. */}
-        <Button
+        <Fab
           variant="contained"
-          color="primary"
           onClick={handleSubmit}
-          style={{ margin: "1rem .5rem" }}
+          style={{ 
+            margin: "1rem .5rem", 
+            color: "white",
+            backgroundColor: "#474747",
+            width:"100px"
+          }}
         >
           Submit
-        </Button>
+        </Fab>
       </form>
     </Box>
   );

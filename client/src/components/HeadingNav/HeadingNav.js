@@ -34,7 +34,7 @@ function HeadingNav() {
         display: "flex",
         justifyContent: "space-between",
         marginBottom: "10px",
-        backgroundColor: "#cacacc",
+        backgroundColor: "#DDDDDD",
         padding: "5px"
       }}
     >

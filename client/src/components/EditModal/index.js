@@ -37,7 +37,7 @@ export default function EditModal(props) {
   return (
     <div>
       {/* Material-UI component that allows users to take actions, and make choices, with a single tap that wraps an Icon */}
-      <IconButton color="primary" aria-label="Edit Book" component="span" onClick={handleOpen} >
+      <IconButton style={{color:"#474747"}} aria-label="Edit Book" component="span" onClick={handleOpen} >
         {/* Material-UI Icon component */}
         <EditIcon />
       </IconButton>

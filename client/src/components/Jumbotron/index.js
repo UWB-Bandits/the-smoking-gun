@@ -6,8 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-//import image
-import Hero from "../../utils/images/hero.jpg";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
 //initialize useStyles variable that uses Material-UI's styling solution makeStyles() function
@@ -15,20 +13,20 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     marginBottom: "10px",
-    backgroundImage: `url(${Hero})`,
-    backgroundSize: "100%"
+    backgroundColor:"#FAB228",
+    maxWidth: 700,
+    marginLeft: "auto",
+    marginRight:"auto"
   },
   title: {
     fontSize: 30,
     fontFamily: "'Rock Salt', cursive",
     textAlign: "center",
     fontWeight: "bold",
-    backgroundColor: "rgba(204, 204, 204, 0.5)"
   },
   date: {
     fontSize:25,
     textAlign: "center",
-    backgroundColor: "rgba(204, 204, 204, 0.5)",
     fontFamily: "'Raleway', sans-serif",
   }
 });
@@ -50,7 +48,7 @@ export default function Jumbotron(props) {
         <Typography className={classes.title} gutterBottom>
           Welcome {props.userName}!
         </Typography>
-        <Typography className={classes.date} gutterBottom>
+        <Typography className={classes.date}>
           {date}
         </Typography>
       </CardContent>

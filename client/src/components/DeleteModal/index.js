@@ -37,7 +37,7 @@ export default function DeleteModal(props) {
   return (
     <div>
       {/* Material-UI component that allows users to take actions, and make choices, with a single tap that wraps an Icon */}
-      <IconButton color="secondary" aria-label="Delete Book" component="span" onClick={handleOpen}>
+      <IconButton style={{color:"#474747"}} aria-label="Delete Book" component="span" onClick={handleOpen}>
         {/* Material-UI Icon component */}
         <DeleteIcon />
       </IconButton>

@@ -19,7 +19,8 @@ import DoodleSlider from "../components/DoodleSlider/DoodleSlider";
 //import context
 import { useAuth } from "../contexts/AuthContext";
 import TitleItem from "../components/TitleItem";
-import { Button } from "@material-ui/core";
+import { Fab
+ } from "@material-ui/core";
 
 //initialize the classes variable with our makeStyles hook
 const classes = makeStyles((theme) => ({
@@ -88,7 +89,7 @@ const DoodleIndex = () => {
   return (
     <div
       className={colorScheme}
-      style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
+      style={{ backgroundColor: "rgba(221, 221, 221, 0.5)"}}
     >
       <TitleItem title="View or Make doodles" />
       {/* Material-UI Breadcrumb component allow users to make selections from a range of values. */}
@@ -100,7 +101,7 @@ const DoodleIndex = () => {
             style={{ verticalAlign: "middle" }}
             className={classes.icon}
           />
-          <span style={{ fontSize: "12px", marginLeft: "2px" }}>Dashboard</span>
+          <span style={{ fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif", }}>Dashboard</span>
         </Link>
         <Link
           color="inherit"
@@ -111,7 +112,7 @@ const DoodleIndex = () => {
             style={{ verticalAlign: "middle" }}
             className={classes.icon}
           />
-          <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+          <span style={{ fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif", }}>
             {bookTitle}
           </span>
         </Link>
@@ -121,13 +122,15 @@ const DoodleIndex = () => {
             style={{ verticalAlign: "middle" }}
             className={classes.icon}
           />
-          <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+          <span style={{ fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif", }}>
             Doodle Index
           </span>
         </Typography>
       </Breadcrumbs>
       <div style={{ margin: "2rem 0", textAlign: "center" }}>
-        <Button className={`${colorScheme} styled-button`}>
+        <Fab
+          variant="contained"
+          className={`${colorScheme} styled-button`}>
           {/* <h2> */}
           <Link
             style={{
@@ -140,7 +143,8 @@ const DoodleIndex = () => {
             Make a New Doodle?
           </Link>
           {/* </h2> */}
-        </Button>
+        </Fab
+        >
       </div>
       {/* _______________________________Previous Doodles_____________________________ */}
       <DoodleSlider

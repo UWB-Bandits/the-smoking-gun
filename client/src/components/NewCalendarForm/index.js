@@ -2,7 +2,7 @@
 import React from "react";
 //import Material UI components
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import Box from "@material-ui/core/Box";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
@@ -35,17 +35,18 @@ const NewCalendarForm = (props) => {
           />
         </div>
         {/* Material-UI component that allows users to take actions, and make choices, with a single tap. */}
-        <Button
+        <Fab
           className={"styled-button"}
           style={{
-            margin: "10px",
+            marginTop: "5px",
             display: "block",
+            maxWidth:"100px",
           }}
           variant="contained"
           color="primary"
           onClick={addCalendar}
         >Add
-        </Button>
+        </Fab>
       </form>
     </Box>
   );

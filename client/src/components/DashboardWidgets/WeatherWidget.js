@@ -74,7 +74,7 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 //export and initialize the Weather component that takes in weather object
-export default function Weather({ weather }) {
+export default function Weather({ weather, buttonSize }) {
   //initialize the classes variable with our useStyles hook
   const classes = useStyles();
   //sets the state variable hooks
@@ -109,42 +109,42 @@ export default function Weather({ weather }) {
   return (
     <div style={{marginRight: "10px", marginLeft: "10px", marginBottom: "10px"}}>
       {/* Material-UI's floating action button appears in front of all screen content, typically as a circular shape with an icon in its center.  */}
-      <Fab color="primary" aria-label="current weather" variant="extended" onClick={handleClickOpen}>
+      <Fab style={{backgroundColor:"#474747", color:"white"}} aria-label="current weather" variant="extended" onClick={handleClickOpen}>
         {/* Material-UI's icon component */}
-        <WbSunnyIcon className={classes.extendedIcon} />
-        Current Weather
+        <WbSunnyIcon className={buttonSize==="large" ? classes.extendedIcon : ""} />
+        {buttonSize==="large" ? "Current Weather": ""}
       </Fab>
       {/* Material-UI component that inform users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
-      <Dialog style={{backgroundColor: "#CACACC"}} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          <img src={weatherIcon} /> 
-          {cityName} 
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle style={{backgroundColor: "#474747", color:"white",  }} id="customized-dialog-title" onClose={handleClose}>
+          <img style={{ verticalAlign:"top"}} src={weatherIcon} /> 
+          <span style={{ fontFamily: "'Rock Salt', cursive", verticalAlign:"top",}}>{cityName}</span> 
         </DialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }} gutterBottom>
             {weatherText}
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {temperature} &deg;F
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {feelsLike} &deg;F
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {wind}
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {gusts}
           </Typography>
-          <Typography gutterBottom>
+          <Typography style={{ fontFamily: "'Raleway', sans-serif", }}  gutterBottom>
             {humidity}
           </Typography>
         </DialogContent>
         <DialogActions>
-        {updated}
+          <span style={{ fontFamily: "'Raleway', sans-serif", }}>{updated}</span>
         </DialogActions>
-        <DialogActions>
-          Powered by <a href="https://www.weatherapi.com/" title="Weather API"> WeatherAPI.com</a>
+        <DialogActions style={{backgroundColor: "#474747", color:"white", fontFamily: "'Raleway', sans-serif", }}>
+          Powered by <a href="https://www.weatherapi.com/" title="Weather API" style={{marginLeft:"10px"}}> WeatherAPI.com</a>
         </DialogActions>
       </Dialog>
     </div>
@@ -165,5 +165,6 @@ Weather.propTypes = {
     gust_mph: PropTypes.string,
     wind_mph: PropTypes.string,
     humidity: PropTypes.string,
-    updated: PropTypes.string
+    updated: PropTypes.string,
+    buttonSize: PropTypes.string
 };

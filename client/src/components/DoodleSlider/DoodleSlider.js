@@ -18,30 +18,28 @@ const DoodleSlider = ({ doodles, deleteDoodle, colorScheme }) => {
         <div className="sliderContainer">
           {doodles.map((item) => (
             <div key={item._id} className="doodleItem">
-              <p>{item.title}</p>
+              <h2>{item.title}</h2>
               <img src={item.url} alt={`Doodle for ${item.title}`} />
               <div className="iconContainer">
                 <a href={item.url} download={item.title}>
                   <Button
-                    className={`doodle-icon-btn ${colorScheme} styled-button`}
+                    className={`doodle-icon-btn ${colorScheme} reverse-button`}
                   >
                     {/* Material Ui Icon component */}
-                    <GetAppIcon fontSize="large" style={{ color: "white" }} />
+                    <GetAppIcon fontSize="large" />
                   </Button>
                 </a>
 
                 {/* Material-Ui component that allow users to take actions, and make choices, with a single tap.*/}
                 <Button
                   className={"deleteDoodle doodle-icon-btn"}
-                  style={{ backgroundColor: "darkgray" }}
                   id={item._id}
                   onClick={deleteDoodle}
                 >
                   {/* Material Ui Icon component */}
                   <DeleteIcon
                     fontSize="large"
-                    color="secondary"
-                    // style={{ color: "white" }}
+                    style={{ color: "#474747" }}
                   />
                 </Button>
               </div>

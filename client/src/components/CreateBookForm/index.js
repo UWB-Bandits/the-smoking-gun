@@ -4,7 +4,7 @@ import React from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import Box from "@material-ui/core/Box";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -33,10 +33,10 @@ const CreateBookForm = (props) => {
         margin: "10px auto",
         minWidth: "300px",
         borderRadius: "5px",
+        backgroundColor:"#DDDDDD"
       }}
-      bgcolor="background.paper"
     >
-      <h2>Create a New Book</h2>
+      <h2 style={{ fontFamily: "'Rock Salt', cursive", }}>Create a New Book</h2>
       <form
         style={{
           minWidth: "300px",
@@ -86,17 +86,18 @@ const CreateBookForm = (props) => {
           </FormControl>
         </div>
         {/*Material-Ui component allow users to take actions, and make choices, with a single tap. */}
-        <Button
+        <Fab
           style={{
             margin: "25px 10px 25px auto",
             display: "block",
+            backgroundColor:"#474747",
+            color:"white"
           }}
           variant="contained"
-          color="primary"
           onClick={handleSubmit}
         >
           Create Book Now
-        </Button>
+        </Fab>
       </form>
     </Box>
   );

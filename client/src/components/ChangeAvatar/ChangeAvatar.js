@@ -8,6 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
+import Fab from "@material-ui/core/Fab";
 //import API route handler
 import API from "../../utils/API";
 //require in gravatar
@@ -156,7 +157,18 @@ const ChangeAvatar = (props) => {
           </FormControl>
         </div>
       </form>
-      <button onClick={updateAvatar}>Update Avatar</button>
+      <Fab
+        variant="contained"
+        style={{ 
+          margin: "1rem .5rem", 
+          color: "white",
+          backgroundColor: "#474747",
+          width:"150px" 
+        }}
+          onClick={updateAvatar} 
+      >
+        Update Avatar
+      </Fab>
       <h2>What is Gravatar?</h2> 
       <p>
         A Gravatar is a Globally Recognized Avatar. 
