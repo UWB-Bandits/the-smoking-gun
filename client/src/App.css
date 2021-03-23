@@ -77,3 +77,15 @@ p {
   font-family: "Raleway", sans-serif !important;
   background-color: #474747 !important;
 }
+
+.blue .fc-h-event .fc-event-main, .blue .fc-v-event .fc-event-main{
+  background-color: #3287FA;
+}
+
+.red .fc-h-event .fc-event-main, .red .fc-v-event .fc-event-main{
+  background-color: #FA4925;
+}
+
+.green .fc-h-event .fc-event-main, .green .fc-v-event .fc-event-main{
+  background-color: #62A321;
+}

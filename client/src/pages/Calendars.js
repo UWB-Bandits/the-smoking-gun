@@ -101,6 +101,7 @@ function Calendars() {
       </Breadcrumbs>
       {/* A custom component that renders a fullCalendar.io react calendar component */}
       <Calendar calendar={calendar}/>
+      <div style={{marginBottom:"50px"}}>{""}</div>
     </div>
   );
 }
