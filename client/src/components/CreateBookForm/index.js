@@ -10,10 +10,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
-//initialize the CreateBookForm component
 //import Material-UI lab
 import Alert from "@material-ui/lab/Alert";
-
+//initialize the CreateBookForm component
 const CreateBookForm = (props) => {
   //deconstruct and initialize variables from props
   const { 

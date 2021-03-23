@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,4 +22,21 @@ try {
   }
 }
 const fire = firebase;
+
+export const uiConfig = {
+  signInFlow: "popup",
+  signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID
+  ],
+  callbacks: {
+    signInSuccessWithAuthResult: () => {
+      console.log("Success!");
+    }
+  }
+};
+
+export const auth = fire.auth();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+
 export default fire;
