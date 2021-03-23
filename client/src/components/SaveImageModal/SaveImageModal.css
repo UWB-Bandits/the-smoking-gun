@@ -13,13 +13,13 @@
 }
 /* modal */
 .modal {
-  background-color: white;
+  background-color: #DDDDDD;
   min-height: 400px;
   min-width: 325px;
   width: 30%;
   text-align: center;
   border-radius: 5px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Raleway, sans-serif;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -44,18 +44,16 @@
   font-size: large;
   border-radius: 5px;
   box-shadow: 2px 2px 5px #4e4e4eb7;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Raleway, sans-serif;
 }
 /* button */
 .close-btn {
-  padding: 5px 10px;
-  background-color: #e7410f;
+  background-color: #DDDDDD;
   border: none;
   cursor: pointer;
   font-size: larger;
   border-radius: 5px;
-  box-shadow: 1px 1px 3px #00000080;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Raleway, sans-serif;
   position: absolute;
   top: 0;
   right: 0;
@@ -76,7 +74,7 @@
 }
 .inputContainer {
   margin: 1rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Raleway, sans-serif;
 }
 /* media query */
 @media only screen and (max-width: 1250px) {

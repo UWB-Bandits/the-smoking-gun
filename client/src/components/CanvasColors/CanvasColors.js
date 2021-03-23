@@ -21,9 +21,10 @@ const CanvasColors = ({ handleUpdate }) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        textAlign:"center"
       }}
     >
-      <h4>Change Pen Color</h4>
+      <h2>Change Pen Color</h2>
       <div>
         {/* Blue Color */}
         <button
@@ -87,7 +88,7 @@ const CanvasColors = ({ handleUpdate }) => {
           htmlFor="colorPicker"
           onClick={handleUpdate}
         >
-          Color Picker
+          Choose a custom color
         </label>
       </div>
     </div>

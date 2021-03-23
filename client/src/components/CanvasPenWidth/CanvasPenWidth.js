@@ -14,9 +14,10 @@ const CanvasPenWidth = ({ handleUpdate, canvasSetting }) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        textAlign: "center"
       }}
     >
-      <h4>Change Pen Width</h4>
+      <h2>Change Pen Width</h2>
       <div>
         {/* extra small */}
         <button

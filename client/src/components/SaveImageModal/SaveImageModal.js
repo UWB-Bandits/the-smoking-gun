@@ -8,6 +8,7 @@ import "./SaveImageModal.css";
 import API from "../../utils/API";
 //import useParams function from react-router-dom
 import { useParams } from "react-router-dom";
+import Fab from "@material-ui/core/Fab";
 //initialize SaveImageModal component that takes in state variables
 const SaveImageModal = ({ setImgUrl, imgURl }) => {
   //initialize state hooks
@@ -53,21 +54,41 @@ const SaveImageModal = ({ setImgUrl, imgURl }) => {
         <img id="modal-img" src={imgURl} alt="doodle preview" />
         <div className="save-options">
           {window.navigator.msSaveBlob ? (
-            <button
+            <Fab
+              style={{
+                backgroundColor:"#474747", 
+                color:"white"
+              }} 
+              variant="extended"
               className="modal-btn"
               onClick={window.navigator.msSaveBlob(imgURl, "doodle-img.png")}
             >
               {" "}
               i/e download
-            </button>
+            </Fab>
           ) : (
             <a href={imgURl} download="doodle-img.png">
-              <button className="modal-btn">Download</button>
+              <Fab 
+              style={{
+                backgroundColor:"#FAB228", 
+              }} 
+              variant="extended"
+              className="modal-btn"
+              >
+                Download
+              </Fab>
             </a>
           )}
-          <button className="modal-btn" onClick={saveImg}>
+          <Fab 
+            style={{
+                backgroundColor:"#474747", color:"white"
+              }} 
+            variant="extended"
+            className="modal-btn" 
+            onClick={saveImg}
+          >
             Save To Book
-          </button>
+          </Fab>
         </div>
       </div>
     </div>
