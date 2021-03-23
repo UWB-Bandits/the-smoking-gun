@@ -81,7 +81,7 @@ export default function ConfirmModal(props) {
             Cancel
           </Fab>
           <Fab 
-            variant="contained" 
+            variant="extended" 
             autoFocus 
             onClick={handleSubmit} 
             style={{

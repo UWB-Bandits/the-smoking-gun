@@ -93,7 +93,7 @@ const CreateBookForm = (props) => {
             backgroundColor:"#474747",
             color:"white"
           }}
-          variant="contained"
+          variant="extended"
           onClick={handleSubmit}
         >
           Create Book Now

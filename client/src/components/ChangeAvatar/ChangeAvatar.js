@@ -158,7 +158,7 @@ const ChangeAvatar = (props) => {
         </div>
       </form>
       <Fab
-        variant="contained"
+        variant="extended"
         style={{ 
           margin: "1rem .5rem", 
           color: "white",

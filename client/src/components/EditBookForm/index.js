@@ -174,13 +174,13 @@ const EditBookForm = (props) => {
               fontWeight:"bold",
 
             }}
-            variant="contained" 
+            variant="extended" 
             onClick={props.handleClose} 
           >
             Cancel
           </Fab>
         <Fab 
-            variant="contained" 
+            variant="extended" 
             autoFocus 
             onClick={handleSubmit} 
             style={{
