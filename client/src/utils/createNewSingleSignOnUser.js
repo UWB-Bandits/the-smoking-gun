@@ -22,6 +22,7 @@ const createNewSingleSignOnUser = () => {
     }).then((res) => {
       console.log(res);
       console.log("User has been created");
+      window.location.reload();
     }).catch((err) => {
         console.log(err.message);
     });
