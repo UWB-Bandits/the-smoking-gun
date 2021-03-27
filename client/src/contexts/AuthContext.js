@@ -44,7 +44,6 @@ export const AuthProvider = ({ children }) => {
     API.getUser(firebase_id).then((res) => {
       if(res.data === null){
         createUser();
-        window.location.reload();
       }
       setMongoId(res.data._id);
     });
