@@ -20,6 +20,7 @@ import DoodlePage from "./pages/DoodlePage";
 import { Container } from "@material-ui/core";
 import DoodleIndex from "./pages/DoodleIndex";
 import Journaling from "./pages/Journaling";
+import DeleteInfo from "./pages/DeleteInfo";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -134,6 +135,9 @@ function App() {
                     </Route>
                     <Route exact path="/books/:bookId/doodlesIndex">
                       <DoodleIndex />
+                    </Route>
+                    <Route exact path ="/delete-user">
+                      <DeleteInfo />
                     </Route>
                     <Route>
                       <NoMatch />
