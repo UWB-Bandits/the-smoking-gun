@@ -3,12 +3,15 @@
 
 ![GitHub top language](https://img.shields.io/github/languages/top/UWB-Bandits/the-smoking-gun)
 ![GitHub language count](https://img.shields.io/github/languages/count/UWB-Bandits/the-smoking-gun)
+![Travis (.org)](https://img.shields.io/travis/UWB-Bandits/the-smoking-gun)
 
 The Smoking Gun Bullet Journals shot up what normally is a stationary activity and brought bullet journaling to the web. This app is a task manager, sketchbook, journal, idea catcher, and much more!
 
-- [View the Live Page](https://the-smoking-gun.herokuapp.com/)
+## [View the Live Page](https://the-smoking-gun.herokuapp.com/)
 
 ![Homepage](./client/demo/homepage.png)
+
+![Login](./client/demo/login.png)
 
 ![Dashboard](./client/demo/dashboard.png)
 
@@ -71,7 +74,7 @@ This bullet journal is a customizable application where you can store different 
 
 ## Roadmap
 
-To continue with this project, we would like to add the ability for users to add friends, share and collaborate on lists/calendars/etc and possibly have a chat form and blog form to share with other users/public. We would like to add a budget tracker to keep track of income and expenses. We would like to add themed templates for higher level of customization. We would like to add reminders to the events in the calendars, connect the weather app to the calendar, and connect the calendar to the dashboard to show upcoming events/reminders. We would like to add offline functionality so the app can be used anywhere. We would also like to look into React-Redux and to reduce the amount of code/repetitive code.
+To continue with this project, we would like to add the ability for users to add friends, share and collaborate on lists/calendars/etc and possibly have a chat form and blog form to share with other users/public. We would like to add a budget tracker to keep track of income and expenses. We would like to add an edit feature to the doodles and a delete modal so the user has a chance to change their mind. We would like to add themed templates for higher level of customization. We would like to add reminders to the events in the calendars, connect the weather app to the calendar, and connect the calendar to the dashboard to show upcoming events/reminders. We would like to add offline functionality so the app can be used anywhere. We would also like to look into React-Redux and to reduce the amount of code/repetitive code.
 
 ## Links
 
