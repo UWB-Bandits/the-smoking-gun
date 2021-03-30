@@ -14,7 +14,7 @@ const CanvasEraser = ({ handleUpdate }) => {
         alignItems: "center",
       }}
     >
-      <h4>Set Eraser</h4>
+      <h2>Set Eraser</h2>
       <div>
         {/* Extra Small */}
         <button

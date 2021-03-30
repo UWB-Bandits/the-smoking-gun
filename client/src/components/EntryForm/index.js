@@ -2,7 +2,7 @@
 import React from "react";
 //import Material-Ui components
 import TextField from "@material-ui/core/TextField";
-import {Button, ButtonGroup} from "@material-ui/core/";
+import {Fab, ButtonGroup} from "@material-ui/core/";
 import Box from "@material-ui/core/Box";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
@@ -71,42 +71,49 @@ const EntryForm = (props) => {
       }
           {type === "new" ?
             //Material-UI component that allows users to take actions, and make choices, with a single tap.
-            <Button
+            <Fab
               className={"styled-button"}
               style={{
                   margin: 10,
                   display: "in-line",
-                  width:"50%"
+                  width:"50%",
+                  fontFamily: "Raleway, sans-serif"
               }}
-              variant="contained"
+              variant="extended"
               color="primary"
               onClick={onSave}
               >Save Entry
-            </Button>
+            </Fab>
             :
             //Material-UI component used to create a split button.
             <ButtonGroup>  
-              <Button
+              <Fab
                 className={"styled-button"}
                 style={{
                     margin: 10,
                     display: "in-line",
-                    width:"50%"
+                    width:"50%",
+                    fontFamily: "Raleway, sans-serif"
                 }}
-                variant="contained"
+                variant="extended"
                 onClick={onSave}
                 >Save Entry
-              </Button>
-              <Button
+              </Fab>
+              <Fab
                 style={{
                     margin: 10,
                     display: "inline",
-                    width:"50%"
+                    width:"50%",
+                    fontFamily: "Raleway, sans-serif",
+                    backgroundColor: "rgba(0,0,0,0)",
+                    borderColor:"#474747",
+                    borderWidth:"2px",
+                    borderStyle:"solid"
                 }}
-                variant="contained"
+                variant="extended"
                 onClick={onDelete}
                 >Delete Entry
-              </Button>
+              </Fab>
             </ButtonGroup>
           }
       </form>

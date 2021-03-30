@@ -8,10 +8,13 @@ import PropTypes from "prop-types";
 import CanvasColors from "../CanvasColors/CanvasColors";
 import CanvasPenWidth from "../CanvasPenWidth/CanvasPenWidth";
 import CanvasEraser from "../CanvasEraser/CanvasEraser";
+import Fab from "@material-ui/core/Fab";
 //import Material-UI Icons
 import HomeIcon from "@material-ui/icons/Home";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import CreateIcon from "@material-ui/icons/Create";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 //initialize CanvasSidebar component that takes in makeImg function, ACTIONS object, dispatch reducer, and existing canvasSettings object  
 const CanvasSidebar = ({
   makeImg,
@@ -22,15 +25,15 @@ const CanvasSidebar = ({
 }) => {
   //initialize state hook variables
   const [display, setDisplay] = useState("0");
-  const [showSettings, setShowSettings] = useState("<- Hide");
+  const [showSettings, setShowSettings] = useState("Hide");
   const [settingToChange, setSettingToChange] = useState("");
   const [storedLineWidth, setStoredLineWidth] = useState(4);
   const { bookId } = useParams();
 
   const showSidebar = () => {
-    showSettings === "Show ->"
-      ? setShowSettings("<- Hide")
-      : setShowSettings("Show ->");
+    showSettings === "Show"
+      ? setShowSettings("Hide")
+      : setShowSettings("Show");
     display === "0" ? setDisplay("-200px") : setDisplay("0");
   };
   //this function handles the settings clicks and changes the setSettingToChange state,
@@ -114,10 +117,10 @@ const CanvasSidebar = ({
           Eraser
         </li>
       </ul>
-      <div>
-        <button className="save-btn" onClick={makeImg}>
+      <div id="saveDiv">
+        <Fab style={{backgroundColor:"#FAB226"}} variant="extended" className="save-btn" onClick={makeImg}>
           Save Image?
-        </button>
+        </Fab>
       </div>
       {settingToChange === ACTIONS.COLOR && (
         <CanvasColors
@@ -143,7 +146,17 @@ const CanvasSidebar = ({
         />
       )}
       <button id="showSettings" onClick={showSidebar}>
-        {showSettings}
+        {showSettings==="Show" ? 
+        <div>
+          {showSettings}
+          <ArrowForwardIcon style={{verticalAlign:"bottom"}}/>
+        </div>
+        :
+        <div>
+          <ArrowBackIcon  style={{verticalAlign:"bottom"}}/>
+          {showSettings}
+        </div>
+        }
       </button>
     </div>
   );

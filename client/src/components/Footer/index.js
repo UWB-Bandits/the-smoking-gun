@@ -17,7 +17,11 @@ const useStyles = makeStyles({
     left: "0",
     bottom: "0",
     width: "100%",
-    backgroundColor: "#cacacc",
+    backgroundColor: "#DDDDDD",
+    borderTopColor: "#474747",
+    borderTopWidth: "1px",
+    borderTopStyle: "solid",
+    color: "#474747"
   },
   phantom: {
     height: "50px",
@@ -40,16 +44,19 @@ export default function SimpleBottomNavigation() {
           href="/dashboard"
           label="Dashboard"
           icon={<HomeIcon />}//Material-UI's Icon
+          style={{color:"#474747"}}
         />
         <BottomNavigationAction
           href="/create-book"
           label="Create New Book"
           icon={<ImportContactsIcon />}//Material-UI's Icon
+          style={{color:"#474747"}}
         />
         <BottomNavigationAction
           href="/settings"
           label="Settings"
           icon={<SettingsIcon />}//Material-UI's Icon
+          style={{color:"#474747"}}
         />
       </BottomNavigation>
     </div>

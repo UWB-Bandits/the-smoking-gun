@@ -2,22 +2,22 @@
 #menuContainer {
   display: flex;
   justify-content: space-around;
-  margin: 0.5rem 0 3rem 0;
-  background: #757575;
-  color: #232323;
+  background: #474747;
+  color: white;
   text-align: center;
   font-size: 1.5rem;
+  font-family: 'Rock Salt', cursive;
 }
 /* items */
 .menuItems {
   padding: 0.5rem;
 }
 .sn-active {
-  color: #464545;
+  color: #FAB228;
   text-decoration: underline;
 }
 .menuItems:hover {
-  color: #acacac;
+  color: #666666;
   cursor: pointer;
 }
 /* media query */

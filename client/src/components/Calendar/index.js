@@ -10,7 +10,7 @@ import TemporaryDrawer from "../TemporaryDrawer";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
 //import Material-Ui components
-import {CircularProgress, Grid} from "@material-ui/core/";
+import { CircularProgress, Grid } from "@material-ui/core/";
 //import API route handler
 import API from "../../utils/API";
 //import useParams to grab the URL parameter used to identify the book id
@@ -43,6 +43,7 @@ export default function Calendar(props) {
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [clickInfo, SetClickInfo] = useState({});
     const [book, setBook] = useState({});
+    const [error, setError] = useState("");
     // initialize the id variable for the bookId and calendarId (calId) that grabs the URL parameters
     const {bookId, calId} = useParams();
     //this lets you perform side effects in function component
@@ -57,6 +58,7 @@ export default function Calendar(props) {
     //closes the modal
     const handleClose = () => {
       setTitleOpen(false);
+      setDeleteOpen(false);
     };
     // this function makes a database query to get the book information the calendar is contained in
     // in order to access the colorScheme
@@ -136,25 +138,30 @@ export default function Calendar(props) {
         setSelectInfo(selectedInfo);        
     }
     //This function runs after a title is saved using the modal
-    const onTitleSubmit = () =>{
-      //closes the modal
-      setTitleOpen(false);
-      //checks for form data and updates state if there is data
-      if (formData) {
-        let newEvent = {
-          id: createEventId(),
-          title: formData,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay
-        };
-        //sends event to Full Calendar
-        calendarApi.addEvent(newEvent);
-        let newEvents = currentEvents;
-        newEvents.push(newEvent);
-        setCurrentEvents(newEvents);
-        //sends new event to the database
-        addEvent();
+    const onTitleSubmit = () => {
+      if (formData === "") {
+        setError("Please enter the title of your event.");
+      } else {
+        setError("");
+        //closes the modal
+        setTitleOpen(false);
+        //checks for form data and updates state if there is data
+        if (formData) {
+          let newEvent = {
+            id: createEventId(),
+            title: formData,
+            start: selectInfo.startStr,
+            end: selectInfo.endStr,
+            allDay: selectInfo.allDay
+          };
+          //sends event to Full Calendar
+          calendarApi.addEvent(newEvent);
+          let newEvents = currentEvents;
+          newEvents.push(newEvent);
+          setCurrentEvents(newEvents);
+          //sends new event to the database
+          addEvent();        
+        }
       }
       //resets the modal form
       setFormData("");
@@ -166,7 +173,7 @@ export default function Calendar(props) {
       //filters out the deleted event
       let leftEvents = currentEvents.filter(event => event._instance !== clickInfo.event._instance);
       //updates state
-      setCurrentEvents (leftEvents);
+      setCurrentEvents(leftEvents);
       //removes event from Full Calendar
       clickInfo.event.remove();
       //removes event from database
@@ -212,33 +219,33 @@ export default function Calendar(props) {
             {/* Material-UI's Grid component sets up a responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts. */}
             <Grid container justify="center" >
               <PromptModal 
-                prompt="Please enter a new title for your event"
+                prompt="Please enter the title of your event:"
                 handleSubmit = {onTitleSubmit}
                 handleInputChange = {handleInputChange}
                 handleClose = {handleClose}
                 buttonLabel ="Save event"
                 open = {titleOpen}
+                error = {error}
               />
               <ConfirmModal 
-                prompt={`Are you sure you want to delete the event "${clickInfo.event ? clickInfo.event.title : ""}"`}
+                prompt={`Are you sure you want to delete "${clickInfo.event ? clickInfo.event.title : ""}"?`}
                 handleSubmit = {onDeleteSubmit}
                 handleClose = {handleClose}
                 buttonLabel ="Delete Event"
                 open = {deleteOpen}
               />
             </Grid>
-    
         </div>
       ); 
     //If currentEvents does not have data render this
     } else {
-    return (
-      //this is Material-Ui loading spinner
-      <div>Loading Calendar...<CircularProgress /></div>
-    );
+      return (
+        //this is Material-Ui loading spinner
+        <div>Loading Calendar...<CircularProgress /></div>
+      );
     }
 }
 //sets up prop types for the Calendar component
 Calendar.propTypes = {
-    calendar: PropTypes.object
-  };
+  calendar: PropTypes.object
+};

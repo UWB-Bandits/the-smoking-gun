@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Mern Demo",
   "main": "server.js",
+  "engines": {
+    "node": "12.18.3",
+    "npm": "6.14.6"
+  },
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server.js",
@@ -29,10 +33,10 @@
     "react-image-resizer": "^1.3.0"
   },
   "dependencies": {
-    "@fullcalendar/daygrid": "^5.5.0",
-    "@fullcalendar/react": "^5.5.0",
     "@fullcalendar/core": "^5.5.0",
+    "@fullcalendar/daygrid": "^5.5.0",
     "@fullcalendar/interaction": "^5.5.0",
+    "@fullcalendar/react": "^5.5.0",
     "@fullcalendar/timegrid": "^5.5.0",
     "@material-ui/core": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.57",
@@ -41,10 +45,12 @@
     "dotenv": "^8.2.0",
     "express": "^4.16.3",
     "firebase": "^8.2.6",
+    "firebaseui": "^4.8.0",
     "geolocation": "^0.2.0",
     "gravatar": "^1.8.1",
     "if-env": "^1.0.4",
     "mongoose": "^5.11.15",
-    "react-chartjs-2": "^2.11.1"
+    "react-chartjs-2": "^2.11.1",
+    "react-firebaseui": "^4.1.0"
   }
 }

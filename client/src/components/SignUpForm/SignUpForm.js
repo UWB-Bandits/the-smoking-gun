@@ -23,6 +23,8 @@ import PropTypes from "prop-types";
 import FormButtons from "../FormButtons/FormButtons";
 //require in gravatar
 import Tooltip from "@material-ui/core/Tooltip";
+import { uiConfig, auth } from "../../utils/firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 const useGravatar = require("gravatar");
 //initialize SignUpForm component that is handed down props
@@ -45,6 +47,8 @@ const SignUpForm = (props) => {
     password: "",
     showPassword: false,
   });
+  // FirebaseUI
+
 
   // __________________________GRAVATAR________________________________________
   const [gravatar, setGravatar] = useState({
@@ -131,8 +135,8 @@ const SignUpForm = (props) => {
         marginLeft: "auto",
         marginBottom: "75px",
         borderRadius: "5px",
+        backgroundColor:"#DDDDDD"
       }}
-      bgcolor="background.paper"
     >
       <h2>Sign Up</h2>
 
@@ -144,7 +148,7 @@ const SignUpForm = (props) => {
           marginTop: "3rem",
         }}
       >
-        {/*  Material UI Alert compomnet displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
+        {/*  Material UI Alert component displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
         {error && <Alert severity="error">{error}</Alert>}
 
         <div style={{ margin: "0px 5px" }}>
@@ -296,6 +300,7 @@ const SignUpForm = (props) => {
             </RadioGroup>
           </FormControl>
         </div>
+        
         <FormButtons
           button1="Sign Up"
           button2={["Have an account? ", "Log In"]}
@@ -304,6 +309,10 @@ const SignUpForm = (props) => {
           handleSubmit={handleSubmit}
         />
       </form>
+      <div>
+          <h2>Or sign in with:</h2>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} /> 
+      </div>
     </Box>
   );
 };

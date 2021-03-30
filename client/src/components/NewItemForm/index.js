@@ -2,7 +2,7 @@
 import React from "react";
 //import Material UI components
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import Box from "@material-ui/core/Box";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
@@ -35,17 +35,14 @@ const NewListForm = (props) => {
           />
         </div>
         {/* Material-UI component that allows users to take actions, and make choices, with a single tap. */}
-        <Button
+        <Fab
           className={"styled-button"}
-          style={{
-            margin: "10px",
-            display: "block",
-          }}
-          variant="contained"
+          variant="extended"
           color="primary"
           onClick={addItem}
+          style={{marginTop:"5px", maxWidth:"100px"}}
         >Add
-        </Button>
+        </Fab>
       </form>
     </Box>
   );

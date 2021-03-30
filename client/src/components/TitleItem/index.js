@@ -16,13 +16,13 @@ TitleItem.propTypes = {
 //initialize useStyles variable that uses Material-UI's styling solution makeStyles() function
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
     marginBottom: "20px",
     textAlign: "center"
   },
   title: {
     fontSize: 50,
     textAlign: "center",
+    fontFamily: "'Rock Salt', cursive",
   },
 });
 //initialize and export TitleItem component
@@ -39,7 +39,7 @@ export default function TitleItem(props) {
         <Typography className={classes.title} gutterBottom>
           {props.title}
         </Typography>
-        <Typography gutterBottom>
+        <Typography style={{fontFamily: "'Rock Salt', cursive",}}>
           {props.description}
         </Typography>
       </CardContent>

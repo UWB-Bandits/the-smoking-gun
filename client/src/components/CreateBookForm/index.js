@@ -4,16 +4,24 @@ import React from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import Box from "@material-ui/core/Box";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
-//initialize the SignInForm component
-const SignInForm = (props) => {
+//import Material-UI lab
+import Alert from "@material-ui/lab/Alert";
+//initialize the CreateBookForm component
+const CreateBookForm = (props) => {
   //deconstruct and initialize variables from props
-  const { handleInputChange, handleThemeChange, handleSubmit } = props;
+  const { 
+    handleInputChange, 
+    handleThemeChange, 
+    handleSubmit, 
+    formData,
+    error 
+  } = props;
   //return a form that helps a user create a new book
   return (
     // Material-Ui component that serves as a wrapper component for most of the CSS utility needs.
@@ -25,10 +33,10 @@ const SignInForm = (props) => {
         margin: "10px auto",
         minWidth: "300px",
         borderRadius: "5px",
+        backgroundColor:"#DDDDDD"
       }}
-      bgcolor="background.paper"
     >
-      <h2>Create a New Book</h2>
+      <h2 style={{ fontFamily: "'Rock Salt', cursive", }}>Create a New Book</h2>
       <form
         style={{
           minWidth: "300px",
@@ -37,6 +45,8 @@ const SignInForm = (props) => {
           justifyContent: "center",
         }}
       >
+        {/*  Material UI Alert component displays a short, important message in a way that attracts the user's attention without interrupting the user's task. */}
+        {error && <Alert severity="error">{error}</Alert>}
         <div style={{ margin: "0px 5px" }}>
           {/*Material-Ui component that serves as a convenience wrapper */}
           <TextField
@@ -45,6 +55,7 @@ const SignInForm = (props) => {
             label="Title"
             type="text"
             name="title"
+            value={formData.title}
             onChange={handleInputChange}
           />
           <TextField
@@ -52,6 +63,7 @@ const SignInForm = (props) => {
             id="newBookDescription"
             label="Description"
             name="description"
+            value={formData.description}
             onChange={handleInputChange}
             multiline
           />
@@ -63,6 +75,7 @@ const SignInForm = (props) => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
+              value={formData.colorScheme}
               onChange={handleThemeChange}
             >
               {/* Material-Ui component is a wrapper around ListItem with some additional styles. */}
@@ -73,26 +86,29 @@ const SignInForm = (props) => {
           </FormControl>
         </div>
         {/*Material-Ui component allow users to take actions, and make choices, with a single tap. */}
-        <Button
+        <Fab
           style={{
             margin: "25px 10px 25px auto",
             display: "block",
+            backgroundColor:"#474747",
+            color:"white"
           }}
-          variant="contained"
-          color="primary"
+          variant="extended"
           onClick={handleSubmit}
         >
           Create Book Now
-        </Button>
+        </Fab>
       </form>
     </Box>
   );
 };
 //sets up prop types for the SignInForm component
-SignInForm.propTypes = {
+CreateBookForm.propTypes = {
   handleInputChange: PropTypes.func,
   handleThemeChange: PropTypes.func,
   handleSubmit: PropTypes.func,
+  formData: PropTypes.object,
+  error: PropTypes.string
 };
 //export the SignInForm component
-export default SignInForm;
+export default CreateBookForm;

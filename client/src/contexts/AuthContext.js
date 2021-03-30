@@ -4,6 +4,9 @@ import React, { useContext, useState, useEffect } from "react";
 import API from "../utils/API";
 //import firebase
 import fire from "../utils/firebase";
+
+import createUser from "../utils/createNewSingleSignOnUser";
+
 //create context
 const AuthContext = React.createContext();
 //export context
@@ -39,6 +42,9 @@ export const AuthProvider = ({ children }) => {
   //this grabs the user id from the database and sets the mongoId state to that value
   const getMongoID = (firebase_id) => {
     API.getUser(firebase_id).then((res) => {
+      if(res.data === null){
+        createUser();
+      }
       setMongoId(res.data._id);
     });
   };

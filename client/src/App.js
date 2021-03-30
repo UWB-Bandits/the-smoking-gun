@@ -84,6 +84,7 @@ function App() {
           "url(https://cdn.pixabay.com/photo/2019/04/08/13/52/paper-4112063_960_720.jpg)",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed"
       }}
     >
       <AuthProvider>

@@ -1,22 +1,63 @@
 //import react
 import React from "react";
-//import Material-Ui component
-import Button from "@material-ui/core/Button";
+//import withStyles function from Material-UI
+import { withStyles } from "@material-ui/core/styles";
+// import Material-UI components for Dialog Modal
+import Fab from "@material-ui/core/Fab";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import MuiDialogContent from "@material-ui/core/DialogContent";
+import MuiDialogActions from "@material-ui/core/DialogActions";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 //import Material-Ui icon
+import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
 //import a dependency that keeps track of the prop types
 import PropTypes from "prop-types";
 //import client side API route handler
 import API from "../../utils/API";
+// sets styles variable for the title box of the dialog
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+// sets up the title box of the dialog
+const DialogTitle = withStyles(styles)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h5">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+// sets up the content box of the dialog
+const DialogContent = withStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3),
+  },
+}))(MuiDialogContent);
+// sets up the footer box of the dialog
+const DialogActions = withStyles((theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(1),
+  },
+}))(MuiDialogActions);
 //initialize DeleteBookForm Component
 const DeleteBookForm = (props) => {
-  //sets up prop types for the DaysMenu component
-  DeleteBookForm.propTypes = {
-    title: PropTypes.string,
-    name: PropTypes.string,
-    id: PropTypes.string.isRequired,
-    type: PropTypes.string
-  };
   //this function handles the book delete 
   const handleBookDelete = () => {
     API.deleteBook(props.id)
@@ -85,28 +126,55 @@ const DeleteBookForm = (props) => {
   }
   //this returns a form to the delete modal with correlating deletion information
   return (
-    <div style={{ display: "flex", justifyContent: "center", margin: "3rem" }}>
-      <div>
-        <h2>{buttonText}{": "}{props.title}{props.name}</h2>
-        <p style={{ display: "inline-block", margin: "1rem" }}>
-          Are you sure you want to {buttonText}?
-        </p>
-        {/* Material-Ui component that allow users to take actions, and make choices, with a single tap.*/}
-        <Button 
-          variant="contained" 
-          color="secondary"
-          startIcon={<DeleteIcon />} //Material-Ui Icon
-          style={{
-              margin: "25px 10px 25px auto",
-              display: "block",
+    <div style={{backgroundColor: "#DDDDDD"}}>
+      {/* Material-UI component that informs users about a task and can contain critical information, require decisions, or involve multiple tasks. */}
+      <DialogTitle style={{color:"white",   backgroundColor:"#474747"}} id="form-dialog-title" onClose={props.handleClose} >
+      <span style={{ fontFamily: "'Rock Salt', cursive"}}>{buttonText} </span>
+      </DialogTitle>
+      <DialogContent dividers>
+        <Typography gutterBottom>
+          <span style={{ fontFamily: "'Raleway', sans-serif"}}>Are you sure you want to {buttonText}{": "}{props.title}{props.name}</span>?
+        </Typography>
+      </DialogContent>
+      <DialogActions style={{backgroundColor:"#474747"}}>
+        <Fab 
+            style={{
+              color:"#474747",
+              fontWeight:"bold",
+
             }}
-          onClick={handle}
-        >
-          {buttonText}
-        </Button>
-      </div>
+            variant="outlined" 
+            onClick={props.handleClose} 
+          >
+            Cancel
+          </Fab>
+        <Fab 
+            variant="extended" 
+            autoFocus 
+            onClick={handle} 
+            color="primary" 
+            style={{
+              backgroundColor:"#474747", 
+              color:"white",
+              borderColor:"white",
+              borderWidth:"1px",
+              borderStyle:"solid"
+            }}
+          >
+            <DeleteIcon style={{marginRight:"5px"}}/>
+            {buttonText}
+          </Fab>
+      </DialogActions>
     </div>
   );
+};
+//sets up prop types for the DaysMenu component
+DeleteBookForm.propTypes = {
+  title: PropTypes.string,
+  name: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  handleClose: PropTypes.func
 };
 //exports DeleteBookForm component
 export default DeleteBookForm;

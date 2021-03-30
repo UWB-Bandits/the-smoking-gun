@@ -14,6 +14,7 @@ const CreateBook = () => {
     description: "",
     colorScheme: "",
   });
+  const [error, setError] = useState("");
   //this grabs the current user information 
   const { currentUser } = useAuth();
   //this sets formData colorScheme on the event target
@@ -26,20 +27,39 @@ const CreateBook = () => {
     setFormData({ ...formData, [name]: value });
   };
   //this handles the create book button press
-  const handleSubmit = () => {
-    //SEND NEW BOOK TO DATABASE AND REDIRECT TO BOOK INDEX
-    API.saveBook({...formData, user:currentUser.uid })
-    .then( res => {
-      window.location.href = "/books/" + res.data._id;
-      }
-    ).catch(err => console.log(err));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.title === "") {
+      setError("Please enter a title.");
+    } else if (formData.description === "") {
+      setError("Please enter a description.");
+    } else if (formData.colorScheme === "") {
+      setError("Please choose a color theme.");
+    } else {
+      //SEND NEW BOOK TO DATABASE AND REDIRECT TO BOOK INDEX
+      setError("");
+      API.saveBook({...formData, user:currentUser.uid })
+      .then( res => {
+          window.location.href = "/books/" + res.data._id;
+        }
+      ).catch(err => {
+          console.log(err);
+          setError(err.message);
+        });
+    }
   };
   //this returns a form for the user to create a new book
   return (
     <div>
       <div className="formContainer" style={{ marginTop: "40px" }}>
         {/* custom component that returns a form for creating a book */}
-        <CreateBookForm handleInputChange={handleInputChange} handleThemeChange={handleThemeChange} handleSubmit={handleSubmit}/>
+        <CreateBookForm 
+          handleInputChange={handleInputChange} 
+          handleThemeChange={handleThemeChange} 
+          handleSubmit={handleSubmit} 
+          formData={formData} 
+          error={error}
+        />
       </div>
     </div>
   );

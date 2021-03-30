@@ -17,6 +17,11 @@ import Alert from "@material-ui/lab/Alert";
 import PropTypes from "prop-types";
 //import components
 import FormButtons from "../FormButtons/FormButtons";
+// import ForgotPassword component
+import ForgotPassword from "../ChangePassword/ForgotPassword";
+//import firebase
+import { uiConfig, auth } from "../../utils/firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 //initialize LogInForm component
 const LogInForm = (props) => {
   const { handleInputChange, setPage, handleSubmit, loading, error } = props;
@@ -47,8 +52,8 @@ const LogInForm = (props) => {
         marginLeft: "auto",
         marginBottom: "75px",
         borderRadius: "5px",
+        backgroundColor:"#DDDDDD"
       }}
-      bgcolor="background.paper"
     >
       <h2>Log In</h2>
       <form
@@ -93,8 +98,10 @@ const LogInForm = (props) => {
               </InputAdornment>
             }
           />
+          <ForgotPassword />
         </FormControl>
         {/* This is custom made component to provide buttons as needed */}
+
         <FormButtons
           button1="Log In"
           button2={["Don't have an account? ", "Sign Up"]}
@@ -102,6 +109,11 @@ const LogInForm = (props) => {
           loading={loading}
           handleSubmit={handleSubmit}
         />
+        
+        <div>
+          <h2>Or sign in with:</h2>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} /> 
+        </div>
       </form>
     </Box>
   );

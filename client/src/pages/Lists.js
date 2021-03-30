@@ -17,7 +17,6 @@ import {
 //import components
 import TitleItem from "../components/TitleItem";
 import NewItemForm from "../components/NewItemForm";
-
 //import Material UI hooks
 import { makeStyles } from "@material-ui/core/styles";
 //import useParams to grab URL parameters
@@ -29,6 +28,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import DeleteIcon from "@material-ui/icons/Delete";
+//import Material-UI lab
+import Alert from "@material-ui/lab/Alert";
 //import context
 import { useAuth } from "../contexts/AuthContext";
 
@@ -39,6 +40,7 @@ function Lists() {
   const [list, setList] = useState({});
   const [items, setItems] = useState([]);
   const [book, setBook] = useState({});
+  const [error, setError] = useState("");
   //get current user info from context
   const { currentUser } = useAuth();
   //get bookId and listId from URL
@@ -65,7 +67,6 @@ function Lists() {
           bookName: res.data.book.title,
           bookId: res.data.book._id
         };
-
         setList(pageList);
         setItems(res.data.items);
       })
@@ -78,7 +79,10 @@ function Lists() {
   };
   //calls database to send the info from the form as a new list item
   const addItem = () => {
-    if (formData.newItem){
+    if (formData.newItem === "") {
+      setError("Please enter a new item.");
+    } else if (formData.newItem) {
+      setError("");
       let updatedItems = items;
       //pushes new item onto other items array
       updatedItems.push({ name: formData.newItem, completed: false });
@@ -113,7 +117,6 @@ function Lists() {
       //reloads the list
     }).then(loadList())
     .catch(err => console.log(err));
-
   };
   //deletes an item from the list in the database
   const handleDelete = (value) => () => {
@@ -147,7 +150,7 @@ function Lists() {
   }));
   //this returns a List page that holds stores items and their completion status
   return (
-    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(221, 221, 221, 0.5)"}}>
       {/* Material-UI Box component serves as a wrapper component for most of the CSS utility needs. */}
       <Box>
         {/* custom component that displays the title of the book */}
@@ -158,7 +161,7 @@ function Lists() {
           <Link color="inherit" href="/dashboard" className={classes.link}>
             {/* Material-UI Icon Component */}
             <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+            <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>Dashboard</span>
           </Link>
           <Link
             color="inherit"
@@ -166,16 +169,20 @@ function Lists() {
             className={classes.link}
           >
             <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px", marginLeft: "2px"}}>{list.bookName}</span>
+            <span style={{fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>{list.bookName}</span>
           </Link>
           {/* Material-UI Typography component is used to present your design and content as clearly and efficiently as possible. */}
           <Typography color="textPrimary" className={classes.link}>
             <PlaylistAddCheckIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>{list.name}</span>
+            <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>{list.name}</span>
           </Typography>
         </Breadcrumbs>
         {/* Material UI List component are continuous, vertical indexes of text or images. */}
         <List className={classes.root}>
+          {/*Material-Ui component that serves as a convenience wrapper */}
+          <ListItem>
+            {error && <Alert severity="error">{error}</Alert>}
+          </ListItem>
           {items.map((value) => {
             const labelId = `checkbox-list-label-${value}`;
             //this returns a list of items and the option to add more items
@@ -198,11 +205,17 @@ function Lists() {
                     inputProps={{ "aria-labelledby": labelId }}
                   />
                 </ListItemIcon>
-                <ListItemText id={labelId} primary={value.name} />
+                <ListItemText id={labelId} ><span style={{fontFamily: "'Raleway', sans-serif",}}>{value.name}</span> </ListItemText>
                 {/* Material UI ListItemSecondaryAction allows a secondary action within a list item  */}
                 <ListItemSecondaryAction>
-                {/* Material UI IconButton component is clickable icon wrapper */}
-                <IconButton edge="end" aria-label="delete item" onClick={handleDelete(value)}><DeleteIcon  /></IconButton>
+                  {/* Material UI IconButton component is clickable icon wrapper */}
+                  <IconButton 
+                    edge="end" 
+                    aria-label="delete item" 
+                    onClick={handleDelete(value)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             );

@@ -3,7 +3,7 @@ import React from "react";
 //import context
 import { useAuth } from "../../contexts/AuthContext";
 //import Material-UI component
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 //import useHistory function from react-router-dom
 import { useHistory } from "react-router-dom";
 //initialize the SignOut component
@@ -25,13 +25,17 @@ const SignOut = () => {
           Please Confirm you would like to sign out
         </p>
         {/* Material-UI component that allows users to take actions, and make choices, with a single tap. */}
-        <Button
+        <Fab
           variant="outlined"
           onClick={signOut}
-          style={{ display: "inline-block" }}
+          style={{ 
+            display: "inline-block",
+            backgroundColor:"#474747",
+            color:"white"
+          }}
         >
           Sign Out
-        </Button>
+        </Fab>
       </div>
     </div>
   );

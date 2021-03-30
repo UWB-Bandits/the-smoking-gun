@@ -1,7 +1,7 @@
 //import react
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
@@ -34,9 +34,17 @@ const ChangePassword = () => {
   return (
     <div style={{ textAlign: "center" }}>
       <h1>To reset your password, please</h1>
-      <Button variant="contained" color="secondary" onClick={handleClick}>
+      <Fab
+        variant="extended"
+        style={{  
+          color: "white",
+          backgroundColor: "#474747",
+          width:"150px" 
+        }}
+          onClick={handleClick}
+      >
         Click Here
-      </Button> 
+      </Fab>
       <h1>for a link to be sent via email.</h1>
       <h3>If you do not see the email, be sure to check your junk folder.</h3>
       <Snackbar

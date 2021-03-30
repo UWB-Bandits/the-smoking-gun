@@ -15,7 +15,7 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemSecondaryAction,
-  Button,
+  Fab,
 } from "@material-ui/core";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
@@ -35,6 +35,8 @@ import NewListForm from "../components/NewItemForm";
 import NewCalendarForm from "../components/NewCalendarForm";
 import EditModal from "../components/EditModal";
 import DeleteModal from "../components/DeleteModal";
+//import Material-UI lab
+import Alert from "@material-ui/lab/Alert";
 //import routes
 import API from "../utils/API";
 //import context
@@ -49,6 +51,8 @@ function IndexPage() {
   const [lists, setLists] = useState([]);
   const [entries, setEntries] = useState([]);
   const [calendars, setCalendars] = useState([]);
+  const [error, setError] = useState("");
+  const [calError, setCalError] = useState("");
   //get current user info from context
   const { currentUser } = useAuth();
   //get bookId from URL
@@ -80,11 +84,15 @@ function IndexPage() {
   };
   //this adds lists to the book and directs the user to the lists page
   const addList = () => {
-    API.saveList({
-      name: formData.newList,
-      items: [],
-      book: book._id,
-    })
+    if (formData.newList === "") {
+      setError("Please enter a title for your new list.");
+    } else {
+      setError("");
+      API.saveList({
+        name: formData.newList,
+        items: [],
+        book: book._id,
+      })
       .then((res) => {
         let newBookLists = lists.map((list) => list._id);
         newBookLists.push(res.data._id);
@@ -96,36 +104,18 @@ function IndexPage() {
           .catch((err) => console.log(err));
         window.location.href = "/books/" + bookId + "/lists/" + res.data._id;
       })
-      .then((res) => {
-        let newBookLists = lists.map((list) => list._id);
-        newBookLists.push(res.data._id);
-        API.updateBook(bookId, {
-          ...book,
-          lists: newBookLists,
-        })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
-        window.location.href = "/lists/" + res.data._id;
-      })
       .catch((err) => console.log(err));
+      }
   };
   //this adds calendars to the book and directs the user to the calendar page
   const addCalendar = () => {
-    API.saveCalendar({
-      name: calendarFormData.newCalendar,
-      book: book._id,
-    })
-      .then((res) => {
-        let newBookCalendars = calendars.map((calendar) => calendar._id);
-        newBookCalendars.push(res.data._id);
-        API.updateBook(bookId, {
-          ...book,
-          calendars: newBookCalendars,
-        })
-          .then((res) => res)
-          .catch((err) => console.log(err));
-        window.location.href =
-          "/books/" + bookId + "/calendars/" + res.data._id;
+    if (calendarFormData.newCalendar === "") {
+      setCalError("Please enter a title for your new calendar.");
+    } else {
+      setCalError("");
+      API.saveCalendar({
+        name: calendarFormData.newCalendar,
+        book: book._id,
       })
       .then((res) => {
         let newBookCalendars = calendars.map((calendar) => calendar._id);
@@ -134,11 +124,12 @@ function IndexPage() {
           ...book,
           calendars: newBookCalendars,
         })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
-        window.location.href = "/calendars/" + res.data._id;
+        .then((res) => res)
+        .catch((err) => console.log(err));
+        window.location.href = "/books/" + bookId + "/calendars/" + res.data._id;
       })
       .catch((err) => console.log(err));
+    }
   };
   //this returns the clickable item that contains props
   function ListItemLink(props) {
@@ -199,7 +190,7 @@ function IndexPage() {
               style={{ verticalAlign: "middle" }}
               className={classes.icon}
             />
-            <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+            <span style={{ fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>
               Dashboard
             </span>
           </Link>
@@ -209,7 +200,7 @@ function IndexPage() {
               style={{ verticalAlign: "middle" }}
               className={classes.icon}
             />
-            <span style={{ fontSize: "12px", marginLeft: "2px" }}>
+            <span style={{ fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif", }}>
               {book.title}
             </span>
           </Typography>
@@ -218,7 +209,8 @@ function IndexPage() {
         {/* Material UI Accordion component contain creation flows and allow lightweight editing of an element. */}
         <Accordion
           expanded={expanded === "panel1"}
-          onChange={handleAccordionChange("panel1")}
+          onChange={handleAccordionChange("panel1")} 
+          style={{backgroundColor: "#DDDDDD"}}
         >
           {/* Material UI AccordionSummary is a wrapper that act as a header/description of and Accordion component  */}
           <AccordionSummary
@@ -226,9 +218,13 @@ function IndexPage() {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
-            <Typography className={classes.heading}>Lists</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Lists</Typography>
           </AccordionSummary>
+          <AccordionDetails>
+            {error && <Alert severity="error">{error}</Alert>}
+          </AccordionDetails>
           {/* Material UI AccordionDetails is what is expanded when an Accordion component is clicked */}
           <AccordionDetails>
             {/* Material-UI Link component allows you to easily customize anchor elements with your theme colors and typography styles. */}
@@ -247,7 +243,7 @@ function IndexPage() {
                           <PlaylistAddCheckIcon />
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={item.name} />
+                      <ListItemText><span style={{fontFamily: "'Raleway', sans-serif",}}>{item.name}</span></ListItemText>
                       <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete">
                           <DeleteModal
@@ -276,15 +272,20 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel2"}
           onChange={handleAccordionChange("panel2")}
+          style={{backgroundColor: "#DDDDDD"}}
         >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
-            <Typography className={classes.heading}>Calendars</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Calendars</Typography>
           </AccordionSummary>
+          <AccordionDetails>
+            {calError && <Alert severity="error">{calError}</Alert>}
+          </AccordionDetails>
           <AccordionDetails>
             <List
               style={{ width: "100%" }}
@@ -302,7 +303,7 @@ function IndexPage() {
                           <PlaylistAddCheckIcon />
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={item.name} />
+                      <ListItemText ><span style={{fontFamily: "'Raleway', sans-serif",}}>{item.name}</span></ListItemText>
                       <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete">
                           <DeleteModal
@@ -331,14 +332,16 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel3"}
           onChange={handleAccordionChange("panel3")}
+          style={{backgroundColor: "#DDDDDD"}}
         >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
-            <Typography className={classes.heading}>Doodles</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Doodles</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <List
@@ -353,7 +356,7 @@ function IndexPage() {
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={"View or Make a Doodle"} />
+                  <ListItemText> <span style={{fontFamily: "'Raleway', sans-serif",}}>View or Make a Doodle</span></ListItemText>
                 </ListItemLink>
                 <Divider />
               </div>
@@ -364,16 +367,18 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel4"}
           onChange={handleAccordionChange("panel4")}
+          
         >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
-            <Typography className={classes.heading}>Habits</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Habits</Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails style={{backgroundColor:"#DDDDDD"}}>
             <List
               style={{ width: "100%" }}
               className={classes.root}
@@ -386,7 +391,7 @@ function IndexPage() {
                       <PlaylistAddCheckIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={"Track your daily habits!"} />
+                  <ListItemText ><span style={{fontFamily: "'Raleway', sans-serif",}}>Track your daily habits!</span></ListItemText>
                 </ListItemLink>
                 <Divider />
               </div>
@@ -397,14 +402,16 @@ function IndexPage() {
         <Accordion
           expanded={expanded === "panel5"}
           onChange={handleAccordionChange("panel5")}
+          style={{marginBottom:"20px", backgroundColor:"#DDDDDD"}}
         >
           <AccordionSummary
             className={classes.accordion}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
+            style={{backgroundColor: "#474747", color:"white"}}
           >
-            <Typography className={classes.heading}>Journal Entries</Typography>
+            <Typography style={{fontFamily: "'Raleway', sans-serif",}} className={classes.heading}>Journal Entries</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <List
@@ -421,7 +428,7 @@ function IndexPage() {
                           <PlaylistAddCheckIcon />
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={item.title} />
+                      <ListItemText > <span style={{fontFamily: "'Raleway', sans-serif",}}>{item.title} </span> </ListItemText>
                       <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete">
                           <DeleteModal
@@ -438,19 +445,15 @@ function IndexPage() {
               ) : (
                 <ListItem>Add a new journal entry to get started</ListItem>
               )}
-              <Button
+              <Fab
                 className={"styled-button"}
-                style={{
-                  margin: "10px",
-                  display: "block",
-                  textAlign: "center",
-                }}
                 href={`/books/${bookId}/new-entry/${bookId}`}
-                variant="contained"
+                variant="extended"
                 color="primary"
+                style={{marginTop:"5px"}}
               >
                 Add a new journal entry
-              </Button>
+              </Fab>
             </List>
           </AccordionDetails>
         </Accordion>

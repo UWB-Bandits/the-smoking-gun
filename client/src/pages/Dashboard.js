@@ -27,6 +27,7 @@ function Dashboard() {
   const [randomWord, setRandomWord] = useState({});
   const [bookSize, setBookSize] = useState({});
   const [windowSize, setWindowSize] = useState("");
+  const [buttonSize, setButtonSize] = useState("");
   //grabs the current user information
   const { currentUser } = useAuth();
   //this allows the page to run these side effects 
@@ -49,28 +50,34 @@ function Dashboard() {
     var width = window.innerWidth;
     if (width > 1100) {
       setBookSize({
-        bookWidth: "350px",
-        pushTop: "100px",
+        bookWidth: "250px",
         textSize: "30px",
+        smallText: "20px"
       });
     } else if (width > 550) {
       setBookSize({
-        bookWidth: "250px",
-        pushTop: "50px",
+        bookWidth: "150px",
         textSize: "25px",
+        smallText: "15px"
       });
     } else if (width > 340) {
       setBookSize({
-        bookWidth: "150px",
-        pushTop: "15px",
+        bookWidth: "100px",
         textSize: "15px",
+        smallText: "12px"
       });
     } else {
       setBookSize({
-        bookWidth: "120px",
-        pushTop: "10px",
+        bookWidth: "80px",
         textSize: "12px",
+        smallText: "12px"
       });
+    }
+
+    if(width>746){
+      setButtonSize("large");
+    } else {
+      setButtonSize("small");
     }
   }
   //this gets all the books that belong to the current user and sets it to usersBooks state
@@ -166,7 +173,7 @@ function Dashboard() {
         <Grid container justify="center">
           {weatherLoaded ? (
             // custom component displays weather info
-            <WeatherWidget weather={weather} />
+            <WeatherWidget buttonSize={buttonSize} weather={weather} />
           ) : (
             <div>
               Loading Weather...
@@ -176,7 +183,7 @@ function Dashboard() {
           )}
           {wordLoaded ? (
             // custom component displays the random word of the day
-            <RandomWordWidget randomWord={randomWord} />
+            <RandomWordWidget buttonSize={buttonSize} randomWord={randomWord} />
           ) : (
             <div>
               Loading Word...
@@ -185,7 +192,7 @@ function Dashboard() {
           )}
           {newsLoaded ? (
             // custom component displays the news
-            <NewsWidget news={[...news]} />
+            <NewsWidget buttonSize={buttonSize} news={[...news]} />
           ) : (
             <div>
               Loading Top Stories...

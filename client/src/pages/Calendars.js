@@ -80,27 +80,28 @@ function Calendars() {
   }));
   //this returns a calendar that the user can use to store events
   return (
-    <div className={book.colorScheme} style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
+    <div className={book.colorScheme} style={{backgroundColor:"rgba(221, 221, 221, 0.5)"}}>
       {/*Material-UI Breadcrumb component allow users to make selections from a range of values. */}
       <Breadcrumbs aria-label="breadcrumb">
         {/*Material-UI Link component allows you to easily customize anchor elements with your theme colors and typography styles. */}
         <Link color="inherit" href="/dashboard" className={classes.link}>
           {/* Material-UI Icon Component */}
           <HomeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-          <span style={{fontSize: "12px",  marginLeft: "2px"}}>Dashboard</span>
+          <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>Dashboard</span>
         </Link>
         <Link color="inherit" href={"/books/" + calendar.bookId} className={classes.link}>
             <ImportContactsIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px", marginLeft: "2px"}}>{calendar.bookName}</span>
+            <span style={{fontSize: "12px", marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>{calendar.bookName}</span>
         </Link>
         {/* Material-UI Typography component is used to present your design and content as clearly and efficiently as possible.  */}
         <Typography color="textPrimary" className={classes.link}>
             <DateRangeIcon style={{verticalAlign: "middle"}} className={classes.icon} />
-            <span style={{fontSize: "12px",  marginLeft: "2px"}}>{calendar.name}</span>
+            <span style={{fontSize: "12px",  marginLeft: "2px", fontFamily: "'Raleway', sans-serif",}}>{calendar.name}</span>
         </Typography>
       </Breadcrumbs>
       {/* A custom component that renders a fullCalendar.io react calendar component */}
       <Calendar calendar={calendar}/>
+      <div style={{marginBottom:"50px"}}>{""}</div>
     </div>
   );
 }
