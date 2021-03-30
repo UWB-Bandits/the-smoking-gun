@@ -3,12 +3,15 @@
 
 ![GitHub top language](https://img.shields.io/github/languages/top/UWB-Bandits/the-smoking-gun)
 ![GitHub language count](https://img.shields.io/github/languages/count/UWB-Bandits/the-smoking-gun)
+![Travis (.org)](https://img.shields.io/travis/UWB-Bandits/the-smoking-gun)
 
 The Smoking Gun Bullet Journals shot up what normally is a stationary activity and brought bullet journaling to the web. This app is a task manager, sketchbook, journal, idea catcher, and much more!
 
-- [View the Live Page](https://the-smoking-gun.herokuapp.com/)
+## [View the Live Page](https://the-smoking-gun.herokuapp.com/)
 
 ![Homepage](./client/demo/homepage.png)
+
+![Login](./client/demo/login.png)
 
 ![Dashboard](./client/demo/dashboard.png)
 
